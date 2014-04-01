@@ -12,6 +12,58 @@ namespace WindowsFormsApplication1
 {
     public partial class MainForm : Form
     {
+
+        double time_frame; // [days] this is how long the simulation will run
+        double delta_t; // [days] the number of days between time steps
+        double time_steps; // time_frame divided by delta_t
+
+        double delta_x; //[ft]
+        double delta_y; //[ft]
+        double delta_z; //[ft]
+        double length; //[ft]
+        double width; //[ft]
+        double height; //[ft]
+
+        double porosity;
+        double perm;
+        double Sw;
+        double Pb;
+        double Pinitial;
+        double Pmin;
+     
+        bool UseWell1;
+        bool Well1_Inj;
+        bool Well1_Qw_or_Pwf; //1=Qw, 0=Pwf
+        double Well1Pwf; 
+        double Well1Qw;
+        double Well1Skin;
+        double Well1Rw; //[ft]
+        double Well1XLoc; //[ft]
+        double Well1YLoc; //[ft]
+
+        bool UseWell2;
+        bool Well2_Inj;
+        bool Well2_Qw_or_Pwf; //1=Qw, 0=Pwf
+        double Well2Pwf;
+        double Well2Qw;
+        double Well2Skin;
+        double Well2Rw; //[ft]
+        double Well1XLoc; //[ft]
+        double Well1YLoc; //[ft]
+
+        bool UseWell3;
+        bool Well3_Inj;
+        bool Well3_Qw_or_Pwf; //1=Qw, 0=Pwf
+        double Well3Pwf;
+        double Well3Qw;
+        double Well3Skin;
+        double Well3Rw; //[ft]
+        double Well1XLoc; //[ft]
+        double Well1YLoc; //[ft]
+
+
+
+
         public MainForm()
         {
             InitializeComponent();
@@ -61,5 +113,46 @@ namespace WindowsFormsApplication1
         {
 
         }
+
+        //this is what heppens what you clidk "Calculate"
+        private void button1_Click(object sender, EventArgs e)
+        {
+            refreshData();
+        }
+   
+        private void refreshData()
+        {
+            //double.TryParse(tbBubblePoint.Text, out foo);
+            //foo = foo + 200;
+            //tbBubblePoint.Text = Convert.ToString(foo);
+        }
+
+
+        private void ThomasMethod(double[] a, double[] b, double[] c, double[] d, int n)
+        {
+            n--; 
+            c[0] /= b[0];
+            d[0] /= b[0];
+
+            for (int i = 1; i < n; i++)
+            {
+                c[i] /= b[i] - a[i] * c[i - 1];
+                d[i] = (d[i] - a[i] * d[i - 1]) / (b[i] - a[i] * c[i - 1]);
+            }
+
+            d[n] = (d[n] - a[n] * d[n - 1]) / (b[n] - a[n] * c[n - 1]);
+
+            for (int i = n; i-- > 0; )
+            {
+                d[i] -= c[i] * d[i + 1];
+            }
+        }
+
+        private void cbWell1Active_CheckedChanged(object sender, EventArgs e)
+        {
+                
+                
+        }
+
     }
 }

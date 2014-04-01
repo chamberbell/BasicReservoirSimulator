@@ -646,6 +646,7 @@
             this.cbWell1Active.TabIndex = 0;
             this.cbWell1Active.Text = "Active";
             this.cbWell1Active.UseVisualStyleBackColor = true;
+            this.cbWell1Active.CheckedChanged += new System.EventHandler(this.cbWell1Active_CheckedChanged);
             // 
             // tbWell1X
             // 
@@ -1283,6 +1284,7 @@
             this.button1.TabIndex = 0;
             this.button1.Text = "Calculate";
             this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // button2
             // 
