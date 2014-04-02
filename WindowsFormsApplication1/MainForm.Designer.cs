@@ -28,60 +28,106 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.txXGridBlocks = new System.Windows.Forms.TextBox();
-            this.lbXGridBlocks = new System.Windows.Forms.Label();
-            this.lbYGridBlocks = new System.Windows.Forms.Label();
-            this.lbZGridBlocks = new System.Windows.Forms.Label();
-            this.txYGridBlocks = new System.Windows.Forms.TextBox();
             this.txZGridBlocks = new System.Windows.Forms.TextBox();
+            this.txYGridBlocks = new System.Windows.Forms.TextBox();
+            this.lbZGridBlocks = new System.Windows.Forms.Label();
+            this.lbYGridBlocks = new System.Windows.Forms.Label();
+            this.lbXGridBlocks = new System.Windows.Forms.Label();
+            this.txXGridBlocks = new System.Windows.Forms.TextBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.txLength = new System.Windows.Forms.TextBox();
-            this.label3 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.label1 = new System.Windows.Forms.Label();
-            this.txWidth = new System.Windows.Forms.TextBox();
+            this.label11 = new System.Windows.Forms.Label();
+            this.label10 = new System.Windows.Forms.Label();
             this.txHeight = new System.Windows.Forms.TextBox();
+            this.label9 = new System.Windows.Forms.Label();
+            this.txWidth = new System.Windows.Forms.TextBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.txLength = new System.Windows.Forms.TextBox();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.label40 = new System.Windows.Forms.Label();
+            this.tbTotalComp = new System.Windows.Forms.TextBox();
+            this.label41 = new System.Windows.Forms.Label();
+            this.label39 = new System.Windows.Forms.Label();
+            this.label37 = new System.Windows.Forms.Label();
+            this.tbRockComp = new System.Windows.Forms.TextBox();
+            this.label38 = new System.Windows.Forms.Label();
+            this.label35 = new System.Windows.Forms.Label();
+            this.tbPorosity = new System.Windows.Forms.TextBox();
+            this.label36 = new System.Windows.Forms.Label();
+            this.label34 = new System.Windows.Forms.Label();
+            this.tbPerm = new System.Windows.Forms.TextBox();
+            this.label33 = new System.Windows.Forms.Label();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
+            this.label52 = new System.Windows.Forms.Label();
+            this.tbBubblePoint = new System.Windows.Forms.TextBox();
+            this.label53 = new System.Windows.Forms.Label();
+            this.label50 = new System.Windows.Forms.Label();
+            this.tbLiquComp = new System.Windows.Forms.TextBox();
+            this.label51 = new System.Windows.Forms.Label();
+            this.label48 = new System.Windows.Forms.Label();
+            this.tbInitialBo = new System.Windows.Forms.TextBox();
+            this.label49 = new System.Windows.Forms.Label();
+            this.label46 = new System.Windows.Forms.Label();
+            this.tbOilVisc = new System.Windows.Forms.TextBox();
+            this.label47 = new System.Windows.Forms.Label();
+            this.label44 = new System.Windows.Forms.Label();
+            this.tbWaterSat = new System.Windows.Forms.TextBox();
+            this.label45 = new System.Windows.Forms.Label();
+            this.label42 = new System.Windows.Forms.Label();
+            this.tbOilSat = new System.Windows.Forms.TextBox();
+            this.label43 = new System.Windows.Forms.Label();
             this.gbInitialandBC = new System.Windows.Forms.GroupBox();
-            this.groupBox6 = new System.Windows.Forms.GroupBox();
-            this.checkBox1 = new System.Windows.Forms.CheckBox();
-            this.label4 = new System.Windows.Forms.Label();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.cbBC_NoFlow_X0 = new System.Windows.Forms.CheckBox();
-            this.cbBC_ConstP_X0 = new System.Windows.Forms.CheckBox();
-            this.checkBox4 = new System.Windows.Forms.CheckBox();
-            this.txTransmX0 = new System.Windows.Forms.TextBox();
+            this.label8 = new System.Windows.Forms.Label();
+            this.label7 = new System.Windows.Forms.Label();
+            this.lbPresToConvert = new System.Windows.Forms.Label();
+            this.txPresToConvert = new System.Windows.Forms.TextBox();
+            this.cbConvertInj = new System.Windows.Forms.CheckBox();
+            this.txInitialP = new System.Windows.Forms.TextBox();
+            this.label6 = new System.Windows.Forms.Label();
             this.txTransmXL = new System.Windows.Forms.TextBox();
             this.checkBox5 = new System.Windows.Forms.CheckBox();
             this.cbBC_ConstP_XL = new System.Windows.Forms.CheckBox();
             this.cbBC_NoFlow_XL = new System.Windows.Forms.CheckBox();
             this.label5 = new System.Windows.Forms.Label();
-            this.label6 = new System.Windows.Forms.Label();
-            this.txInitialP = new System.Windows.Forms.TextBox();
-            this.cbConvertInj = new System.Windows.Forms.CheckBox();
-            this.txPresToConvert = new System.Windows.Forms.TextBox();
-            this.lbPresToConvert = new System.Windows.Forms.Label();
-            this.label7 = new System.Windows.Forms.Label();
-            this.label8 = new System.Windows.Forms.Label();
-            this.label9 = new System.Windows.Forms.Label();
-            this.label10 = new System.Windows.Forms.Label();
-            this.label11 = new System.Windows.Forms.Label();
+            this.txTransmX0 = new System.Windows.Forms.TextBox();
+            this.checkBox4 = new System.Windows.Forms.CheckBox();
+            this.cbBC_ConstP_X0 = new System.Windows.Forms.CheckBox();
+            this.cbBC_NoFlow_X0 = new System.Windows.Forms.CheckBox();
+            this.label4 = new System.Windows.Forms.Label();
+            this.groupBox6 = new System.Windows.Forms.GroupBox();
+            this.button2 = new System.Windows.Forms.Button();
+            this.button1 = new System.Windows.Forms.Button();
+            this.checkBox1 = new System.Windows.Forms.CheckBox();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
-            this.cbWell1Active = new System.Windows.Forms.CheckBox();
-            this.tbWell1X = new System.Windows.Forms.TextBox();
-            this.tbWell1Y = new System.Windows.Forms.TextBox();
-            this.label13 = new System.Windows.Forms.Label();
-            this.label14 = new System.Windows.Forms.Label();
-            this.label15 = new System.Windows.Forms.Label();
-            this.label16 = new System.Windows.Forms.Label();
-            this.tbWell1Skin = new System.Windows.Forms.TextBox();
-            this.tbWell1rw = new System.Windows.Forms.TextBox();
-            this.label26 = new System.Windows.Forms.Label();
-            this.label27 = new System.Windows.Forms.Label();
+            this.tbWell1Qw = new System.Windows.Forms.TextBox();
+            this.tbWell1Pwf = new System.Windows.Forms.TextBox();
+            this.rbWell1Pwf = new System.Windows.Forms.RadioButton();
+            this.rbWell1Qw = new System.Windows.Forms.RadioButton();
+            this.cbWell1Injector = new System.Windows.Forms.CheckBox();
             this.label28 = new System.Windows.Forms.Label();
+            this.label27 = new System.Windows.Forms.Label();
+            this.label26 = new System.Windows.Forms.Label();
+            this.tbWell1rw = new System.Windows.Forms.TextBox();
+            this.tbWell1Skin = new System.Windows.Forms.TextBox();
+            this.label16 = new System.Windows.Forms.Label();
+            this.label15 = new System.Windows.Forms.Label();
+            this.label14 = new System.Windows.Forms.Label();
+            this.label13 = new System.Windows.Forms.Label();
+            this.tbWell1Y = new System.Windows.Forms.TextBox();
+            this.tbWell1X = new System.Windows.Forms.TextBox();
+            this.cbWell1Active = new System.Windows.Forms.CheckBox();
             this.groupBox7 = new System.Windows.Forms.GroupBox();
+            this.tbWell2Qw = new System.Windows.Forms.TextBox();
+            this.tbWell2Pwf = new System.Windows.Forms.TextBox();
+            this.rbWell2Pwf = new System.Windows.Forms.RadioButton();
+            this.rbWell2Qw = new System.Windows.Forms.RadioButton();
+            this.cbWell2Injector = new System.Windows.Forms.CheckBox();
             this.label12 = new System.Windows.Forms.Label();
             this.label17 = new System.Windows.Forms.Label();
             this.label18 = new System.Windows.Forms.Label();
@@ -93,10 +139,15 @@
             this.label22 = new System.Windows.Forms.Label();
             this.tbWell2Y = new System.Windows.Forms.TextBox();
             this.tbWell2X = new System.Windows.Forms.TextBox();
-            this.checkBox2 = new System.Windows.Forms.CheckBox();
+            this.cbWell2Active = new System.Windows.Forms.CheckBox();
             this.groupBox8 = new System.Windows.Forms.GroupBox();
+            this.tbWell3Qw = new System.Windows.Forms.TextBox();
+            this.cbWell3Injector = new System.Windows.Forms.CheckBox();
+            this.tbWell3Pwf = new System.Windows.Forms.TextBox();
             this.label23 = new System.Windows.Forms.Label();
+            this.rbWell3Pwf = new System.Windows.Forms.RadioButton();
             this.label24 = new System.Windows.Forms.Label();
+            this.rbWell3Qw = new System.Windows.Forms.RadioButton();
             this.label25 = new System.Windows.Forms.Label();
             this.tbWell3rw = new System.Windows.Forms.TextBox();
             this.tbWell3Skin = new System.Windows.Forms.TextBox();
@@ -106,61 +157,14 @@
             this.label32 = new System.Windows.Forms.Label();
             this.tbWell3Y = new System.Windows.Forms.TextBox();
             this.tbWell3X = new System.Windows.Forms.TextBox();
-            this.checkBox3 = new System.Windows.Forms.CheckBox();
-            this.label33 = new System.Windows.Forms.Label();
-            this.tbPerm = new System.Windows.Forms.TextBox();
-            this.label34 = new System.Windows.Forms.Label();
-            this.label35 = new System.Windows.Forms.Label();
-            this.tbPorosity = new System.Windows.Forms.TextBox();
-            this.label36 = new System.Windows.Forms.Label();
-            this.label37 = new System.Windows.Forms.Label();
-            this.tbRockComp = new System.Windows.Forms.TextBox();
-            this.label38 = new System.Windows.Forms.Label();
-            this.label39 = new System.Windows.Forms.Label();
-            this.label40 = new System.Windows.Forms.Label();
-            this.tbTotalComp = new System.Windows.Forms.TextBox();
-            this.label41 = new System.Windows.Forms.Label();
-            this.label42 = new System.Windows.Forms.Label();
-            this.tbOilSat = new System.Windows.Forms.TextBox();
-            this.label43 = new System.Windows.Forms.Label();
-            this.label44 = new System.Windows.Forms.Label();
-            this.tbWaterSat = new System.Windows.Forms.TextBox();
-            this.label45 = new System.Windows.Forms.Label();
-            this.label46 = new System.Windows.Forms.Label();
-            this.tbOilVisc = new System.Windows.Forms.TextBox();
-            this.label47 = new System.Windows.Forms.Label();
-            this.label48 = new System.Windows.Forms.Label();
-            this.tbInitialBo = new System.Windows.Forms.TextBox();
-            this.label49 = new System.Windows.Forms.Label();
-            this.label50 = new System.Windows.Forms.Label();
-            this.tbLiquComp = new System.Windows.Forms.TextBox();
-            this.label51 = new System.Windows.Forms.Label();
-            this.label52 = new System.Windows.Forms.Label();
-            this.tbBubblePoint = new System.Windows.Forms.TextBox();
-            this.label53 = new System.Windows.Forms.Label();
-            this.button1 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.cbWell3Active = new System.Windows.Forms.CheckBox();
+            this.tbTimeStep = new System.Windows.Forms.TextBox();
             this.lbTimeStep = new System.Windows.Forms.Label();
             this.label54 = new System.Windows.Forms.Label();
             this.label55 = new System.Windows.Forms.Label();
             this.label56 = new System.Windows.Forms.Label();
-            this.textBox2 = new System.Windows.Forms.TextBox();
-            this.cbWell1Injector = new System.Windows.Forms.CheckBox();
-            this.cbWell2Injector = new System.Windows.Forms.CheckBox();
-            this.cbWell3Injector = new System.Windows.Forms.CheckBox();
-            this.rbWell1Qw = new System.Windows.Forms.RadioButton();
-            this.rbWell1Pwf = new System.Windows.Forms.RadioButton();
-            this.tbWell1Pwf = new System.Windows.Forms.TextBox();
-            this.tbWell1Qw = new System.Windows.Forms.TextBox();
-            this.tbWell2Qw = new System.Windows.Forms.TextBox();
-            this.tbWell2Pwf = new System.Windows.Forms.TextBox();
-            this.rbWell2Pwf = new System.Windows.Forms.RadioButton();
-            this.rbWell2Qw = new System.Windows.Forms.RadioButton();
-            this.tbWell3Qw = new System.Windows.Forms.TextBox();
-            this.tbWell3Pwf = new System.Windows.Forms.TextBox();
-            this.rbWell3Pwf = new System.Windows.Forms.RadioButton();
-            this.rbWell3Qw = new System.Windows.Forms.RadioButton();
+            this.tbTimeFrame = new System.Windows.Forms.TextBox();
+            this.chart1 = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -171,6 +175,7 @@
             this.groupBox5.SuspendLayout();
             this.groupBox7.SuspendLayout();
             this.groupBox8.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.chart1)).BeginInit();
             this.SuspendLayout();
             // 
             // groupBox1
@@ -189,31 +194,21 @@
             this.groupBox1.Text = "# Grid Blocks";
             this.groupBox1.Enter += new System.EventHandler(this.groupBox1_Enter);
             // 
-            // txXGridBlocks
+            // txZGridBlocks
             // 
-            this.txXGridBlocks.Location = new System.Drawing.Point(30, 20);
-            this.txXGridBlocks.Name = "txXGridBlocks";
-            this.txXGridBlocks.Size = new System.Drawing.Size(61, 20);
-            this.txXGridBlocks.TabIndex = 0;
-            this.txXGridBlocks.Text = "25";
+            this.txZGridBlocks.Location = new System.Drawing.Point(30, 72);
+            this.txZGridBlocks.Name = "txZGridBlocks";
+            this.txZGridBlocks.Size = new System.Drawing.Size(61, 20);
+            this.txZGridBlocks.TabIndex = 7;
+            this.txZGridBlocks.Text = "1";
             // 
-            // lbXGridBlocks
+            // txYGridBlocks
             // 
-            this.lbXGridBlocks.AutoSize = true;
-            this.lbXGridBlocks.Location = new System.Drawing.Point(12, 23);
-            this.lbXGridBlocks.Name = "lbXGridBlocks";
-            this.lbXGridBlocks.Size = new System.Drawing.Size(12, 13);
-            this.lbXGridBlocks.TabIndex = 3;
-            this.lbXGridBlocks.Text = "x";
-            // 
-            // lbYGridBlocks
-            // 
-            this.lbYGridBlocks.AutoSize = true;
-            this.lbYGridBlocks.Location = new System.Drawing.Point(12, 49);
-            this.lbYGridBlocks.Name = "lbYGridBlocks";
-            this.lbYGridBlocks.Size = new System.Drawing.Size(12, 13);
-            this.lbYGridBlocks.TabIndex = 4;
-            this.lbYGridBlocks.Text = "y";
+            this.txYGridBlocks.Location = new System.Drawing.Point(30, 46);
+            this.txYGridBlocks.Name = "txYGridBlocks";
+            this.txYGridBlocks.Size = new System.Drawing.Size(61, 20);
+            this.txYGridBlocks.TabIndex = 6;
+            this.txYGridBlocks.Text = "1";
             // 
             // lbZGridBlocks
             // 
@@ -224,21 +219,31 @@
             this.lbZGridBlocks.TabIndex = 5;
             this.lbZGridBlocks.Text = "z";
             // 
-            // txYGridBlocks
+            // lbYGridBlocks
             // 
-            this.txYGridBlocks.Location = new System.Drawing.Point(30, 46);
-            this.txYGridBlocks.Name = "txYGridBlocks";
-            this.txYGridBlocks.Size = new System.Drawing.Size(61, 20);
-            this.txYGridBlocks.TabIndex = 6;
-            this.txYGridBlocks.Text = "1";
+            this.lbYGridBlocks.AutoSize = true;
+            this.lbYGridBlocks.Location = new System.Drawing.Point(12, 49);
+            this.lbYGridBlocks.Name = "lbYGridBlocks";
+            this.lbYGridBlocks.Size = new System.Drawing.Size(12, 13);
+            this.lbYGridBlocks.TabIndex = 4;
+            this.lbYGridBlocks.Text = "y";
             // 
-            // txZGridBlocks
+            // lbXGridBlocks
             // 
-            this.txZGridBlocks.Location = new System.Drawing.Point(30, 72);
-            this.txZGridBlocks.Name = "txZGridBlocks";
-            this.txZGridBlocks.Size = new System.Drawing.Size(61, 20);
-            this.txZGridBlocks.TabIndex = 7;
-            this.txZGridBlocks.Text = "1";
+            this.lbXGridBlocks.AutoSize = true;
+            this.lbXGridBlocks.Location = new System.Drawing.Point(12, 23);
+            this.lbXGridBlocks.Name = "lbXGridBlocks";
+            this.lbXGridBlocks.Size = new System.Drawing.Size(12, 13);
+            this.lbXGridBlocks.TabIndex = 3;
+            this.lbXGridBlocks.Text = "x";
+            // 
+            // txXGridBlocks
+            // 
+            this.txXGridBlocks.Location = new System.Drawing.Point(30, 20);
+            this.txXGridBlocks.Name = "txXGridBlocks";
+            this.txXGridBlocks.Size = new System.Drawing.Size(61, 20);
+            this.txXGridBlocks.TabIndex = 0;
+            this.txXGridBlocks.Text = "25";
             // 
             // groupBox2
             // 
@@ -258,40 +263,40 @@
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Grid Dimension";
             // 
-            // txLength
+            // label11
             // 
-            this.txLength.Location = new System.Drawing.Point(37, 20);
-            this.txLength.Name = "txLength";
-            this.txLength.Size = new System.Drawing.Size(61, 20);
-            this.txLength.TabIndex = 0;
-            this.txLength.Text = "5000";
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(101, 75);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(13, 13);
+            this.label11.TabIndex = 10;
+            this.label11.Text = "ft";
             // 
-            // label3
+            // label10
             // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(8, 23);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(27, 13);
-            this.label3.TabIndex = 3;
-            this.label3.Text = "x (L)";
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(101, 49);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(13, 13);
+            this.label10.TabIndex = 9;
+            this.label10.Text = "ft";
             // 
-            // label2
+            // txHeight
             // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(6, 49);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(29, 13);
-            this.label2.TabIndex = 4;
-            this.label2.Text = "y (w)";
+            this.txHeight.Location = new System.Drawing.Point(37, 72);
+            this.txHeight.Name = "txHeight";
+            this.txHeight.Size = new System.Drawing.Size(61, 20);
+            this.txHeight.TabIndex = 7;
+            this.txHeight.Text = "50";
             // 
-            // label1
+            // label9
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(8, 75);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(27, 13);
-            this.label1.TabIndex = 5;
-            this.label1.Text = "z (h)";
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(101, 23);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(13, 13);
+            this.label9.TabIndex = 8;
+            this.label9.Text = "ft";
             // 
             // txWidth
             // 
@@ -302,13 +307,40 @@
             this.txWidth.Text = "200";
             this.txWidth.TextChanged += new System.EventHandler(this.textBox4_TextChanged);
             // 
-            // txHeight
+            // label1
             // 
-            this.txHeight.Location = new System.Drawing.Point(37, 72);
-            this.txHeight.Name = "txHeight";
-            this.txHeight.Size = new System.Drawing.Size(61, 20);
-            this.txHeight.TabIndex = 7;
-            this.txHeight.Text = "50";
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(8, 75);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(27, 13);
+            this.label1.TabIndex = 5;
+            this.label1.Text = "z (h)";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(6, 49);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(29, 13);
+            this.label2.TabIndex = 4;
+            this.label2.Text = "y (w)";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(8, 23);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(27, 13);
+            this.label3.TabIndex = 3;
+            this.label3.Text = "x (L)";
+            // 
+            // txLength
+            // 
+            this.txLength.Location = new System.Drawing.Point(37, 20);
+            this.txLength.Name = "txLength";
+            this.txLength.Size = new System.Drawing.Size(61, 20);
+            this.txLength.TabIndex = 0;
+            this.txLength.Text = "5000";
             // 
             // groupBox3
             // 
@@ -331,6 +363,120 @@
             this.groupBox3.TabIndex = 10;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Rock Properties";
+            // 
+            // label40
+            // 
+            this.label40.AutoSize = true;
+            this.label40.Location = new System.Drawing.Point(145, 130);
+            this.label40.Name = "label40";
+            this.label40.Size = new System.Drawing.Size(31, 13);
+            this.label40.TabIndex = 12;
+            this.label40.Text = "1/psi";
+            // 
+            // tbTotalComp
+            // 
+            this.tbTotalComp.Location = new System.Drawing.Point(72, 127);
+            this.tbTotalComp.Name = "tbTotalComp";
+            this.tbTotalComp.Size = new System.Drawing.Size(75, 20);
+            this.tbTotalComp.TabIndex = 11;
+            this.tbTotalComp.Text = "1.5x10-5";
+            // 
+            // label41
+            // 
+            this.label41.AutoSize = true;
+            this.label41.Location = new System.Drawing.Point(11, 130);
+            this.label41.Name = "label41";
+            this.label41.Size = new System.Drawing.Size(61, 13);
+            this.label41.TabIndex = 10;
+            this.label41.Text = "Total Comp";
+            // 
+            // label39
+            // 
+            this.label39.AutoSize = true;
+            this.label39.Location = new System.Drawing.Point(89, 111);
+            this.label39.Name = "label39";
+            this.label39.Size = new System.Drawing.Size(16, 13);
+            this.label39.TabIndex = 9;
+            this.label39.Text = "or";
+            // 
+            // label37
+            // 
+            this.label37.AutoSize = true;
+            this.label37.Location = new System.Drawing.Point(145, 89);
+            this.label37.Name = "label37";
+            this.label37.Size = new System.Drawing.Size(31, 13);
+            this.label37.TabIndex = 8;
+            this.label37.Text = "1/psi";
+            this.label37.Click += new System.EventHandler(this.label37_Click);
+            // 
+            // tbRockComp
+            // 
+            this.tbRockComp.Location = new System.Drawing.Point(72, 86);
+            this.tbRockComp.Name = "tbRockComp";
+            this.tbRockComp.Size = new System.Drawing.Size(75, 20);
+            this.tbRockComp.TabIndex = 7;
+            this.tbRockComp.Text = "0.5x10-5";
+            // 
+            // label38
+            // 
+            this.label38.AutoSize = true;
+            this.label38.Location = new System.Drawing.Point(11, 89);
+            this.label38.Name = "label38";
+            this.label38.Size = new System.Drawing.Size(63, 13);
+            this.label38.TabIndex = 6;
+            this.label38.Text = "Rock Comp";
+            // 
+            // label35
+            // 
+            this.label35.AutoSize = true;
+            this.label35.Location = new System.Drawing.Point(145, 46);
+            this.label35.Name = "label35";
+            this.label35.Size = new System.Drawing.Size(15, 13);
+            this.label35.TabIndex = 5;
+            this.label35.Text = "%";
+            // 
+            // tbPorosity
+            // 
+            this.tbPorosity.Location = new System.Drawing.Point(72, 43);
+            this.tbPorosity.Name = "tbPorosity";
+            this.tbPorosity.Size = new System.Drawing.Size(75, 20);
+            this.tbPorosity.TabIndex = 4;
+            this.tbPorosity.Text = "10";
+            // 
+            // label36
+            // 
+            this.label36.AutoSize = true;
+            this.label36.Location = new System.Drawing.Point(26, 46);
+            this.label36.Name = "label36";
+            this.label36.Size = new System.Drawing.Size(44, 13);
+            this.label36.TabIndex = 3;
+            this.label36.Text = "Porosity";
+            // 
+            // label34
+            // 
+            this.label34.AutoSize = true;
+            this.label34.Location = new System.Drawing.Point(146, 24);
+            this.label34.Name = "label34";
+            this.label34.Size = new System.Drawing.Size(23, 13);
+            this.label34.TabIndex = 2;
+            this.label34.Text = "mD";
+            // 
+            // tbPerm
+            // 
+            this.tbPerm.Location = new System.Drawing.Point(73, 21);
+            this.tbPerm.Name = "tbPerm";
+            this.tbPerm.Size = new System.Drawing.Size(75, 20);
+            this.tbPerm.TabIndex = 1;
+            this.tbPerm.Text = "7.9";
+            // 
+            // label33
+            // 
+            this.label33.AutoSize = true;
+            this.label33.Location = new System.Drawing.Point(12, 24);
+            this.label33.Name = "label33";
+            this.label33.Size = new System.Drawing.Size(63, 13);
+            this.label33.TabIndex = 0;
+            this.label33.Text = "Permeability";
             // 
             // groupBox4
             // 
@@ -360,6 +506,162 @@
             this.groupBox4.Text = "Fluid Properties";
             this.groupBox4.Enter += new System.EventHandler(this.groupBox4_Enter);
             // 
+            // label52
+            // 
+            this.label52.AutoSize = true;
+            this.label52.Location = new System.Drawing.Point(179, 138);
+            this.label52.Name = "label52";
+            this.label52.Size = new System.Drawing.Size(26, 13);
+            this.label52.TabIndex = 20;
+            this.label52.Text = "psia";
+            // 
+            // tbBubblePoint
+            // 
+            this.tbBubblePoint.Location = new System.Drawing.Point(103, 135);
+            this.tbBubblePoint.Name = "tbBubblePoint";
+            this.tbBubblePoint.Size = new System.Drawing.Size(75, 20);
+            this.tbBubblePoint.TabIndex = 19;
+            this.tbBubblePoint.Text = "900";
+            // 
+            // label53
+            // 
+            this.label53.AutoSize = true;
+            this.label53.Location = new System.Drawing.Point(33, 139);
+            this.label53.Name = "label53";
+            this.label53.Size = new System.Drawing.Size(67, 13);
+            this.label53.TabIndex = 18;
+            this.label53.Text = "Bubble Point";
+            // 
+            // label50
+            // 
+            this.label50.AutoSize = true;
+            this.label50.Location = new System.Drawing.Point(179, 114);
+            this.label50.Name = "label50";
+            this.label50.Size = new System.Drawing.Size(31, 13);
+            this.label50.TabIndex = 17;
+            this.label50.Text = "1/psi";
+            // 
+            // tbLiquComp
+            // 
+            this.tbLiquComp.Location = new System.Drawing.Point(103, 111);
+            this.tbLiquComp.Name = "tbLiquComp";
+            this.tbLiquComp.Size = new System.Drawing.Size(75, 20);
+            this.tbLiquComp.TabIndex = 16;
+            this.tbLiquComp.Text = "1.0x10-5";
+            // 
+            // label51
+            // 
+            this.label51.AutoSize = true;
+            this.label51.Location = new System.Drawing.Point(35, 115);
+            this.label51.Name = "label51";
+            this.label51.Size = new System.Drawing.Size(65, 13);
+            this.label51.TabIndex = 15;
+            this.label51.Text = "Liquid Comp";
+            // 
+            // label48
+            // 
+            this.label48.AutoSize = true;
+            this.label48.Location = new System.Drawing.Point(179, 91);
+            this.label48.Name = "label48";
+            this.label48.Size = new System.Drawing.Size(48, 13);
+            this.label48.TabIndex = 14;
+            this.label48.Text = "RB/STB";
+            // 
+            // tbInitialBo
+            // 
+            this.tbInitialBo.Location = new System.Drawing.Point(103, 88);
+            this.tbInitialBo.Name = "tbInitialBo";
+            this.tbInitialBo.Size = new System.Drawing.Size(75, 20);
+            this.tbInitialBo.TabIndex = 13;
+            this.tbInitialBo.Text = "1.25";
+            // 
+            // label49
+            // 
+            this.label49.AutoSize = true;
+            this.label49.Location = new System.Drawing.Point(29, 92);
+            this.label49.Name = "label49";
+            this.label49.Size = new System.Drawing.Size(69, 13);
+            this.label49.TabIndex = 12;
+            this.label49.Text = "Initial FVF, oil";
+            // 
+            // label46
+            // 
+            this.label46.AutoSize = true;
+            this.label46.Location = new System.Drawing.Point(179, 69);
+            this.label46.Name = "label46";
+            this.label46.Size = new System.Drawing.Size(19, 13);
+            this.label46.TabIndex = 11;
+            this.label46.Text = "cp";
+            // 
+            // tbOilVisc
+            // 
+            this.tbOilVisc.Location = new System.Drawing.Point(103, 66);
+            this.tbOilVisc.Name = "tbOilVisc";
+            this.tbOilVisc.Size = new System.Drawing.Size(75, 20);
+            this.tbOilVisc.TabIndex = 10;
+            this.tbOilVisc.Text = "5";
+            // 
+            // label47
+            // 
+            this.label47.AutoSize = true;
+            this.label47.Location = new System.Drawing.Point(37, 70);
+            this.label47.Name = "label47";
+            this.label47.Size = new System.Drawing.Size(63, 13);
+            this.label47.TabIndex = 9;
+            this.label47.Text = "Oil Viscosity";
+            // 
+            // label44
+            // 
+            this.label44.AutoSize = true;
+            this.label44.Location = new System.Drawing.Point(179, 46);
+            this.label44.Name = "label44";
+            this.label44.Size = new System.Drawing.Size(15, 13);
+            this.label44.TabIndex = 8;
+            this.label44.Text = "%";
+            // 
+            // tbWaterSat
+            // 
+            this.tbWaterSat.Location = new System.Drawing.Point(103, 43);
+            this.tbWaterSat.Name = "tbWaterSat";
+            this.tbWaterSat.Size = new System.Drawing.Size(75, 20);
+            this.tbWaterSat.TabIndex = 7;
+            this.tbWaterSat.Text = "0";
+            // 
+            // label45
+            // 
+            this.label45.AutoSize = true;
+            this.label45.Location = new System.Drawing.Point(13, 47);
+            this.label45.Name = "label45";
+            this.label45.Size = new System.Drawing.Size(87, 13);
+            this.label45.TabIndex = 6;
+            this.label45.Text = "Water Saturation";
+            // 
+            // label42
+            // 
+            this.label42.AutoSize = true;
+            this.label42.Location = new System.Drawing.Point(179, 23);
+            this.label42.Name = "label42";
+            this.label42.Size = new System.Drawing.Size(15, 13);
+            this.label42.TabIndex = 5;
+            this.label42.Text = "%";
+            // 
+            // tbOilSat
+            // 
+            this.tbOilSat.Location = new System.Drawing.Point(103, 20);
+            this.tbOilSat.Name = "tbOilSat";
+            this.tbOilSat.Size = new System.Drawing.Size(75, 20);
+            this.tbOilSat.TabIndex = 4;
+            this.tbOilSat.Text = "100";
+            // 
+            // label43
+            // 
+            this.label43.AutoSize = true;
+            this.label43.Location = new System.Drawing.Point(30, 24);
+            this.label43.Name = "label43";
+            this.label43.Size = new System.Drawing.Size(70, 13);
+            this.label43.TabIndex = 3;
+            this.label43.Text = "Oil Saturation";
+            // 
             // gbInitialandBC
             // 
             this.gbInitialandBC.Controls.Add(this.label8);
@@ -386,89 +688,67 @@
             this.gbInitialandBC.TabStop = false;
             this.gbInitialandBC.Text = "Initial and Boundary Conditions";
             // 
-            // groupBox6
+            // label8
             // 
-            this.groupBox6.Controls.Add(this.button2);
-            this.groupBox6.Controls.Add(this.button1);
-            this.groupBox6.Location = new System.Drawing.Point(464, 310);
-            this.groupBox6.Name = "groupBox6";
-            this.groupBox6.Size = new System.Drawing.Size(352, 115);
-            this.groupBox6.TabIndex = 13;
-            this.groupBox6.TabStop = false;
-            this.groupBox6.Text = "Commands and Outputs";
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(296, 46);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(26, 13);
+            this.label8.TabIndex = 16;
+            this.label8.Text = "psia";
             // 
-            // checkBox1
+            // label7
             // 
-            this.checkBox1.AutoSize = true;
-            this.checkBox1.Checked = true;
-            this.checkBox1.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBox1.Location = new System.Drawing.Point(17, 18);
-            this.checkBox1.Name = "checkBox1";
-            this.checkBox1.Size = new System.Drawing.Size(133, 17);
-            this.checkBox1.TabIndex = 14;
-            this.checkBox1.Text = "Black Oil Single Phase";
-            this.checkBox1.UseVisualStyleBackColor = true;
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(315, 105);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(26, 13);
+            this.label7.TabIndex = 15;
+            this.label7.Text = "psia";
             // 
-            // label4
+            // lbPresToConvert
             // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(14, 23);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(24, 13);
-            this.label4.TabIndex = 0;
-            this.label4.Text = "x=0";
+            this.lbPresToConvert.AutoSize = true;
+            this.lbPresToConvert.Location = new System.Drawing.Point(216, 105);
+            this.lbPresToConvert.Name = "lbPresToConvert";
+            this.lbPresToConvert.Size = new System.Drawing.Size(42, 13);
+            this.lbPresToConvert.TabIndex = 14;
+            this.lbPresToConvert.Text = "P_inj = ";
             // 
-            // pictureBox1
+            // txPresToConvert
             // 
-            this.pictureBox1.Image = global::WindowsFormsApplication1.Properties.Resources.gridsetup2;
-            this.pictureBox1.Location = new System.Drawing.Point(464, 12);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(352, 156);
-            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pictureBox1.TabIndex = 2;
-            this.pictureBox1.TabStop = false;
-            this.pictureBox1.Click += new System.EventHandler(this.pictureBox1_Click);
+            this.txPresToConvert.Location = new System.Drawing.Point(255, 102);
+            this.txPresToConvert.Name = "txPresToConvert";
+            this.txPresToConvert.Size = new System.Drawing.Size(55, 20);
+            this.txPresToConvert.TabIndex = 13;
+            this.txPresToConvert.Text = "2500";
             // 
-            // cbBC_NoFlow_X0
+            // cbConvertInj
             // 
-            this.cbBC_NoFlow_X0.AutoSize = true;
-            this.cbBC_NoFlow_X0.Checked = true;
-            this.cbBC_NoFlow_X0.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.cbBC_NoFlow_X0.Location = new System.Drawing.Point(13, 45);
-            this.cbBC_NoFlow_X0.Name = "cbBC_NoFlow_X0";
-            this.cbBC_NoFlow_X0.Size = new System.Drawing.Size(65, 17);
-            this.cbBC_NoFlow_X0.TabIndex = 1;
-            this.cbBC_NoFlow_X0.Text = "No-Flow";
-            this.cbBC_NoFlow_X0.UseVisualStyleBackColor = true;
+            this.cbConvertInj.AutoSize = true;
+            this.cbConvertInj.Location = new System.Drawing.Point(206, 80);
+            this.cbConvertInj.Name = "cbConvertInj";
+            this.cbConvertInj.Size = new System.Drawing.Size(138, 17);
+            this.cbConvertInj.TabIndex = 12;
+            this.cbConvertInj.Text = "Convert to Inj. at 10% Q";
+            this.cbConvertInj.UseVisualStyleBackColor = true;
             // 
-            // cbBC_ConstP_X0
+            // txInitialP
             // 
-            this.cbBC_ConstP_X0.AutoSize = true;
-            this.cbBC_ConstP_X0.ForeColor = System.Drawing.SystemColors.ControlDark;
-            this.cbBC_ConstP_X0.Location = new System.Drawing.Point(13, 68);
-            this.cbBC_ConstP_X0.Name = "cbBC_ConstP_X0";
-            this.cbBC_ConstP_X0.Size = new System.Drawing.Size(78, 17);
-            this.cbBC_ConstP_X0.TabIndex = 2;
-            this.cbBC_ConstP_X0.Text = "Constant P";
-            this.cbBC_ConstP_X0.UseVisualStyleBackColor = true;
+            this.txInitialP.Location = new System.Drawing.Point(221, 44);
+            this.txInitialP.Name = "txInitialP";
+            this.txInitialP.Size = new System.Drawing.Size(69, 20);
+            this.txInitialP.TabIndex = 11;
+            this.txInitialP.Text = "3100";
             // 
-            // checkBox4
+            // label6
             // 
-            this.checkBox4.AutoSize = true;
-            this.checkBox4.ForeColor = System.Drawing.SystemColors.ControlDark;
-            this.checkBox4.Location = new System.Drawing.Point(13, 91);
-            this.checkBox4.Name = "checkBox4";
-            this.checkBox4.Size = new System.Drawing.Size(33, 17);
-            this.checkBox4.TabIndex = 3;
-            this.checkBox4.Text = "T";
-            this.checkBox4.UseVisualStyleBackColor = true;
-            // 
-            // txTransmX0
-            // 
-            this.txTransmX0.Location = new System.Drawing.Point(50, 88);
-            this.txTransmX0.Name = "txTransmX0";
-            this.txTransmX0.Size = new System.Drawing.Size(41, 20);
-            this.txTransmX0.TabIndex = 4;
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(216, 27);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(75, 13);
+            this.label6.TabIndex = 10;
+            this.label6.Text = "Initial Pressure";
             // 
             // txTransmXL
             // 
@@ -520,94 +800,109 @@
             this.label5.TabIndex = 5;
             this.label5.Text = "x=L";
             // 
-            // label6
+            // txTransmX0
             // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(216, 27);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(75, 13);
-            this.label6.TabIndex = 10;
-            this.label6.Text = "Initial Pressure";
+            this.txTransmX0.Location = new System.Drawing.Point(50, 88);
+            this.txTransmX0.Name = "txTransmX0";
+            this.txTransmX0.Size = new System.Drawing.Size(41, 20);
+            this.txTransmX0.TabIndex = 4;
             // 
-            // txInitialP
+            // checkBox4
             // 
-            this.txInitialP.Location = new System.Drawing.Point(221, 44);
-            this.txInitialP.Name = "txInitialP";
-            this.txInitialP.Size = new System.Drawing.Size(69, 20);
-            this.txInitialP.TabIndex = 11;
-            this.txInitialP.Text = "3100";
+            this.checkBox4.AutoSize = true;
+            this.checkBox4.ForeColor = System.Drawing.SystemColors.ControlDark;
+            this.checkBox4.Location = new System.Drawing.Point(13, 91);
+            this.checkBox4.Name = "checkBox4";
+            this.checkBox4.Size = new System.Drawing.Size(33, 17);
+            this.checkBox4.TabIndex = 3;
+            this.checkBox4.Text = "T";
+            this.checkBox4.UseVisualStyleBackColor = true;
             // 
-            // cbConvertInj
+            // cbBC_ConstP_X0
             // 
-            this.cbConvertInj.AutoSize = true;
-            this.cbConvertInj.Location = new System.Drawing.Point(206, 80);
-            this.cbConvertInj.Name = "cbConvertInj";
-            this.cbConvertInj.Size = new System.Drawing.Size(138, 17);
-            this.cbConvertInj.TabIndex = 12;
-            this.cbConvertInj.Text = "Convert to Inj. at 10% Q";
-            this.cbConvertInj.UseVisualStyleBackColor = true;
+            this.cbBC_ConstP_X0.AutoSize = true;
+            this.cbBC_ConstP_X0.ForeColor = System.Drawing.SystemColors.ControlDark;
+            this.cbBC_ConstP_X0.Location = new System.Drawing.Point(13, 68);
+            this.cbBC_ConstP_X0.Name = "cbBC_ConstP_X0";
+            this.cbBC_ConstP_X0.Size = new System.Drawing.Size(78, 17);
+            this.cbBC_ConstP_X0.TabIndex = 2;
+            this.cbBC_ConstP_X0.Text = "Constant P";
+            this.cbBC_ConstP_X0.UseVisualStyleBackColor = true;
             // 
-            // txPresToConvert
+            // cbBC_NoFlow_X0
             // 
-            this.txPresToConvert.Location = new System.Drawing.Point(255, 102);
-            this.txPresToConvert.Name = "txPresToConvert";
-            this.txPresToConvert.Size = new System.Drawing.Size(55, 20);
-            this.txPresToConvert.TabIndex = 13;
-            this.txPresToConvert.Text = "2500";
+            this.cbBC_NoFlow_X0.AutoSize = true;
+            this.cbBC_NoFlow_X0.Checked = true;
+            this.cbBC_NoFlow_X0.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.cbBC_NoFlow_X0.Location = new System.Drawing.Point(13, 45);
+            this.cbBC_NoFlow_X0.Name = "cbBC_NoFlow_X0";
+            this.cbBC_NoFlow_X0.Size = new System.Drawing.Size(65, 17);
+            this.cbBC_NoFlow_X0.TabIndex = 1;
+            this.cbBC_NoFlow_X0.Text = "No-Flow";
+            this.cbBC_NoFlow_X0.UseVisualStyleBackColor = true;
             // 
-            // lbPresToConvert
+            // label4
             // 
-            this.lbPresToConvert.AutoSize = true;
-            this.lbPresToConvert.Location = new System.Drawing.Point(216, 105);
-            this.lbPresToConvert.Name = "lbPresToConvert";
-            this.lbPresToConvert.Size = new System.Drawing.Size(42, 13);
-            this.lbPresToConvert.TabIndex = 14;
-            this.lbPresToConvert.Text = "P_inj = ";
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(14, 23);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(24, 13);
+            this.label4.TabIndex = 0;
+            this.label4.Text = "x=0";
             // 
-            // label7
+            // groupBox6
             // 
-            this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(315, 105);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(26, 13);
-            this.label7.TabIndex = 15;
-            this.label7.Text = "psia";
+            this.groupBox6.Controls.Add(this.button2);
+            this.groupBox6.Controls.Add(this.button1);
+            this.groupBox6.Location = new System.Drawing.Point(464, 310);
+            this.groupBox6.Name = "groupBox6";
+            this.groupBox6.Size = new System.Drawing.Size(352, 115);
+            this.groupBox6.TabIndex = 13;
+            this.groupBox6.TabStop = false;
+            this.groupBox6.Text = "Commands and Outputs";
             // 
-            // label8
+            // button2
             // 
-            this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(296, 46);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(26, 13);
-            this.label8.TabIndex = 16;
-            this.label8.Text = "psia";
+            this.button2.Location = new System.Drawing.Point(134, 26);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(108, 34);
+            this.button2.TabIndex = 1;
+            this.button2.Text = "Plot Pressure";
+            this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
-            // label9
+            // button1
             // 
-            this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(101, 23);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(13, 13);
-            this.label9.TabIndex = 8;
-            this.label9.Text = "ft";
+            this.button1.Location = new System.Drawing.Point(17, 26);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(99, 33);
+            this.button1.TabIndex = 0;
+            this.button1.Text = "Calculate";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
-            // label10
+            // checkBox1
             // 
-            this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(101, 49);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(13, 13);
-            this.label10.TabIndex = 9;
-            this.label10.Text = "ft";
+            this.checkBox1.AutoSize = true;
+            this.checkBox1.Checked = true;
+            this.checkBox1.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkBox1.Location = new System.Drawing.Point(17, 18);
+            this.checkBox1.Name = "checkBox1";
+            this.checkBox1.Size = new System.Drawing.Size(133, 17);
+            this.checkBox1.TabIndex = 14;
+            this.checkBox1.Text = "Black Oil Single Phase";
+            this.checkBox1.UseVisualStyleBackColor = true;
             // 
-            // label11
+            // pictureBox1
             // 
-            this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(101, 75);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(13, 13);
-            this.label11.TabIndex = 10;
-            this.label11.Text = "ft";
+            this.pictureBox1.Image = global::WindowsFormsApplication1.Properties.Resources.gridsetup2;
+            this.pictureBox1.Location = new System.Drawing.Point(464, 12);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(352, 156);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pictureBox1.TabIndex = 2;
+            this.pictureBox1.TabStop = false;
+            this.pictureBox1.Click += new System.EventHandler(this.pictureBox1_Click);
             // 
             // groupBox5
             // 
@@ -635,6 +930,151 @@
             this.groupBox5.TabStop = false;
             this.groupBox5.Text = "Well #1";
             // 
+            // tbWell1Qw
+            // 
+            this.tbWell1Qw.Location = new System.Drawing.Point(93, 36);
+            this.tbWell1Qw.Name = "tbWell1Qw";
+            this.tbWell1Qw.Size = new System.Drawing.Size(50, 20);
+            this.tbWell1Qw.TabIndex = 18;
+            this.tbWell1Qw.Text = "50";
+            // 
+            // tbWell1Pwf
+            // 
+            this.tbWell1Pwf.Location = new System.Drawing.Point(92, 78);
+            this.tbWell1Pwf.Name = "tbWell1Pwf";
+            this.tbWell1Pwf.Size = new System.Drawing.Size(50, 20);
+            this.tbWell1Pwf.TabIndex = 17;
+            this.tbWell1Pwf.Text = "1000";
+            // 
+            // rbWell1Pwf
+            // 
+            this.rbWell1Pwf.AutoSize = true;
+            this.rbWell1Pwf.Location = new System.Drawing.Point(95, 60);
+            this.rbWell1Pwf.Name = "rbWell1Pwf";
+            this.rbWell1Pwf.Size = new System.Drawing.Size(43, 17);
+            this.rbWell1Pwf.TabIndex = 16;
+            this.rbWell1Pwf.Text = "Pwf";
+            this.rbWell1Pwf.UseVisualStyleBackColor = true;
+            this.rbWell1Pwf.CheckedChanged += new System.EventHandler(this.rbWell1Pwf_CheckedChanged);
+            // 
+            // rbWell1Qw
+            // 
+            this.rbWell1Qw.AutoSize = true;
+            this.rbWell1Qw.Checked = true;
+            this.rbWell1Qw.Location = new System.Drawing.Point(95, 19);
+            this.rbWell1Qw.Name = "rbWell1Qw";
+            this.rbWell1Qw.Size = new System.Drawing.Size(41, 17);
+            this.rbWell1Qw.TabIndex = 15;
+            this.rbWell1Qw.TabStop = true;
+            this.rbWell1Qw.Text = "Qw";
+            this.rbWell1Qw.UseVisualStyleBackColor = true;
+            this.rbWell1Qw.CheckedChanged += new System.EventHandler(this.rbWell1Qw_CheckedChanged);
+            // 
+            // cbWell1Injector
+            // 
+            this.cbWell1Injector.AutoSize = true;
+            this.cbWell1Injector.Location = new System.Drawing.Point(75, 100);
+            this.cbWell1Injector.Name = "cbWell1Injector";
+            this.cbWell1Injector.Size = new System.Drawing.Size(71, 17);
+            this.cbWell1Injector.TabIndex = 14;
+            this.cbWell1Injector.Text = "Inj Ready";
+            this.cbWell1Injector.UseVisualStyleBackColor = true;
+            // 
+            // label28
+            // 
+            this.label28.AutoSize = true;
+            this.label28.Location = new System.Drawing.Point(70, 77);
+            this.label28.Name = "label28";
+            this.label28.Size = new System.Drawing.Size(13, 13);
+            this.label28.TabIndex = 13;
+            this.label28.Text = "ft";
+            // 
+            // label27
+            // 
+            this.label27.AutoSize = true;
+            this.label27.Location = new System.Drawing.Point(70, 46);
+            this.label27.Name = "label27";
+            this.label27.Size = new System.Drawing.Size(13, 13);
+            this.label27.TabIndex = 12;
+            this.label27.Text = "ft";
+            // 
+            // label26
+            // 
+            this.label26.AutoSize = true;
+            this.label26.Location = new System.Drawing.Point(70, 27);
+            this.label26.Name = "label26";
+            this.label26.Size = new System.Drawing.Size(13, 13);
+            this.label26.TabIndex = 11;
+            this.label26.Text = "ft";
+            // 
+            // tbWell1rw
+            // 
+            this.tbWell1rw.Location = new System.Drawing.Point(32, 74);
+            this.tbWell1rw.Name = "tbWell1rw";
+            this.tbWell1rw.Size = new System.Drawing.Size(37, 20);
+            this.tbWell1rw.TabIndex = 10;
+            this.tbWell1rw.Text = "d";
+            // 
+            // tbWell1Skin
+            // 
+            this.tbWell1Skin.Location = new System.Drawing.Point(32, 99);
+            this.tbWell1Skin.Name = "tbWell1Skin";
+            this.tbWell1Skin.Size = new System.Drawing.Size(37, 20);
+            this.tbWell1Skin.TabIndex = 9;
+            this.tbWell1Skin.Text = "0";
+            // 
+            // label16
+            // 
+            this.label16.AutoSize = true;
+            this.label16.Location = new System.Drawing.Point(2, 103);
+            this.label16.Name = "label16";
+            this.label16.Size = new System.Drawing.Size(28, 13);
+            this.label16.TabIndex = 8;
+            this.label16.Text = "Skin";
+            // 
+            // label15
+            // 
+            this.label15.AutoSize = true;
+            this.label15.Location = new System.Drawing.Point(15, 77);
+            this.label15.Name = "label15";
+            this.label15.Size = new System.Drawing.Size(18, 13);
+            this.label15.TabIndex = 7;
+            this.label15.Text = "rw";
+            // 
+            // label14
+            // 
+            this.label14.AutoSize = true;
+            this.label14.Location = new System.Drawing.Point(11, 46);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(12, 13);
+            this.label14.TabIndex = 6;
+            this.label14.Text = "y";
+            // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.Location = new System.Drawing.Point(11, 23);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(12, 13);
+            this.label13.TabIndex = 5;
+            this.label13.Text = "x";
+            // 
+            // tbWell1Y
+            // 
+            this.tbWell1Y.Location = new System.Drawing.Point(28, 43);
+            this.tbWell1Y.Name = "tbWell1Y";
+            this.tbWell1Y.Size = new System.Drawing.Size(41, 20);
+            this.tbWell1Y.TabIndex = 4;
+            this.tbWell1Y.Text = "100";
+            // 
+            // tbWell1X
+            // 
+            this.tbWell1X.Location = new System.Drawing.Point(28, 20);
+            this.tbWell1X.Name = "tbWell1X";
+            this.tbWell1X.Size = new System.Drawing.Size(41, 20);
+            this.tbWell1X.TabIndex = 3;
+            this.tbWell1X.Text = "1100";
+            // 
             // cbWell1Active
             // 
             this.cbWell1Active.AutoSize = true;
@@ -647,101 +1087,6 @@
             this.cbWell1Active.Text = "Active";
             this.cbWell1Active.UseVisualStyleBackColor = true;
             this.cbWell1Active.CheckedChanged += new System.EventHandler(this.cbWell1Active_CheckedChanged);
-            // 
-            // tbWell1X
-            // 
-            this.tbWell1X.Location = new System.Drawing.Point(28, 20);
-            this.tbWell1X.Name = "tbWell1X";
-            this.tbWell1X.Size = new System.Drawing.Size(41, 20);
-            this.tbWell1X.TabIndex = 3;
-            this.tbWell1X.Text = "1100";
-            // 
-            // tbWell1Y
-            // 
-            this.tbWell1Y.Location = new System.Drawing.Point(28, 43);
-            this.tbWell1Y.Name = "tbWell1Y";
-            this.tbWell1Y.Size = new System.Drawing.Size(41, 20);
-            this.tbWell1Y.TabIndex = 4;
-            this.tbWell1Y.Text = "100";
-            // 
-            // label13
-            // 
-            this.label13.AutoSize = true;
-            this.label13.Location = new System.Drawing.Point(11, 23);
-            this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(12, 13);
-            this.label13.TabIndex = 5;
-            this.label13.Text = "x";
-            // 
-            // label14
-            // 
-            this.label14.AutoSize = true;
-            this.label14.Location = new System.Drawing.Point(11, 46);
-            this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(12, 13);
-            this.label14.TabIndex = 6;
-            this.label14.Text = "y";
-            // 
-            // label15
-            // 
-            this.label15.AutoSize = true;
-            this.label15.Location = new System.Drawing.Point(15, 77);
-            this.label15.Name = "label15";
-            this.label15.Size = new System.Drawing.Size(18, 13);
-            this.label15.TabIndex = 7;
-            this.label15.Text = "rw";
-            // 
-            // label16
-            // 
-            this.label16.AutoSize = true;
-            this.label16.Location = new System.Drawing.Point(2, 103);
-            this.label16.Name = "label16";
-            this.label16.Size = new System.Drawing.Size(28, 13);
-            this.label16.TabIndex = 8;
-            this.label16.Text = "Skin";
-            // 
-            // tbWell1Skin
-            // 
-            this.tbWell1Skin.Location = new System.Drawing.Point(32, 99);
-            this.tbWell1Skin.Name = "tbWell1Skin";
-            this.tbWell1Skin.Size = new System.Drawing.Size(37, 20);
-            this.tbWell1Skin.TabIndex = 9;
-            this.tbWell1Skin.Text = "0";
-            // 
-            // tbWell1rw
-            // 
-            this.tbWell1rw.Location = new System.Drawing.Point(32, 74);
-            this.tbWell1rw.Name = "tbWell1rw";
-            this.tbWell1rw.Size = new System.Drawing.Size(37, 20);
-            this.tbWell1rw.TabIndex = 10;
-            this.tbWell1rw.Text = "0.25";
-            // 
-            // label26
-            // 
-            this.label26.AutoSize = true;
-            this.label26.Location = new System.Drawing.Point(70, 27);
-            this.label26.Name = "label26";
-            this.label26.Size = new System.Drawing.Size(13, 13);
-            this.label26.TabIndex = 11;
-            this.label26.Text = "ft";
-            // 
-            // label27
-            // 
-            this.label27.AutoSize = true;
-            this.label27.Location = new System.Drawing.Point(70, 46);
-            this.label27.Name = "label27";
-            this.label27.Size = new System.Drawing.Size(13, 13);
-            this.label27.TabIndex = 12;
-            this.label27.Text = "ft";
-            // 
-            // label28
-            // 
-            this.label28.AutoSize = true;
-            this.label28.Location = new System.Drawing.Point(70, 77);
-            this.label28.Name = "label28";
-            this.label28.Size = new System.Drawing.Size(13, 13);
-            this.label28.TabIndex = 13;
-            this.label28.Text = "ft";
             // 
             // groupBox7
             // 
@@ -761,13 +1106,61 @@
             this.groupBox7.Controls.Add(this.label22);
             this.groupBox7.Controls.Add(this.tbWell2Y);
             this.groupBox7.Controls.Add(this.tbWell2X);
-            this.groupBox7.Controls.Add(this.checkBox2);
+            this.groupBox7.Controls.Add(this.cbWell2Active);
             this.groupBox7.Location = new System.Drawing.Point(165, 127);
             this.groupBox7.Name = "groupBox7";
             this.groupBox7.Size = new System.Drawing.Size(144, 130);
             this.groupBox7.TabIndex = 16;
             this.groupBox7.TabStop = false;
             this.groupBox7.Text = "Well #2";
+            // 
+            // tbWell2Qw
+            // 
+            this.tbWell2Qw.Location = new System.Drawing.Point(87, 36);
+            this.tbWell2Qw.Name = "tbWell2Qw";
+            this.tbWell2Qw.Size = new System.Drawing.Size(50, 20);
+            this.tbWell2Qw.TabIndex = 22;
+            this.tbWell2Qw.Text = "50";
+            // 
+            // tbWell2Pwf
+            // 
+            this.tbWell2Pwf.Location = new System.Drawing.Point(86, 78);
+            this.tbWell2Pwf.Name = "tbWell2Pwf";
+            this.tbWell2Pwf.Size = new System.Drawing.Size(50, 20);
+            this.tbWell2Pwf.TabIndex = 21;
+            this.tbWell2Pwf.Text = "1000";
+            // 
+            // rbWell2Pwf
+            // 
+            this.rbWell2Pwf.AutoSize = true;
+            this.rbWell2Pwf.Location = new System.Drawing.Point(89, 60);
+            this.rbWell2Pwf.Name = "rbWell2Pwf";
+            this.rbWell2Pwf.Size = new System.Drawing.Size(43, 17);
+            this.rbWell2Pwf.TabIndex = 20;
+            this.rbWell2Pwf.Text = "Pwf";
+            this.rbWell2Pwf.UseVisualStyleBackColor = true;
+            // 
+            // rbWell2Qw
+            // 
+            this.rbWell2Qw.AutoSize = true;
+            this.rbWell2Qw.Checked = true;
+            this.rbWell2Qw.Location = new System.Drawing.Point(89, 19);
+            this.rbWell2Qw.Name = "rbWell2Qw";
+            this.rbWell2Qw.Size = new System.Drawing.Size(41, 17);
+            this.rbWell2Qw.TabIndex = 19;
+            this.rbWell2Qw.TabStop = true;
+            this.rbWell2Qw.Text = "Qw";
+            this.rbWell2Qw.UseVisualStyleBackColor = true;
+            // 
+            // cbWell2Injector
+            // 
+            this.cbWell2Injector.AutoSize = true;
+            this.cbWell2Injector.Location = new System.Drawing.Point(72, 102);
+            this.cbWell2Injector.Name = "cbWell2Injector";
+            this.cbWell2Injector.Size = new System.Drawing.Size(71, 17);
+            this.cbWell2Injector.TabIndex = 15;
+            this.cbWell2Injector.Text = "Inj Ready";
+            this.cbWell2Injector.UseVisualStyleBackColor = true;
             // 
             // label12
             // 
@@ -866,17 +1259,17 @@
             this.tbWell2X.TabIndex = 3;
             this.tbWell2X.Text = "3900";
             // 
-            // checkBox2
+            // cbWell2Active
             // 
-            this.checkBox2.AutoSize = true;
-            this.checkBox2.Checked = true;
-            this.checkBox2.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBox2.Location = new System.Drawing.Point(66, 0);
-            this.checkBox2.Name = "checkBox2";
-            this.checkBox2.Size = new System.Drawing.Size(56, 17);
-            this.checkBox2.TabIndex = 0;
-            this.checkBox2.Text = "Active";
-            this.checkBox2.UseVisualStyleBackColor = true;
+            this.cbWell2Active.AutoSize = true;
+            this.cbWell2Active.Checked = true;
+            this.cbWell2Active.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.cbWell2Active.Location = new System.Drawing.Point(66, 0);
+            this.cbWell2Active.Name = "cbWell2Active";
+            this.cbWell2Active.Size = new System.Drawing.Size(56, 17);
+            this.cbWell2Active.TabIndex = 0;
+            this.cbWell2Active.Text = "Active";
+            this.cbWell2Active.UseVisualStyleBackColor = true;
             // 
             // groupBox8
             // 
@@ -896,13 +1289,39 @@
             this.groupBox8.Controls.Add(this.label32);
             this.groupBox8.Controls.Add(this.tbWell3Y);
             this.groupBox8.Controls.Add(this.tbWell3X);
-            this.groupBox8.Controls.Add(this.checkBox3);
+            this.groupBox8.Controls.Add(this.cbWell3Active);
             this.groupBox8.Location = new System.Drawing.Point(314, 127);
             this.groupBox8.Name = "groupBox8";
             this.groupBox8.Size = new System.Drawing.Size(144, 130);
             this.groupBox8.TabIndex = 16;
             this.groupBox8.TabStop = false;
             this.groupBox8.Text = "Well #3";
+            // 
+            // tbWell3Qw
+            // 
+            this.tbWell3Qw.Location = new System.Drawing.Point(85, 36);
+            this.tbWell3Qw.Name = "tbWell3Qw";
+            this.tbWell3Qw.Size = new System.Drawing.Size(50, 20);
+            this.tbWell3Qw.TabIndex = 26;
+            this.tbWell3Qw.Text = "50";
+            // 
+            // cbWell3Injector
+            // 
+            this.cbWell3Injector.AutoSize = true;
+            this.cbWell3Injector.Location = new System.Drawing.Point(71, 102);
+            this.cbWell3Injector.Name = "cbWell3Injector";
+            this.cbWell3Injector.Size = new System.Drawing.Size(71, 17);
+            this.cbWell3Injector.TabIndex = 16;
+            this.cbWell3Injector.Text = "Inj Ready";
+            this.cbWell3Injector.UseVisualStyleBackColor = true;
+            // 
+            // tbWell3Pwf
+            // 
+            this.tbWell3Pwf.Location = new System.Drawing.Point(84, 78);
+            this.tbWell3Pwf.Name = "tbWell3Pwf";
+            this.tbWell3Pwf.Size = new System.Drawing.Size(50, 20);
+            this.tbWell3Pwf.TabIndex = 25;
+            this.tbWell3Pwf.Text = "1000";
             // 
             // label23
             // 
@@ -913,6 +1332,16 @@
             this.label23.TabIndex = 13;
             this.label23.Text = "ft";
             // 
+            // rbWell3Pwf
+            // 
+            this.rbWell3Pwf.AutoSize = true;
+            this.rbWell3Pwf.Location = new System.Drawing.Point(87, 60);
+            this.rbWell3Pwf.Name = "rbWell3Pwf";
+            this.rbWell3Pwf.Size = new System.Drawing.Size(43, 17);
+            this.rbWell3Pwf.TabIndex = 24;
+            this.rbWell3Pwf.Text = "Pwf";
+            this.rbWell3Pwf.UseVisualStyleBackColor = true;
+            // 
             // label24
             // 
             this.label24.AutoSize = true;
@@ -921,6 +1350,18 @@
             this.label24.Size = new System.Drawing.Size(13, 13);
             this.label24.TabIndex = 12;
             this.label24.Text = "ft";
+            // 
+            // rbWell3Qw
+            // 
+            this.rbWell3Qw.AutoSize = true;
+            this.rbWell3Qw.Checked = true;
+            this.rbWell3Qw.Location = new System.Drawing.Point(87, 19);
+            this.rbWell3Qw.Name = "rbWell3Qw";
+            this.rbWell3Qw.Size = new System.Drawing.Size(41, 17);
+            this.rbWell3Qw.TabIndex = 23;
+            this.rbWell3Qw.TabStop = true;
+            this.rbWell3Qw.Text = "Qw";
+            this.rbWell3Qw.UseVisualStyleBackColor = true;
             // 
             // label25
             // 
@@ -995,313 +1436,24 @@
             this.tbWell3X.Size = new System.Drawing.Size(39, 20);
             this.tbWell3X.TabIndex = 3;
             // 
-            // checkBox3
-            // 
-            this.checkBox3.AutoSize = true;
-            this.checkBox3.Location = new System.Drawing.Point(71, 0);
-            this.checkBox3.Name = "checkBox3";
-            this.checkBox3.Size = new System.Drawing.Size(56, 17);
-            this.checkBox3.TabIndex = 0;
-            this.checkBox3.Text = "Active";
-            this.checkBox3.UseVisualStyleBackColor = true;
-            this.checkBox3.CheckedChanged += new System.EventHandler(this.checkBox3_CheckedChanged);
-            // 
-            // label33
-            // 
-            this.label33.AutoSize = true;
-            this.label33.Location = new System.Drawing.Point(12, 24);
-            this.label33.Name = "label33";
-            this.label33.Size = new System.Drawing.Size(63, 13);
-            this.label33.TabIndex = 0;
-            this.label33.Text = "Permeability";
-            // 
-            // tbPerm
-            // 
-            this.tbPerm.Location = new System.Drawing.Point(73, 21);
-            this.tbPerm.Name = "tbPerm";
-            this.tbPerm.Size = new System.Drawing.Size(75, 20);
-            this.tbPerm.TabIndex = 1;
-            this.tbPerm.Text = "7.9";
-            // 
-            // label34
-            // 
-            this.label34.AutoSize = true;
-            this.label34.Location = new System.Drawing.Point(146, 24);
-            this.label34.Name = "label34";
-            this.label34.Size = new System.Drawing.Size(23, 13);
-            this.label34.TabIndex = 2;
-            this.label34.Text = "mD";
-            // 
-            // label35
-            // 
-            this.label35.AutoSize = true;
-            this.label35.Location = new System.Drawing.Point(145, 46);
-            this.label35.Name = "label35";
-            this.label35.Size = new System.Drawing.Size(15, 13);
-            this.label35.TabIndex = 5;
-            this.label35.Text = "%";
-            // 
-            // tbPorosity
-            // 
-            this.tbPorosity.Location = new System.Drawing.Point(72, 43);
-            this.tbPorosity.Name = "tbPorosity";
-            this.tbPorosity.Size = new System.Drawing.Size(75, 20);
-            this.tbPorosity.TabIndex = 4;
-            this.tbPorosity.Text = "10";
-            // 
-            // label36
-            // 
-            this.label36.AutoSize = true;
-            this.label36.Location = new System.Drawing.Point(26, 46);
-            this.label36.Name = "label36";
-            this.label36.Size = new System.Drawing.Size(44, 13);
-            this.label36.TabIndex = 3;
-            this.label36.Text = "Porosity";
-            // 
-            // label37
-            // 
-            this.label37.AutoSize = true;
-            this.label37.Location = new System.Drawing.Point(145, 89);
-            this.label37.Name = "label37";
-            this.label37.Size = new System.Drawing.Size(31, 13);
-            this.label37.TabIndex = 8;
-            this.label37.Text = "1/psi";
-            this.label37.Click += new System.EventHandler(this.label37_Click);
-            // 
-            // tbRockComp
-            // 
-            this.tbRockComp.Location = new System.Drawing.Point(72, 86);
-            this.tbRockComp.Name = "tbRockComp";
-            this.tbRockComp.Size = new System.Drawing.Size(75, 20);
-            this.tbRockComp.TabIndex = 7;
-            this.tbRockComp.Text = "0.5x10-5";
-            // 
-            // label38
-            // 
-            this.label38.AutoSize = true;
-            this.label38.Location = new System.Drawing.Point(11, 89);
-            this.label38.Name = "label38";
-            this.label38.Size = new System.Drawing.Size(63, 13);
-            this.label38.TabIndex = 6;
-            this.label38.Text = "Rock Comp";
-            // 
-            // label39
-            // 
-            this.label39.AutoSize = true;
-            this.label39.Location = new System.Drawing.Point(89, 111);
-            this.label39.Name = "label39";
-            this.label39.Size = new System.Drawing.Size(16, 13);
-            this.label39.TabIndex = 9;
-            this.label39.Text = "or";
-            // 
-            // label40
-            // 
-            this.label40.AutoSize = true;
-            this.label40.Location = new System.Drawing.Point(145, 130);
-            this.label40.Name = "label40";
-            this.label40.Size = new System.Drawing.Size(31, 13);
-            this.label40.TabIndex = 12;
-            this.label40.Text = "1/psi";
-            // 
-            // tbTotalComp
-            // 
-            this.tbTotalComp.Location = new System.Drawing.Point(72, 127);
-            this.tbTotalComp.Name = "tbTotalComp";
-            this.tbTotalComp.Size = new System.Drawing.Size(75, 20);
-            this.tbTotalComp.TabIndex = 11;
-            this.tbTotalComp.Text = "1.5x10-5";
-            // 
-            // label41
-            // 
-            this.label41.AutoSize = true;
-            this.label41.Location = new System.Drawing.Point(11, 130);
-            this.label41.Name = "label41";
-            this.label41.Size = new System.Drawing.Size(61, 13);
-            this.label41.TabIndex = 10;
-            this.label41.Text = "Total Comp";
-            // 
-            // label42
-            // 
-            this.label42.AutoSize = true;
-            this.label42.Location = new System.Drawing.Point(179, 23);
-            this.label42.Name = "label42";
-            this.label42.Size = new System.Drawing.Size(15, 13);
-            this.label42.TabIndex = 5;
-            this.label42.Text = "%";
-            // 
-            // tbOilSat
-            // 
-            this.tbOilSat.Location = new System.Drawing.Point(103, 20);
-            this.tbOilSat.Name = "tbOilSat";
-            this.tbOilSat.Size = new System.Drawing.Size(75, 20);
-            this.tbOilSat.TabIndex = 4;
-            this.tbOilSat.Text = "100";
-            // 
-            // label43
-            // 
-            this.label43.AutoSize = true;
-            this.label43.Location = new System.Drawing.Point(30, 24);
-            this.label43.Name = "label43";
-            this.label43.Size = new System.Drawing.Size(70, 13);
-            this.label43.TabIndex = 3;
-            this.label43.Text = "Oil Saturation";
-            // 
-            // label44
-            // 
-            this.label44.AutoSize = true;
-            this.label44.Location = new System.Drawing.Point(179, 46);
-            this.label44.Name = "label44";
-            this.label44.Size = new System.Drawing.Size(15, 13);
-            this.label44.TabIndex = 8;
-            this.label44.Text = "%";
-            // 
-            // tbWaterSat
-            // 
-            this.tbWaterSat.Location = new System.Drawing.Point(103, 43);
-            this.tbWaterSat.Name = "tbWaterSat";
-            this.tbWaterSat.Size = new System.Drawing.Size(75, 20);
-            this.tbWaterSat.TabIndex = 7;
-            this.tbWaterSat.Text = "0";
-            // 
-            // label45
-            // 
-            this.label45.AutoSize = true;
-            this.label45.Location = new System.Drawing.Point(13, 47);
-            this.label45.Name = "label45";
-            this.label45.Size = new System.Drawing.Size(87, 13);
-            this.label45.TabIndex = 6;
-            this.label45.Text = "Water Saturation";
-            // 
-            // label46
-            // 
-            this.label46.AutoSize = true;
-            this.label46.Location = new System.Drawing.Point(179, 69);
-            this.label46.Name = "label46";
-            this.label46.Size = new System.Drawing.Size(19, 13);
-            this.label46.TabIndex = 11;
-            this.label46.Text = "cp";
-            // 
-            // tbOilVisc
-            // 
-            this.tbOilVisc.Location = new System.Drawing.Point(103, 66);
-            this.tbOilVisc.Name = "tbOilVisc";
-            this.tbOilVisc.Size = new System.Drawing.Size(75, 20);
-            this.tbOilVisc.TabIndex = 10;
-            this.tbOilVisc.Text = "5";
-            // 
-            // label47
-            // 
-            this.label47.AutoSize = true;
-            this.label47.Location = new System.Drawing.Point(37, 70);
-            this.label47.Name = "label47";
-            this.label47.Size = new System.Drawing.Size(63, 13);
-            this.label47.TabIndex = 9;
-            this.label47.Text = "Oil Viscosity";
-            // 
-            // label48
-            // 
-            this.label48.AutoSize = true;
-            this.label48.Location = new System.Drawing.Point(179, 91);
-            this.label48.Name = "label48";
-            this.label48.Size = new System.Drawing.Size(48, 13);
-            this.label48.TabIndex = 14;
-            this.label48.Text = "RB/STB";
-            // 
-            // tbInitialBo
-            // 
-            this.tbInitialBo.Location = new System.Drawing.Point(103, 88);
-            this.tbInitialBo.Name = "tbInitialBo";
-            this.tbInitialBo.Size = new System.Drawing.Size(75, 20);
-            this.tbInitialBo.TabIndex = 13;
-            this.tbInitialBo.Text = "1.25";
-            // 
-            // label49
-            // 
-            this.label49.AutoSize = true;
-            this.label49.Location = new System.Drawing.Point(29, 92);
-            this.label49.Name = "label49";
-            this.label49.Size = new System.Drawing.Size(69, 13);
-            this.label49.TabIndex = 12;
-            this.label49.Text = "Initial FVF, oil";
-            // 
-            // label50
-            // 
-            this.label50.AutoSize = true;
-            this.label50.Location = new System.Drawing.Point(179, 114);
-            this.label50.Name = "label50";
-            this.label50.Size = new System.Drawing.Size(31, 13);
-            this.label50.TabIndex = 17;
-            this.label50.Text = "1/psi";
-            // 
-            // tbLiquComp
-            // 
-            this.tbLiquComp.Location = new System.Drawing.Point(103, 111);
-            this.tbLiquComp.Name = "tbLiquComp";
-            this.tbLiquComp.Size = new System.Drawing.Size(75, 20);
-            this.tbLiquComp.TabIndex = 16;
-            this.tbLiquComp.Text = "1.0x10-5";
-            // 
-            // label51
-            // 
-            this.label51.AutoSize = true;
-            this.label51.Location = new System.Drawing.Point(35, 115);
-            this.label51.Name = "label51";
-            this.label51.Size = new System.Drawing.Size(65, 13);
-            this.label51.TabIndex = 15;
-            this.label51.Text = "Liquid Comp";
-            // 
-            // label52
-            // 
-            this.label52.AutoSize = true;
-            this.label52.Location = new System.Drawing.Point(179, 138);
-            this.label52.Name = "label52";
-            this.label52.Size = new System.Drawing.Size(26, 13);
-            this.label52.TabIndex = 20;
-            this.label52.Text = "psia";
-            // 
-            // tbBubblePoint
-            // 
-            this.tbBubblePoint.Location = new System.Drawing.Point(103, 135);
-            this.tbBubblePoint.Name = "tbBubblePoint";
-            this.tbBubblePoint.Size = new System.Drawing.Size(75, 20);
-            this.tbBubblePoint.TabIndex = 19;
-            this.tbBubblePoint.Text = "900";
-            // 
-            // label53
-            // 
-            this.label53.AutoSize = true;
-            this.label53.Location = new System.Drawing.Point(33, 139);
-            this.label53.Name = "label53";
-            this.label53.Size = new System.Drawing.Size(67, 13);
-            this.label53.TabIndex = 18;
-            this.label53.Text = "Bubble Point";
-            // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(17, 26);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(99, 33);
-            this.button1.TabIndex = 0;
-            this.button1.Text = "Calculate";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
-            // 
-            // button2
-            // 
-            this.button2.Location = new System.Drawing.Point(134, 26);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(108, 34);
-            this.button2.TabIndex = 1;
-            this.button2.Text = "Plot Pressure";
-            this.button2.UseVisualStyleBackColor = true;
-            // 
-            // textBox1
-            // 
-            this.textBox1.Location = new System.Drawing.Point(91, 64);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(62, 20);
-            this.textBox1.TabIndex = 17;
-            this.textBox1.Text = "1";
+            // cbWell3Active
+            // 
+            this.cbWell3Active.AutoSize = true;
+            this.cbWell3Active.Location = new System.Drawing.Point(71, 0);
+            this.cbWell3Active.Name = "cbWell3Active";
+            this.cbWell3Active.Size = new System.Drawing.Size(56, 17);
+            this.cbWell3Active.TabIndex = 0;
+            this.cbWell3Active.Text = "Active";
+            this.cbWell3Active.UseVisualStyleBackColor = true;
+            this.cbWell3Active.CheckedChanged += new System.EventHandler(this.checkBox3_CheckedChanged);
+            // 
+            // tbTimeStep
+            // 
+            this.tbTimeStep.Location = new System.Drawing.Point(91, 64);
+            this.tbTimeStep.Name = "tbTimeStep";
+            this.tbTimeStep.Size = new System.Drawing.Size(62, 20);
+            this.tbTimeStep.TabIndex = 17;
+            this.tbTimeStep.Text = "1";
             // 
             // lbTimeStep
             // 
@@ -1339,166 +1491,44 @@
             this.label56.TabIndex = 21;
             this.label56.Text = "End at";
             // 
-            // textBox2
+            // tbTimeFrame
             // 
-            this.textBox2.Location = new System.Drawing.Point(91, 86);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(62, 20);
-            this.textBox2.TabIndex = 20;
-            this.textBox2.Text = "500";
+            this.tbTimeFrame.Location = new System.Drawing.Point(91, 86);
+            this.tbTimeFrame.Name = "tbTimeFrame";
+            this.tbTimeFrame.Size = new System.Drawing.Size(62, 20);
+            this.tbTimeFrame.TabIndex = 20;
+            this.tbTimeFrame.Text = "500";
             // 
-            // cbWell1Injector
+            // chart1
             // 
-            this.cbWell1Injector.AutoSize = true;
-            this.cbWell1Injector.Location = new System.Drawing.Point(75, 100);
-            this.cbWell1Injector.Name = "cbWell1Injector";
-            this.cbWell1Injector.Size = new System.Drawing.Size(71, 17);
-            this.cbWell1Injector.TabIndex = 14;
-            this.cbWell1Injector.Text = "Inj Ready";
-            this.cbWell1Injector.UseVisualStyleBackColor = true;
-            // 
-            // cbWell2Injector
-            // 
-            this.cbWell2Injector.AutoSize = true;
-            this.cbWell2Injector.Location = new System.Drawing.Point(72, 102);
-            this.cbWell2Injector.Name = "cbWell2Injector";
-            this.cbWell2Injector.Size = new System.Drawing.Size(71, 17);
-            this.cbWell2Injector.TabIndex = 15;
-            this.cbWell2Injector.Text = "Inj Ready";
-            this.cbWell2Injector.UseVisualStyleBackColor = true;
-            // 
-            // cbWell3Injector
-            // 
-            this.cbWell3Injector.AutoSize = true;
-            this.cbWell3Injector.Location = new System.Drawing.Point(71, 102);
-            this.cbWell3Injector.Name = "cbWell3Injector";
-            this.cbWell3Injector.Size = new System.Drawing.Size(71, 17);
-            this.cbWell3Injector.TabIndex = 16;
-            this.cbWell3Injector.Text = "Inj Ready";
-            this.cbWell3Injector.UseVisualStyleBackColor = true;
-            // 
-            // rbWell1Qw
-            // 
-            this.rbWell1Qw.AutoSize = true;
-            this.rbWell1Qw.Checked = true;
-            this.rbWell1Qw.Location = new System.Drawing.Point(95, 19);
-            this.rbWell1Qw.Name = "rbWell1Qw";
-            this.rbWell1Qw.Size = new System.Drawing.Size(41, 17);
-            this.rbWell1Qw.TabIndex = 15;
-            this.rbWell1Qw.Text = "Qw";
-            this.rbWell1Qw.UseVisualStyleBackColor = true;
-            // 
-            // rbWell1Pwf
-            // 
-            this.rbWell1Pwf.AutoSize = true;
-            this.rbWell1Pwf.Location = new System.Drawing.Point(95, 60);
-            this.rbWell1Pwf.Name = "rbWell1Pwf";
-            this.rbWell1Pwf.Size = new System.Drawing.Size(43, 17);
-            this.rbWell1Pwf.TabIndex = 16;
-            this.rbWell1Pwf.Text = "Pwf";
-            this.rbWell1Pwf.UseVisualStyleBackColor = true;
-            // 
-            // tbWell1Pwf
-            // 
-            this.tbWell1Pwf.Location = new System.Drawing.Point(92, 78);
-            this.tbWell1Pwf.Name = "tbWell1Pwf";
-            this.tbWell1Pwf.Size = new System.Drawing.Size(50, 20);
-            this.tbWell1Pwf.TabIndex = 17;
-            this.tbWell1Pwf.Text = "1000";
-            // 
-            // tbWell1Qw
-            // 
-            this.tbWell1Qw.Location = new System.Drawing.Point(93, 36);
-            this.tbWell1Qw.Name = "tbWell1Qw";
-            this.tbWell1Qw.Size = new System.Drawing.Size(50, 20);
-            this.tbWell1Qw.TabIndex = 18;
-            this.tbWell1Qw.Text = "50";
-            // 
-            // tbWell2Qw
-            // 
-            this.tbWell2Qw.Location = new System.Drawing.Point(87, 36);
-            this.tbWell2Qw.Name = "tbWell2Qw";
-            this.tbWell2Qw.Size = new System.Drawing.Size(50, 20);
-            this.tbWell2Qw.TabIndex = 22;
-            this.tbWell2Qw.Text = "50";
-            // 
-            // tbWell2Pwf
-            // 
-            this.tbWell2Pwf.Location = new System.Drawing.Point(86, 78);
-            this.tbWell2Pwf.Name = "tbWell2Pwf";
-            this.tbWell2Pwf.Size = new System.Drawing.Size(50, 20);
-            this.tbWell2Pwf.TabIndex = 21;
-            this.tbWell2Pwf.Text = "1000";
-            // 
-            // rbWell2Pwf
-            // 
-            this.rbWell2Pwf.AutoSize = true;
-            this.rbWell2Pwf.Location = new System.Drawing.Point(89, 60);
-            this.rbWell2Pwf.Name = "rbWell2Pwf";
-            this.rbWell2Pwf.Size = new System.Drawing.Size(43, 17);
-            this.rbWell2Pwf.TabIndex = 20;
-            this.rbWell2Pwf.Text = "Pwf";
-            this.rbWell2Pwf.UseVisualStyleBackColor = true;
-            // 
-            // rbWell2Qw
-            // 
-            this.rbWell2Qw.AutoSize = true;
-            this.rbWell2Qw.Checked = true;
-            this.rbWell2Qw.Location = new System.Drawing.Point(89, 19);
-            this.rbWell2Qw.Name = "rbWell2Qw";
-            this.rbWell2Qw.Size = new System.Drawing.Size(41, 17);
-            this.rbWell2Qw.TabIndex = 19;
-            this.rbWell2Qw.Text = "Qw";
-            this.rbWell2Qw.UseVisualStyleBackColor = true;
-            // 
-            // tbWell3Qw
-            // 
-            this.tbWell3Qw.Location = new System.Drawing.Point(85, 36);
-            this.tbWell3Qw.Name = "tbWell3Qw";
-            this.tbWell3Qw.Size = new System.Drawing.Size(50, 20);
-            this.tbWell3Qw.TabIndex = 26;
-            this.tbWell3Qw.Text = "50";
-            // 
-            // tbWell3Pwf
-            // 
-            this.tbWell3Pwf.Location = new System.Drawing.Point(84, 78);
-            this.tbWell3Pwf.Name = "tbWell3Pwf";
-            this.tbWell3Pwf.Size = new System.Drawing.Size(50, 20);
-            this.tbWell3Pwf.TabIndex = 25;
-            this.tbWell3Pwf.Text = "1000";
-            // 
-            // rbWell3Pwf
-            // 
-            this.rbWell3Pwf.AutoSize = true;
-            this.rbWell3Pwf.Location = new System.Drawing.Point(87, 60);
-            this.rbWell3Pwf.Name = "rbWell3Pwf";
-            this.rbWell3Pwf.Size = new System.Drawing.Size(43, 17);
-            this.rbWell3Pwf.TabIndex = 24;
-            this.rbWell3Pwf.Text = "Pwf";
-            this.rbWell3Pwf.UseVisualStyleBackColor = true;
-            // 
-            // rbWell3Qw
-            // 
-            this.rbWell3Qw.AutoSize = true;
-            this.rbWell3Qw.Checked = true;
-            this.rbWell3Qw.Location = new System.Drawing.Point(87, 19);
-            this.rbWell3Qw.Name = "rbWell3Qw";
-            this.rbWell3Qw.Size = new System.Drawing.Size(41, 17);
-            this.rbWell3Qw.TabIndex = 23;
-            this.rbWell3Qw.Text = "Qw";
-            this.rbWell3Qw.UseVisualStyleBackColor = true;
+            chartArea1.Name = "ChartArea1";
+            this.chart1.ChartAreas.Add(chartArea1);
+            legend1.Enabled = false;
+            legend1.Name = "Legend1";
+            this.chart1.Legends.Add(legend1);
+            this.chart1.Location = new System.Drawing.Point(12, 432);
+            this.chart1.Name = "chart1";
+            series1.ChartArea = "ChartArea1";
+            series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+            series1.Legend = "Legend1";
+            series1.Name = "Series1";
+            this.chart1.Series.Add(series1);
+            this.chart1.Size = new System.Drawing.Size(804, 344);
+            this.chart1.TabIndex = 23;
+            this.chart1.Text = "chart1";
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(828, 446);
+            this.ClientSize = new System.Drawing.Size(828, 788);
+            this.Controls.Add(this.chart1);
             this.Controls.Add(this.label55);
             this.Controls.Add(this.label56);
-            this.Controls.Add(this.textBox2);
+            this.Controls.Add(this.tbTimeFrame);
             this.Controls.Add(this.label54);
             this.Controls.Add(this.lbTimeStep);
-            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.tbTimeStep);
             this.Controls.Add(this.groupBox8);
             this.Controls.Add(this.groupBox7);
             this.Controls.Add(this.groupBox5);
@@ -1531,6 +1561,7 @@
             this.groupBox7.PerformLayout();
             this.groupBox8.ResumeLayout(false);
             this.groupBox8.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.chart1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1603,7 +1634,7 @@
         private System.Windows.Forms.Label label22;
         private System.Windows.Forms.TextBox tbWell2Y;
         private System.Windows.Forms.TextBox tbWell2X;
-        private System.Windows.Forms.CheckBox checkBox2;
+        private System.Windows.Forms.CheckBox cbWell2Active;
         private System.Windows.Forms.GroupBox groupBox8;
         private System.Windows.Forms.Label label23;
         private System.Windows.Forms.Label label24;
@@ -1616,7 +1647,7 @@
         private System.Windows.Forms.Label label32;
         private System.Windows.Forms.TextBox tbWell3Y;
         private System.Windows.Forms.TextBox tbWell3X;
-        private System.Windows.Forms.CheckBox checkBox3;
+        private System.Windows.Forms.CheckBox cbWell3Active;
         private System.Windows.Forms.Label label37;
         private System.Windows.Forms.TextBox tbRockComp;
         private System.Windows.Forms.Label label38;
@@ -1650,12 +1681,12 @@
         private System.Windows.Forms.Label label53;
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox tbTimeStep;
         private System.Windows.Forms.Label lbTimeStep;
         private System.Windows.Forms.Label label54;
         private System.Windows.Forms.Label label55;
         private System.Windows.Forms.Label label56;
-        private System.Windows.Forms.TextBox textBox2;
+        private System.Windows.Forms.TextBox tbTimeFrame;
         private System.Windows.Forms.CheckBox cbWell1Injector;
         private System.Windows.Forms.CheckBox cbWell2Injector;
         private System.Windows.Forms.TextBox tbWell1Qw;
@@ -1671,6 +1702,7 @@
         private System.Windows.Forms.TextBox tbWell3Pwf;
         private System.Windows.Forms.RadioButton rbWell3Pwf;
         private System.Windows.Forms.RadioButton rbWell3Qw;
+        private System.Windows.Forms.DataVisualization.Charting.Chart chart1;
 
     }
 }
