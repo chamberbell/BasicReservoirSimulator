@@ -206,55 +206,141 @@ MessageBoxButtons.OKCancel, MessageBoxIcon.Information);
             double.TryParse(tbWell3X.Text, out  Well3XLoc); //[ft]
             double.TryParse(tbWell3Y.Text, out  Well3YLoc); //[ft]
 
+            //calculate constants
+            double alpha = -158 * porosity * oilVisc * totalComp / perm * Math.Pow(delta_x, 2) / delta_t;
+            double beta = 2+alpha; 
+
+            //set up the arrays
             double[] x_array = new double[grid_x + 1];
             double[] Pn = new double[grid_x + 1];
+            double[] a = new double[grid_x + 1];
+            double[] b = new double[grid_x + 1];
+            double[] c = new double[grid_x + 1];
+            double[] d = new double[grid_x + 1];
+
             x_array[0] = delta_x / 2;
             Pn[0] = Pinitial;
 
-            double[,] P = new double [time_steps,grid_x+1];
+            int i; //time step
+            int n; //grid block
 
+            //define the pressure matrix to store the P values over time and space
+            double[,] P = new double [time_steps,grid_x+1]; // P[n,i]
+
+            //set up the dirac delta well term and initialize arrays
+            double[] dirac = new double[grid_x + 1];
+            for (int x = 0;  x < grid_x+1;  x++)
+            {
+                dirac[x] = 0;
+                P[0, x] = Pinitial;
+                x_array[x] = x * delta_x + delta_x / 2;
+                a[x] = 1;
+                b[x] = beta;
+                c[x] = -alpha * Pinitial;
+            }
+
+            //Manage the end points and boundary conditions
+            a[0] = 0;
+            c[grid_x + 1] = 0;
+            b[0] = 1 + beta;
+            b[grid_x + 1] = 1 + beta;
+
+
+            //mark where the wells are in the dirac delta array
+            if (UseWell1 == true)
+            {
+                n = Convert.ToInt32((Well1XLoc / delta_x)+1);
+                dirac[n] = 1;
+            }
+
+            if (UseWell2 == true)
+            {
+                n = Convert.ToInt32((Well2XLoc / delta_x) + 1);
+                dirac[n] = 1;
+            }
+
+            if (UseWell3 == true)
+            {
+                n = Convert.ToInt32((Well3XLoc / delta_x) + 1);
+                dirac[n] = 1;
+            } 
+
+            //compute the well term
+                //computer new Jw based on pressure at the block [B@Pi]
+            double Well1Jw = Jw(Pinitial, Well1Rw, Well1Skin);
+
+            //MAIN PRESSURE CALCULATIONS
+            for (n = 0; n < time_steps+1; n++)
+            {
+                
+            }
+
+            //initialize the first series (t=0) on the graph
             string seriesName = "Time Step #0"; ;
             chart1.Series.Add(seriesName);
             chart1.Series[seriesName].ChartType = SeriesChartType.Line;
 
-            int i = 0;
-            while (i < grid_x + 1)
+            //Initializes the basics of the pressure vs x vs time plot (@time = 0)
+            for (int pi=0; pi < grid_x + 1; pi++ )
             {
-                Pn[i] = Pinitial;
-                P[0,i] = Pinitial;
-                x_array[i] = i* delta_x+delta_x/2;
-                chart1.Series[0].Points.AddXY(x_array[i], P[0, i]);
-                i++;
+                chart1.Series[0].Points.AddXY(x_array[pi], P[0, pi]);
             }
 
-            int j = 1;
-            while(j<time_steps-1)
+
+            //This block of code takes the P[,] matrix and plots the pressures vs x, for each time step.
+            n = 1; //each n is a time_step. n+1 is the next time step.
+            while(n<time_steps-1)
             {
-                seriesName = "Time Step #" + j; ;
+                seriesName = "Time Step #" + n; ;
                 chart1.Series.Add(seriesName);
                 chart1.Series[seriesName].ChartType = SeriesChartType.Line;
 
                 i = 0;
                 while (i < grid_x + 1)
                 {
-                    P[j,i] = P[j - 1, i] - delta_t*1;
+                    P[n,i] = P[n - 1, i] - delta_t*1; //just a dummy equation to test the graph
+                    //P[n,i];  //this is what to switch it to when the code is working
 
-                    chart1.Series[seriesName].Points.AddXY(x_array[i], P[j, i]);
+                    chart1.Series[seriesName].Points.AddXY(x_array[i], P[n, i]);
                     i++;
                 }
-                j++;
+                n++;
             }
 
-
-
-           
-            //chart1.ChartAreas["ChartArea1"].AxisX.Interval = length;
-
-
-
+            
 
         }
 
+        //calculate the well term for the matrix
+        private double wellTermQ(double Qw, double Pn, int dirac)
+        {
+            double well = 887.53 * dirac * Qw * oilVisc * Bo_n(Pn) * delta_x / (perm * delta_y * delta_z);
+            return well;
+        }
+
+        //calculate the pressure dependent FVF
+        private double Bo_n(double Pn)
+        {
+            double Bn = Boi*Math.Exp(-liquidComp*(Pn-Pinitial));
+            return Bn;
+        }
+
+        //Productivity Index from Q
+        private double Jw_Q(double Qw, double Pn)
+        {
+            double Jw_n = 1; //just a placeholder
+            return Jw_n;
+        }
+
+        //Productivity index from Peaceman's Method
+        private double Jw(double Pn, double rw, double S)
+        {
+            double re = 0.14 * Math.Sqrt(Math.Pow(delta_x, 2) + Math.Pow(delta_y, 2));
+            double Bn = Boi*Math.Exp(-liquidComp*(Pn-Pinitial)); //need to make this based on pressure from c_liquid
+            double Jw_n;
+            Jw_n= 0.00708 / oilVisc / Bn * perm * height / (Math.Log(rw/re) +S);
+            return Jw_n;
+        }
 
         private void ThomasMethod(double[] a, double[] b, double[] c, double[] d, int n)
         {
