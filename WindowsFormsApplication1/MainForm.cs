@@ -229,22 +229,22 @@ MessageBoxButtons.OKCancel, MessageBoxIcon.Information);
 
             //set up the dirac delta well term and initialize arrays
             double[] dirac = new double[grid_x + 1];
-            for (int x = 0;  x < grid_x+1;  x++)
+            for (int x = 0;  x < (grid_x+1);  x++)
             {
                 dirac[x] = 0;
                 P[0, x] = Pinitial;
                 x_array[x] = x * delta_x + delta_x / 2;
                 a[x] = 1;
                 b[x] = beta;
-                c[x] = -alpha * Pinitial;
+                c[x] = 1;
+                d[x] = -alpha * Pinitial;
             }
 
             //Manage the end points and boundary conditions
             a[0] = 0;
-            c[grid_x + 1] = 0;
-            b[0] = 1 + beta;
-            b[grid_x + 1] = 1 + beta;
-
+            b[0] = 1 + beta; //no flow x=0 boundary
+            b[(grid_x )] = 1 + beta; //no flow x=L boundary
+            c[(grid_x )] = 0;
 
             //mark where the wells are in the dirac delta array
             if (UseWell1 == true)
