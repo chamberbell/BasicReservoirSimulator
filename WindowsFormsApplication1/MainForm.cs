@@ -132,8 +132,6 @@ namespace WindowsFormsApplication1
         private void button1_Click(object sender, EventArgs e)
         {
             refreshData();
-            MessageBox.Show("The data is refrshed! But no calculations are programmed yet", "My Application",
-MessageBoxButtons.OKCancel, MessageBoxIcon.Information);
         }
    
         private void refreshData()
@@ -144,6 +142,15 @@ MessageBoxButtons.OKCancel, MessageBoxIcon.Information);
 
             chart1.Series.Clear();
 
+            bool?[] wells = new bool?[3]; //right now the code supports 3 wells
+            bool?[] Inj = new bool?[3];
+            bool?[] QwConst = new bool?[3];
+            double[] QwRate = new double[3];
+            double[] PwfPres = new double[3];
+            double[] WellRw = new double[3];
+            double[] Skin = new double[3];
+            double[] X_loc = new double[3];
+            double[] Y_loc = new double[3];
 
             double.TryParse(tbTimeFrame.Text, out time_frame); // [days] this is how long the simulation will run
             double.TryParse(tbTimeStep.Text, out  delta_t); // [days] the number of days between time steps
@@ -176,47 +183,50 @@ MessageBoxButtons.OKCancel, MessageBoxIcon.Information);
             double.TryParse(txPresToConvert.Text, out  Pmin);
             double.TryParse(txPresToConvert.Text, out  ConvToInjPres);
 
-            UseWell1 = cbWell1Active.Checked;
-            Well1_Inj = cbWell1Injector.Checked;
-            Well1_Qw_or_Pwf = rbWell1Qw.Checked; //1=Qw, 0=Pwf
-            double.TryParse(tbWell1Pwf.Text, out  Well1Pwf);
-            double.TryParse(tbWell1Qw.Text, out  Well1Qw);
-            double.TryParse(tbWell1Skin.Text, out  Well1Skin);
-            double.TryParse(tbWell1rw.Text, out  Well1Rw); //[ft]
-            double.TryParse(tbWell1X.Text, out  Well1XLoc); //[ft]
-            double.TryParse(tbWell1Y.Text, out  Well1YLoc); //[ft]
+            wells[0] = cbWell1Active.Checked;
+            Inj[0] = cbWell1Injector.Checked;
+            QwConst[0] = rbWell1Qw.Checked; //1=Qw, 0=Pwf
+            double.TryParse(tbWell1Pwf.Text, out  PwfPres[0]);
+            double.TryParse(tbWell1Qw.Text, out  QwRate[0]);
+            double.TryParse(tbWell1Skin.Text, out  Skin[0]);
+            double.TryParse(tbWell1rw.Text, out  WellRw[0]); //[ft]
+            double.TryParse(tbWell1X.Text, out  X_loc[0]); //[ft]
+            double.TryParse(tbWell1Y.Text, out  Y_loc[0]); //[ft]
 
-            UseWell2 = cbWell2Active.Checked;
-            Well2_Inj = cbWell2Injector.Checked;
-            Well2_Qw_or_Pwf = rbWell2Qw.Checked; //1=Qw, 0=Pwf
-            double.TryParse(tbWell2Pwf.Text, out  Well2Pwf);
-            double.TryParse(tbWell2Qw.Text, out  Well2Qw);
-            double.TryParse(tbWell2Skin.Text, out  Well2Skin);
-            double.TryParse(tbWell2rw.Text, out  Well2Rw); //[ft]
-            double.TryParse(tbWell2X.Text, out  Well2XLoc); //[ft]
-            double.TryParse(tbWell2Y.Text, out  Well2YLoc); //[ft]
+            wells[1] = cbWell2Active.Checked;
+            Inj[1] = cbWell2Injector.Checked;
+            QwConst[1] = rbWell2Qw.Checked; //1=Qw, 0=Pwf
+            double.TryParse(tbWell2Pwf.Text, out  PwfPres[1]);
+            double.TryParse(tbWell2Qw.Text, out  QwRate[1]);
+            double.TryParse(tbWell2Skin.Text, out  Skin[1]);
+            double.TryParse(tbWell2rw.Text, out  WellRw[1]); //[ft]
+            double.TryParse(tbWell2X.Text, out  X_loc[1]); //[ft]
+            double.TryParse(tbWell2Y.Text, out  Y_loc[1]); //[ft]
 
-            UseWell2 = cbWell2Active.Checked;
-            Well2_Inj = cbWell2Injector.Checked;
-            Well2_Qw_or_Pwf = rbWell2Qw.Checked; //1=Qw, 0=Pwf
-            double.TryParse(tbWell3Pwf.Text, out  Well3Pwf);
-            double.TryParse(tbWell3Qw.Text, out  Well3Qw);
-            double.TryParse(tbWell3Skin.Text, out  Well3Skin);
-            double.TryParse(tbWell3rw.Text, out  Well3Rw); //[ft]
-            double.TryParse(tbWell3X.Text, out  Well3XLoc); //[ft]
-            double.TryParse(tbWell3Y.Text, out  Well3YLoc); //[ft]
+            wells[2] = cbWell3Active.Checked;
+            Inj[2] = cbWell3Injector.Checked;
+            QwConst[2] = rbWell3Qw.Checked; //1=Qw, 0=Pwf
+            double.TryParse(tbWell3Pwf.Text, out  PwfPres[2]);
+            double.TryParse(tbWell3Qw.Text, out  QwRate[2]);
+            double.TryParse(tbWell3Skin.Text, out  Skin[2]);
+            double.TryParse(tbWell3rw.Text, out  WellRw[2]); //[ft]
+            double.TryParse(tbWell3X.Text, out  X_loc[2]); //[ft]
+            double.TryParse(tbWell3Y.Text, out  Y_loc[2]); //[ft]
 
             //calculate constants
-            double alpha = -158 * porosity * oilVisc * totalComp / perm * Math.Pow(delta_x, 2) / delta_t;
-            double beta = 2+alpha; 
+            double alpha = 158 * porosity * oilVisc * totalComp / perm * Math.Pow(delta_x, 2) / delta_t;
+            double beta = -2-alpha;
+            double wellTerm; //will calculate later in program
+            double re = 0.14 * Math.Sqrt(Math.Pow(delta_x, 2) + Math.Pow(delta_y, 2)); //Peaceman
 
             //set up the arrays
-            double[] x_array = new double[grid_x + 1];
-            double[] Pn = new double[grid_x + 1];
-            double[] a = new double[grid_x + 1];
-            double[] b = new double[grid_x + 1];
-            double[] c = new double[grid_x + 1];
-            double[] d = new double[grid_x + 1];
+            double[] x_array = new double[grid_x ];
+            double[] Pn = new double[grid_x];
+            double[] a = new double[grid_x];
+            double[] b = new double[grid_x];
+            double[] c = new double[grid_x];
+            double[] d = new double[grid_x];
+           
 
             x_array[0] = delta_x / 2;
             Pn[0] = Pinitial;
@@ -225,11 +235,11 @@ MessageBoxButtons.OKCancel, MessageBoxIcon.Information);
             int n; //grid block
 
             //define the pressure matrix to store the P values over time and space
-            double[,] P = new double [time_steps,grid_x+1]; // P[n,i]
+            double[,] P = new double [time_steps+1,grid_x]; // P[n,i]
 
             //set up the dirac delta well term and initialize arrays
-            double[] dirac = new double[grid_x + 1];
-            for (int x = 0;  x < (grid_x+1);  x++)
+            double[] dirac = new double[grid_x ];
+            for (int x = 0;  x < (grid_x);  x++)
             {
                 dirac[x] = 0;
                 P[0, x] = Pinitial;
@@ -243,45 +253,94 @@ MessageBoxButtons.OKCancel, MessageBoxIcon.Information);
             //Manage the end points and boundary conditions
             a[0] = 0;
             b[0] = 1 + beta; //no flow x=0 boundary
-            b[(grid_x )] = 1 + beta; //no flow x=L boundary
-            c[(grid_x )] = 0;
-
+            b[(grid_x-1 )] = 1 + beta; //no flow x=L boundary
+            c[(grid_x-1 )] = 0;
+            
             //mark where the wells are in the dirac delta array
-            if (UseWell1 == true)
+            for (int ii = 0; ii < 3; ii++)
             {
-                n = Convert.ToInt32((Well1XLoc / delta_x)+1);
-                dirac[n] = 1;
+                if (wells[ii] == true)
+                {
+                    n = Convert.ToInt32((X_loc[ii] / delta_x)+1);
+                    dirac[n] = 1;
+                }
             }
 
-            if (UseWell2 == true)
+
+            //initialize the first series (t=0) on the graph
+            string seriesName = "Time Step #0"; ;
+            chart1.Series.Add(seriesName);
+            chart1.Series[seriesName].ChartType = SeriesChartType.Line;
+            for (int pi = 0; pi < grid_x; pi++)
             {
-                n = Convert.ToInt32((Well2XLoc / delta_x) + 1);
-                dirac[n] = 1;
+                chart1.Series[0].Points.AddXY(x_array[pi], P[0, pi]);
             }
-
-            if (UseWell3 == true)
-            {
-                n = Convert.ToInt32((Well3XLoc / delta_x) + 1);
-                dirac[n] = 1;
-            } 
-
-            //compute the well term
-                //computer new Jw based on pressure at the block [B@Pi]
-            double Well1Jw = Jw(Pinitial, Well1Rw, Well1Skin);
 
             //MAIN PRESSURE CALCULATIONS
-            for (n = 0; n < time_steps+1; n++)
+            for (n = 0; n < time_steps; n++)
             {
+                for (int ii = 0; ii < grid_x; ii++) //set the Thomas Method arrays
+                {
+                    Pn[ii] = P[n, ii];
+                }
+
+                //add the well terms to the b an d arrays
+                for (int ii = 0; ii < 3; ii++)
+                {
+                    if (wells[ii] == true)
+                    {
+                        int loc = Convert.ToInt32((X_loc[ii] / delta_x) + 1);
+                        if (QwConst[ii]==true)
+                        {
+                            wellTerm = 887.53 * QwRate[ii] * oilVisc * Bo_n(loc) * delta_x / (perm * delta_y * delta_z);
+                            d[loc] = d[loc] + wellTerm;
+                        }
+                        else
+                        {
+                            wellTerm = 887.53 * 0.00708 / (Math.Log(re / WellRw[ii]) + Skin[ii]) * delta_x / delta_y;
+                            d[loc] = d[loc] + wellTerm;
+                            b[loc] = b[loc] - wellTerm;
+                        }
+                    }
+                }
+
+                Pn = ThomasMethod(a, b, c, d, grid_x);
+
+                //reset the beta and d terms
+                for (int ii = 0; ii < (grid_x ); ii++)
+                {
+                    b[ii] = beta;
+                    b[0] = 1 + beta;
+                    b[grid_x-1] = 1+beta;
+                    d[ii] = -alpha * Pn[ii];
+                }
+
+                //save pressure array to P[,] matix
+                for (int ii= 0; ii < grid_x; ii++) 
+                {
+                    P[n + 1, ii] = Pn[ii];
+                }
+
+                //chart the new time step
+                seriesName = "Time Step #" + n+1; ;
+                chart1.Series.Add(seriesName);
+                chart1.Series[seriesName].ChartType = SeriesChartType.Line;
+
+
+                for (int ii = 1; ii < grid_x; ii++ )
+                {
+                    chart1.Series[seriesName].Points.AddXY(x_array[ii], P[n + 1, ii]);
+                }
                 
             }
-
+            /*
             //initialize the first series (t=0) on the graph
             string seriesName = "Time Step #0"; ;
             chart1.Series.Add(seriesName);
             chart1.Series[seriesName].ChartType = SeriesChartType.Line;
 
             //Initializes the basics of the pressure vs x vs time plot (@time = 0)
-            for (int pi=0; pi < grid_x + 1; pi++ )
+            for (int pi=0; pi < grid_x ; pi++ )
             {
                 chart1.Series[0].Points.AddXY(x_array[pi], P[0, pi]);
             }
@@ -296,18 +355,15 @@ MessageBoxButtons.OKCancel, MessageBoxIcon.Information);
                 chart1.Series[seriesName].ChartType = SeriesChartType.Line;
 
                 i = 0;
-                while (i < grid_x + 1)
+                while (i < grid_x )
                 {
-                    P[n,i] = P[n - 1, i] - delta_t*1; //just a dummy equation to test the graph
-                    //P[n,i];  //this is what to switch it to when the code is working
-
                     chart1.Series[seriesName].Points.AddXY(x_array[i], P[n, i]);
                     i++;
                 }
                 n++;
             }
 
-            
+            */
 
         }
 
@@ -342,26 +398,39 @@ MessageBoxButtons.OKCancel, MessageBoxIcon.Information);
             return Jw_n;
         }
 
-        private void ThomasMethod(double[] a, double[] b, double[] c, double[] d, int n)
+        private double[] ThomasMethod(double[] a, double[] b, double[] c, double[] d, int n)
         {
-            n--; 
-            c[0] /= b[0];
-            d[0] /= b[0];
+            
+            double[] P = new double[n];
+            double[] w = new double[n];
+            double[] g = new double[n];
+       
+            w[0] = c[0] / b[0];
+            g[0] = d[0] / b[0];
 
             for (int i = 1; i < n; i++)
             {
-                c[i] /= b[i] - a[i] * c[i - 1];
-                d[i] = (d[i] - a[i] * d[i - 1]) / (b[i] - a[i] * c[i - 1]);
+                w[i] = c[i] / (b[i] - a[i]*w[i-1]);
             }
 
-            d[n] = (d[n] - a[n] * d[n - 1]) / (b[n] - a[n] * c[n - 1]);
 
-            for (int i = n; i-- > 0; )
+            for (int i = 1; i < n; i++)
             {
-                d[i] -= c[i] * d[i + 1];
+                g[i] = (d[i] - a[i] * g[i - 1]) / (b[i] - a[i] * w[i - 1]);
             }
+
+            P[n - 1] = g[n - 1];
+
+            for (int i = n - 2; i >= 0; i--)
+			{
+			    P[i] = g[i] - w[i]*P[i+1];
+			}
+
+            return P;
         }
 
+
+    
         private void cbWell1Active_CheckedChanged(object sender, EventArgs e)
         {
                 
