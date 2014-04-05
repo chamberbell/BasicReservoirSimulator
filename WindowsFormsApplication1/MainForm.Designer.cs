@@ -28,9 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea5 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend5 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series5 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea3 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend3 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series3 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.txZGridBlocks = new System.Windows.Forms.TextBox();
             this.txYGridBlocks = new System.Windows.Forms.TextBox();
@@ -165,6 +165,13 @@
             this.label56 = new System.Windows.Forms.Label();
             this.tbTimeFrame = new System.Windows.Forms.TextBox();
             this.chart1 = new System.Windows.Forms.DataVisualization.Charting.Chart();
+            this.button3 = new System.Windows.Forms.Button();
+            this.lbRF = new System.Windows.Forms.Label();
+            this.lbOOIP = new System.Windows.Forms.Label();
+            this.lbProdTotal = new System.Windows.Forms.Label();
+            this.lbProdWell1 = new System.Windows.Forms.Label();
+            this.lbProdWell2 = new System.Windows.Forms.Label();
+            this.lbProdWell3 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -852,6 +859,13 @@
             // 
             // groupBox6
             // 
+            this.groupBox6.Controls.Add(this.lbProdWell3);
+            this.groupBox6.Controls.Add(this.lbProdWell2);
+            this.groupBox6.Controls.Add(this.lbProdWell1);
+            this.groupBox6.Controls.Add(this.lbProdTotal);
+            this.groupBox6.Controls.Add(this.lbOOIP);
+            this.groupBox6.Controls.Add(this.lbRF);
+            this.groupBox6.Controls.Add(this.button3);
             this.groupBox6.Controls.Add(this.button2);
             this.groupBox6.Controls.Add(this.button1);
             this.groupBox6.Location = new System.Drawing.Point(464, 310);
@@ -863,22 +877,24 @@
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(134, 26);
+            this.button2.Location = new System.Drawing.Point(17, 53);
             this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(108, 34);
+            this.button2.Size = new System.Drawing.Size(93, 24);
             this.button2.TabIndex = 1;
-            this.button2.Text = "Plot Pressure";
+            this.button2.Text = "Rate vs Time";
             this.button2.UseVisualStyleBackColor = true;
             this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(17, 26);
+            this.button1.BackColor = System.Drawing.Color.LightGreen;
+            this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button1.Location = new System.Drawing.Point(14, 16);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(99, 33);
             this.button1.TabIndex = 0;
-            this.button1.Text = "Calculate";
-            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Text = "Calculate!";
+            this.button1.UseVisualStyleBackColor = false;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // checkBox1
@@ -1502,21 +1518,84 @@
             // 
             // chart1
             // 
-            chartArea5.Name = "ChartArea1";
-            this.chart1.ChartAreas.Add(chartArea5);
-            legend5.Enabled = false;
-            legend5.Name = "Legend1";
-            this.chart1.Legends.Add(legend5);
+            chartArea3.Name = "ChartArea1";
+            this.chart1.ChartAreas.Add(chartArea3);
+            legend3.Enabled = false;
+            legend3.Name = "Legend1";
+            this.chart1.Legends.Add(legend3);
             this.chart1.Location = new System.Drawing.Point(12, 432);
             this.chart1.Name = "chart1";
-            series5.ChartArea = "ChartArea1";
-            series5.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
-            series5.Legend = "Legend1";
-            series5.Name = "Series1";
-            this.chart1.Series.Add(series5);
+            series3.ChartArea = "ChartArea1";
+            series3.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+            series3.Legend = "Legend1";
+            series3.Name = "Series1";
+            this.chart1.Series.Add(series3);
             this.chart1.Size = new System.Drawing.Size(804, 344);
             this.chart1.TabIndex = 23;
             this.chart1.Text = "chart1";
+            // 
+            // button3
+            // 
+            this.button3.Location = new System.Drawing.Point(17, 84);
+            this.button3.Name = "button3";
+            this.button3.Size = new System.Drawing.Size(93, 23);
+            this.button3.TabIndex = 2;
+            this.button3.Text = "Export to Excel";
+            this.button3.UseVisualStyleBackColor = true;
+            // 
+            // lbRF
+            // 
+            this.lbRF.AutoSize = true;
+            this.lbRF.Location = new System.Drawing.Point(216, 94);
+            this.lbRF.Name = "lbRF";
+            this.lbRF.Size = new System.Drawing.Size(82, 13);
+            this.lbRF.TabIndex = 3;
+            this.lbRF.Text = "Recovery = n/a";
+            // 
+            // lbOOIP
+            // 
+            this.lbOOIP.AutoSize = true;
+            this.lbOOIP.Location = new System.Drawing.Point(218, 12);
+            this.lbOOIP.Name = "lbOOIP";
+            this.lbOOIP.Size = new System.Drawing.Size(62, 13);
+            this.lbOOIP.TabIndex = 4;
+            this.lbOOIP.Text = "OOIP = n/a";
+            // 
+            // lbProdTotal
+            // 
+            this.lbProdTotal.AutoSize = true;
+            this.lbProdTotal.Location = new System.Drawing.Point(216, 33);
+            this.lbProdTotal.Name = "lbProdTotal";
+            this.lbProdTotal.Size = new System.Drawing.Size(87, 13);
+            this.lbProdTotal.TabIndex = 5;
+            this.lbProdTotal.Text = "Production = n/a";
+            // 
+            // lbProdWell1
+            // 
+            this.lbProdWell1.AutoSize = true;
+            this.lbProdWell1.Location = new System.Drawing.Point(240, 46);
+            this.lbProdWell1.Name = "lbProdWell1";
+            this.lbProdWell1.Size = new System.Drawing.Size(63, 13);
+            this.lbProdWell1.TabIndex = 6;
+            this.lbProdWell1.Text = "Well1 = n/a";
+            // 
+            // lbProdWell2
+            // 
+            this.lbProdWell2.AutoSize = true;
+            this.lbProdWell2.Location = new System.Drawing.Point(240, 62);
+            this.lbProdWell2.Name = "lbProdWell2";
+            this.lbProdWell2.Size = new System.Drawing.Size(63, 13);
+            this.lbProdWell2.TabIndex = 7;
+            this.lbProdWell2.Text = "Well2 = n/a";
+            // 
+            // lbProdWell3
+            // 
+            this.lbProdWell3.AutoSize = true;
+            this.lbProdWell3.Location = new System.Drawing.Point(240, 77);
+            this.lbProdWell3.Name = "lbProdWell3";
+            this.lbProdWell3.Size = new System.Drawing.Size(63, 13);
+            this.lbProdWell3.TabIndex = 8;
+            this.lbProdWell3.Text = "Well3 = n/a";
             // 
             // MainForm
             // 
@@ -1555,6 +1634,7 @@
             this.gbInitialandBC.ResumeLayout(false);
             this.gbInitialandBC.PerformLayout();
             this.groupBox6.ResumeLayout(false);
+            this.groupBox6.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.groupBox5.ResumeLayout(false);
             this.groupBox5.PerformLayout();
@@ -1704,6 +1784,13 @@
         private System.Windows.Forms.RadioButton rbWell3Pwf;
         private System.Windows.Forms.RadioButton rbWell3Qw;
         private System.Windows.Forms.DataVisualization.Charting.Chart chart1;
+        private System.Windows.Forms.Label lbProdWell3;
+        private System.Windows.Forms.Label lbProdWell2;
+        private System.Windows.Forms.Label lbProdWell1;
+        private System.Windows.Forms.Label lbProdTotal;
+        private System.Windows.Forms.Label lbOOIP;
+        private System.Windows.Forms.Label lbRF;
+        private System.Windows.Forms.Button button3;
 
     }
 }
