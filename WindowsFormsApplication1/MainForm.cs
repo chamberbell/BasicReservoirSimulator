@@ -142,6 +142,7 @@ namespace WindowsFormsApplication1
 
             chart1.Series.Clear();
 
+            double rate;
             bool?[] wells = new bool?[3]; //right now the code supports 3 wells
             bool?[] Inj = new bool?[3];
             bool?[] QwConst = new bool?[3];
@@ -170,12 +171,14 @@ namespace WindowsFormsApplication1
             delta_z = height / grid_z; //[ft]
 
             double.TryParse(tbPorosity.Text, out  porosity);
+            porosity = porosity / 100; //convert from % to decimal
             double.TryParse(tbPerm.Text, out  perm);
             double.TryParse(tbRockComp.Text, out  rockComp);
             double.TryParse(tbTotalComp.Text, out  totalComp);
             double.TryParse(tbLiquComp.Text, out  liquidComp);
 
             double.TryParse(tbWaterSat.Text, out  Sw);
+            Sw = Sw / 100; //convert from % to decimal
             double.TryParse(tbBubblePoint.Text, out  Pb);
             double.TryParse(tbInitialBo.Text, out  Boi);
             double.TryParse(tbOilVisc.Text, out  oilVisc);
@@ -187,7 +190,8 @@ namespace WindowsFormsApplication1
             Inj[0] = cbWell1Injector.Checked;
             QwConst[0] = rbWell1Qw.Checked; //1=Qw, 0=Pwf
             double.TryParse(tbWell1Pwf.Text, out  PwfPres[0]);
-            double.TryParse(tbWell1Qw.Text, out  QwRate[0]);
+            double.TryParse(tbWell1Qw.Text, out  rate);
+            QwRate[0] = -rate; //production = negative
             double.TryParse(tbWell1Skin.Text, out  Skin[0]);
             double.TryParse(tbWell1rw.Text, out  WellRw[0]); //[ft]
             double.TryParse(tbWell1X.Text, out  X_loc[0]); //[ft]
@@ -197,7 +201,8 @@ namespace WindowsFormsApplication1
             Inj[1] = cbWell2Injector.Checked;
             QwConst[1] = rbWell2Qw.Checked; //1=Qw, 0=Pwf
             double.TryParse(tbWell2Pwf.Text, out  PwfPres[1]);
-            double.TryParse(tbWell2Qw.Text, out  QwRate[1]);
+            double.TryParse(tbWell2Qw.Text, out  rate);
+            QwRate[1] = -rate; //production = negative
             double.TryParse(tbWell2Skin.Text, out  Skin[1]);
             double.TryParse(tbWell2rw.Text, out  WellRw[1]); //[ft]
             double.TryParse(tbWell2X.Text, out  X_loc[1]); //[ft]
@@ -207,14 +212,15 @@ namespace WindowsFormsApplication1
             Inj[2] = cbWell3Injector.Checked;
             QwConst[2] = rbWell3Qw.Checked; //1=Qw, 0=Pwf
             double.TryParse(tbWell3Pwf.Text, out  PwfPres[2]);
-            double.TryParse(tbWell3Qw.Text, out  QwRate[2]);
+            double.TryParse(tbWell3Qw.Text, out  rate);
+            QwRate[2] = -rate; //production = negative
             double.TryParse(tbWell3Skin.Text, out  Skin[2]);
             double.TryParse(tbWell3rw.Text, out  WellRw[2]); //[ft]
             double.TryParse(tbWell3X.Text, out  X_loc[2]); //[ft]
             double.TryParse(tbWell3Y.Text, out  Y_loc[2]); //[ft]
 
             //calculate constants
-            double alpha = 158 * porosity * oilVisc * totalComp / perm * Math.Pow(delta_x, 2) / delta_t;
+            double alpha = 158 * porosity * oilVisc * liquidComp / perm * Math.Pow(delta_x, 2) / delta_t;
             double beta = -2-alpha;
             double wellTerm; //will calculate later in program
             double re = 0.14 * Math.Sqrt(Math.Pow(delta_x, 2) + Math.Pow(delta_y, 2)); //Peaceman
@@ -226,7 +232,7 @@ namespace WindowsFormsApplication1
             double[] b = new double[grid_x];
             double[] c = new double[grid_x];
             double[] d = new double[grid_x];
-           
+          
 
             x_array[0] = delta_x / 2;
             Pn[0] = Pinitial;
@@ -267,6 +273,13 @@ namespace WindowsFormsApplication1
             }
 
 
+            //Initialize settings of the graph
+            chart1.ChartAreas[0].AxisX.MajorGrid.Interval = delta_x;
+            chart1.ChartAreas[0].AxisX.Title = "x, ft";
+            chart1.ChartAreas[0].AxisX.Minimum = 0;
+            chart1.ChartAreas[0].AxisX.Maximum = length;
+            chart1.ChartAreas[0].AxisY.Title = "P, psia";
+            
             //initialize the first series (t=0) on the graph
             string seriesName = "Time Step #0"; ;
             chart1.Series.Add(seriesName);
@@ -289,17 +302,17 @@ namespace WindowsFormsApplication1
                 {
                     if (wells[ii] == true)
                     {
-                        int loc = Convert.ToInt32((X_loc[ii] / delta_x) + 1);
+                        int loc = Convert.ToInt32((X_loc[ii] / delta_x))-1;
                         if (QwConst[ii]==true)
                         {
-                            wellTerm = 887.53 * QwRate[ii] * oilVisc * Bo_n(loc) * delta_x / (perm * delta_y * delta_z);
-                            d[loc] = d[loc] + wellTerm;
+                            wellTerm = 887.53 * QwRate[ii] * oilVisc * Bo_n(Pn[loc]) * delta_x / (perm * delta_y * delta_z);
+                            d[loc] = d[loc] - wellTerm;
                         }
                         else
                         {
                             wellTerm = 887.53 * 0.00708 / (Math.Log(re / WellRw[ii]) + Skin[ii]) * delta_x / delta_y;
-                            d[loc] = d[loc] + wellTerm;
-                            b[loc] = b[loc] - wellTerm;
+                            d[loc] = d[loc] - wellTerm;
+                            b[loc] = b[loc] + wellTerm;
                         }
                     }
                 }
@@ -327,11 +340,24 @@ namespace WindowsFormsApplication1
                 chart1.Series[seriesName].ChartType = SeriesChartType.Line;
 
 
-                for (int ii = 1; ii < grid_x; ii++ )
+                for (int ii = 0; ii < grid_x; ii++ )
                 {
                     chart1.Series[seriesName].Points.AddXY(x_array[ii], P[n + 1, ii]);
                 }
+
+                for (int wellID = 0; wellID < 3; wellID++)
+                {
+                    if (wells[wellID] ==true)
+                    {
+                        chart1.ChartAreas[0].AxisX.StripLines.Add(new StripLine());
+                        chart1.ChartAreas[0].AxisX.StripLines[wellID].BackColor = Color.Black;
+                        chart1.ChartAreas[0].AxisX.StripLines[wellID].StripWidth = 40;
+                        chart1.ChartAreas[0].AxisX.StripLines[wellID].Interval = 10000;
+                        chart1.ChartAreas[0].AxisX.StripLines[wellID].IntervalOffset = X_loc[wellID];
+                        chart1.ChartAreas[0].AxisX.StripLines[wellID].Text = "Well " + Convert.ToString(wellID + 1);
                 
+                    }
+                }
             }
             /*
             //initialize the first series (t=0) on the graph
@@ -456,6 +482,11 @@ namespace WindowsFormsApplication1
             
             Form1 f1 = new Form1(); // Instantiate a Form1 object.
             f1.Show();    
+        }
+
+        private void tbTimeStep_TextChanged(object sender, EventArgs e)
+        {
+
         }
 
     }
