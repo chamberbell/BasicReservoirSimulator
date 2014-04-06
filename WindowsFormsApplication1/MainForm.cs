@@ -11,6 +11,7 @@ using System.Windows.Forms.DataVisualization.Charting;
 using System.Reflection; // For Missing.Value and BindingFlags
 using System.Runtime.InteropServices; // For COMException
 using Microsoft.Office.Interop.Excel;
+using Application = Microsoft.Office.Interop.Excel.Application;
 
 
 namespace WindowsFormsApplication1
@@ -550,10 +551,10 @@ namespace WindowsFormsApplication1
     class CreateExcelDoc
     {
         
-        private Excel.Application app = null;
-        private Excel.Workbook workbook = null;
-        private Excel.Worksheet worksheet = null;
-        private Excel.Range workSheet_range = null;
+        private Application app = null;
+        private Workbook workbook = null;
+        private Worksheet worksheet = null;
+        private Range workSheet_range = null;
         public CreateExcelDoc()
         {
             createDoc(); 
@@ -562,10 +563,10 @@ namespace WindowsFormsApplication1
         {
             try
             {       
-                app = new Excel.Application();
+                app = new Application();
                 app.Visible = true;
                 workbook = app.Workbooks.Add(1);
-                worksheet = (Excel.Worksheet)workbook.Sheets[1];
+                worksheet = (Worksheet)workbook.Sheets[1];
             }
             catch (Exception e)
             {
