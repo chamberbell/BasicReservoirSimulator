@@ -28,9 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea3 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend3 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series3 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.txZGridBlocks = new System.Windows.Forms.TextBox();
             this.txYGridBlocks = new System.Windows.Forms.TextBox();
@@ -100,6 +100,13 @@
             this.cbBC_NoFlow_X0 = new System.Windows.Forms.CheckBox();
             this.label4 = new System.Windows.Forms.Label();
             this.groupBox6 = new System.Windows.Forms.GroupBox();
+            this.lbProdWell3 = new System.Windows.Forms.Label();
+            this.lbProdWell2 = new System.Windows.Forms.Label();
+            this.lbProdWell1 = new System.Windows.Forms.Label();
+            this.lbProdTotal = new System.Windows.Forms.Label();
+            this.lbOOIP = new System.Windows.Forms.Label();
+            this.lbRF = new System.Windows.Forms.Label();
+            this.button3 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
             this.checkBox1 = new System.Windows.Forms.CheckBox();
@@ -165,13 +172,6 @@
             this.label56 = new System.Windows.Forms.Label();
             this.tbTimeFrame = new System.Windows.Forms.TextBox();
             this.chart1 = new System.Windows.Forms.DataVisualization.Charting.Chart();
-            this.button3 = new System.Windows.Forms.Button();
-            this.lbRF = new System.Windows.Forms.Label();
-            this.lbOOIP = new System.Windows.Forms.Label();
-            this.lbProdTotal = new System.Windows.Forms.Label();
-            this.lbProdWell1 = new System.Windows.Forms.Label();
-            this.lbProdWell2 = new System.Windows.Forms.Label();
-            this.lbProdWell3 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -448,7 +448,7 @@
             this.tbPorosity.Name = "tbPorosity";
             this.tbPorosity.Size = new System.Drawing.Size(75, 20);
             this.tbPorosity.TabIndex = 4;
-            this.tbPorosity.Text = "10";
+            this.tbPorosity.Text = "20";
             // 
             // label36
             // 
@@ -875,6 +875,70 @@
             this.groupBox6.TabStop = false;
             this.groupBox6.Text = "Commands and Outputs";
             // 
+            // lbProdWell3
+            // 
+            this.lbProdWell3.AutoSize = true;
+            this.lbProdWell3.Location = new System.Drawing.Point(240, 77);
+            this.lbProdWell3.Name = "lbProdWell3";
+            this.lbProdWell3.Size = new System.Drawing.Size(63, 13);
+            this.lbProdWell3.TabIndex = 8;
+            this.lbProdWell3.Text = "Well3 = n/a";
+            // 
+            // lbProdWell2
+            // 
+            this.lbProdWell2.AutoSize = true;
+            this.lbProdWell2.Location = new System.Drawing.Point(240, 62);
+            this.lbProdWell2.Name = "lbProdWell2";
+            this.lbProdWell2.Size = new System.Drawing.Size(63, 13);
+            this.lbProdWell2.TabIndex = 7;
+            this.lbProdWell2.Text = "Well2 = n/a";
+            // 
+            // lbProdWell1
+            // 
+            this.lbProdWell1.AutoSize = true;
+            this.lbProdWell1.Location = new System.Drawing.Point(240, 46);
+            this.lbProdWell1.Name = "lbProdWell1";
+            this.lbProdWell1.Size = new System.Drawing.Size(63, 13);
+            this.lbProdWell1.TabIndex = 6;
+            this.lbProdWell1.Text = "Well1 = n/a";
+            // 
+            // lbProdTotal
+            // 
+            this.lbProdTotal.AutoSize = true;
+            this.lbProdTotal.Location = new System.Drawing.Point(216, 33);
+            this.lbProdTotal.Name = "lbProdTotal";
+            this.lbProdTotal.Size = new System.Drawing.Size(87, 13);
+            this.lbProdTotal.TabIndex = 5;
+            this.lbProdTotal.Text = "Production = n/a";
+            // 
+            // lbOOIP
+            // 
+            this.lbOOIP.AutoSize = true;
+            this.lbOOIP.Location = new System.Drawing.Point(218, 12);
+            this.lbOOIP.Name = "lbOOIP";
+            this.lbOOIP.Size = new System.Drawing.Size(62, 13);
+            this.lbOOIP.TabIndex = 4;
+            this.lbOOIP.Text = "OOIP = n/a";
+            // 
+            // lbRF
+            // 
+            this.lbRF.AutoSize = true;
+            this.lbRF.Location = new System.Drawing.Point(216, 94);
+            this.lbRF.Name = "lbRF";
+            this.lbRF.Size = new System.Drawing.Size(82, 13);
+            this.lbRF.TabIndex = 3;
+            this.lbRF.Text = "Recovery = n/a";
+            // 
+            // button3
+            // 
+            this.button3.Location = new System.Drawing.Point(17, 84);
+            this.button3.Name = "button3";
+            this.button3.Size = new System.Drawing.Size(93, 23);
+            this.button3.TabIndex = 2;
+            this.button3.Text = "Export to Excel";
+            this.button3.UseVisualStyleBackColor = true;
+            this.button3.Click += new System.EventHandler(this.button3_Click);
+            // 
             // button2
             // 
             this.button2.Location = new System.Drawing.Point(17, 53);
@@ -965,10 +1029,12 @@
             // rbWell1Pwf
             // 
             this.rbWell1Pwf.AutoSize = true;
+            this.rbWell1Pwf.Checked = true;
             this.rbWell1Pwf.Location = new System.Drawing.Point(95, 60);
             this.rbWell1Pwf.Name = "rbWell1Pwf";
             this.rbWell1Pwf.Size = new System.Drawing.Size(43, 17);
             this.rbWell1Pwf.TabIndex = 16;
+            this.rbWell1Pwf.TabStop = true;
             this.rbWell1Pwf.Text = "Pwf";
             this.rbWell1Pwf.UseVisualStyleBackColor = true;
             this.rbWell1Pwf.CheckedChanged += new System.EventHandler(this.rbWell1Pwf_CheckedChanged);
@@ -976,12 +1042,10 @@
             // rbWell1Qw
             // 
             this.rbWell1Qw.AutoSize = true;
-            this.rbWell1Qw.Checked = true;
             this.rbWell1Qw.Location = new System.Drawing.Point(95, 19);
             this.rbWell1Qw.Name = "rbWell1Qw";
             this.rbWell1Qw.Size = new System.Drawing.Size(41, 17);
             this.rbWell1Qw.TabIndex = 15;
-            this.rbWell1Qw.TabStop = true;
             this.rbWell1Qw.Text = "Qw";
             this.rbWell1Qw.UseVisualStyleBackColor = true;
             this.rbWell1Qw.CheckedChanged += new System.EventHandler(this.rbWell1Qw_CheckedChanged);
@@ -1514,88 +1578,25 @@
             this.tbTimeFrame.Name = "tbTimeFrame";
             this.tbTimeFrame.Size = new System.Drawing.Size(62, 20);
             this.tbTimeFrame.TabIndex = 20;
-            this.tbTimeFrame.Text = "500";
+            this.tbTimeFrame.Text = "250";
             // 
             // chart1
             // 
-            chartArea3.Name = "ChartArea1";
-            this.chart1.ChartAreas.Add(chartArea3);
-            legend3.Enabled = false;
-            legend3.Name = "Legend1";
-            this.chart1.Legends.Add(legend3);
+            chartArea1.Name = "ChartArea1";
+            this.chart1.ChartAreas.Add(chartArea1);
+            legend1.Enabled = false;
+            legend1.Name = "Legend1";
+            this.chart1.Legends.Add(legend1);
             this.chart1.Location = new System.Drawing.Point(12, 432);
             this.chart1.Name = "chart1";
-            series3.ChartArea = "ChartArea1";
-            series3.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
-            series3.Legend = "Legend1";
-            series3.Name = "Series1";
-            this.chart1.Series.Add(series3);
+            series1.ChartArea = "ChartArea1";
+            series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+            series1.Legend = "Legend1";
+            series1.Name = "Series1";
+            this.chart1.Series.Add(series1);
             this.chart1.Size = new System.Drawing.Size(804, 344);
             this.chart1.TabIndex = 23;
             this.chart1.Text = "chart1";
-            // 
-            // button3
-            // 
-            this.button3.Location = new System.Drawing.Point(17, 84);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(93, 23);
-            this.button3.TabIndex = 2;
-            this.button3.Text = "Export to Excel";
-            this.button3.UseVisualStyleBackColor = true;
-            // 
-            // lbRF
-            // 
-            this.lbRF.AutoSize = true;
-            this.lbRF.Location = new System.Drawing.Point(216, 94);
-            this.lbRF.Name = "lbRF";
-            this.lbRF.Size = new System.Drawing.Size(82, 13);
-            this.lbRF.TabIndex = 3;
-            this.lbRF.Text = "Recovery = n/a";
-            // 
-            // lbOOIP
-            // 
-            this.lbOOIP.AutoSize = true;
-            this.lbOOIP.Location = new System.Drawing.Point(218, 12);
-            this.lbOOIP.Name = "lbOOIP";
-            this.lbOOIP.Size = new System.Drawing.Size(62, 13);
-            this.lbOOIP.TabIndex = 4;
-            this.lbOOIP.Text = "OOIP = n/a";
-            // 
-            // lbProdTotal
-            // 
-            this.lbProdTotal.AutoSize = true;
-            this.lbProdTotal.Location = new System.Drawing.Point(216, 33);
-            this.lbProdTotal.Name = "lbProdTotal";
-            this.lbProdTotal.Size = new System.Drawing.Size(87, 13);
-            this.lbProdTotal.TabIndex = 5;
-            this.lbProdTotal.Text = "Production = n/a";
-            // 
-            // lbProdWell1
-            // 
-            this.lbProdWell1.AutoSize = true;
-            this.lbProdWell1.Location = new System.Drawing.Point(240, 46);
-            this.lbProdWell1.Name = "lbProdWell1";
-            this.lbProdWell1.Size = new System.Drawing.Size(63, 13);
-            this.lbProdWell1.TabIndex = 6;
-            this.lbProdWell1.Text = "Well1 = n/a";
-            // 
-            // lbProdWell2
-            // 
-            this.lbProdWell2.AutoSize = true;
-            this.lbProdWell2.Location = new System.Drawing.Point(240, 62);
-            this.lbProdWell2.Name = "lbProdWell2";
-            this.lbProdWell2.Size = new System.Drawing.Size(63, 13);
-            this.lbProdWell2.TabIndex = 7;
-            this.lbProdWell2.Text = "Well2 = n/a";
-            // 
-            // lbProdWell3
-            // 
-            this.lbProdWell3.AutoSize = true;
-            this.lbProdWell3.Location = new System.Drawing.Point(240, 77);
-            this.lbProdWell3.Name = "lbProdWell3";
-            this.lbProdWell3.Size = new System.Drawing.Size(63, 13);
-            this.lbProdWell3.TabIndex = 8;
-            this.lbProdWell3.Text = "Well3 = n/a";
             // 
             // MainForm
             // 

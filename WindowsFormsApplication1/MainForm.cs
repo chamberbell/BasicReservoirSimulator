@@ -16,9 +16,11 @@ using Application = Microsoft.Office.Interop.Excel.Application;
 
 namespace WindowsFormsApplication1
 {
+    
     public partial class MainForm : Form
     {
 
+        
         double time_frame; // [days] this is how long the simulation will run
         double delta_t; // [days] the number of days between time steps
         int time_steps; // time_frame divided by delta_t
@@ -50,44 +52,27 @@ namespace WindowsFormsApplication1
         double Pmin;
         double ConvToInjPres;
 
-        /*
-        bool? UseWell1 = null;
-        bool? Well1_Inj = null;
-        bool? Well1_Qw_or_Pwf = null; //1=Qw, 0=Pwf
-        double Well1Pwf; 
-        double Well1Qw;
-        double Well1Skin;
-        double Well1Rw; //[ft]
-        double Well1XLoc; //[ft]
-        double Well1YLoc; //[ft]
+        double rate;
+        bool?[] wells = new bool?[3]; //right now the code supports 3 wells
+        bool?[] Inj = new bool?[3];
+        bool?[] QwConst = new bool?[3];
+        double[] QwRate = new double[3];
 
-        bool? UseWell2 = null;
-        bool? Well2_Inj = null;
-        bool? Well2_Qw_or_Pwf = null; //1=Qw, 0=Pwf
-        double Well2Pwf;
-        double Well2Qw;
-        double Well2Skin;
-        double Well2Rw; //[ft]
-        double Well2XLoc; //[ft]
-        double Well2YLoc; //[ft]
+        double[] PwfPres = new double[3];
+        double[] WellRw = new double[3];
+        double[] Skin = new double[3];
+        double[] X_loc = new double[3];
+        double[] Y_loc = new double[3];
 
-        bool? UseWell3 = null;
-        bool? Well3_Inj = null;
-        bool? Well3_Qw_or_Pwf = null; //1=Qw, 0=Pwf
-        double Well3Pwf;
-        double Well3Qw;
-        double Well3Skin;
-        double Well3Rw; //[ft]
-        double Well3XLoc; //[ft]
-        double Well3YLoc; //[ft]
-
-        */
+        //define the pressure & rate matrices to store the P values over time and space
+        double[,] P;   // P_avg vs time vs x_loc
+        double[,] Qw;  // rate vs time vs x loc
+        double[,] Pwf; // Pwf vs time vs x_loc
 
 
         public MainForm()
         {
             InitializeComponent();
-
         }
 
         private void pictureBox1_Click(object sender, EventArgs e)
@@ -143,22 +128,10 @@ namespace WindowsFormsApplication1
    
         private void refreshData()
         {
-            //double.TryParse(tbBubblePoint.Text, out foo);
-            //foo = foo + 200;
-            //tbBubblePoint.Text = Convert.ToString(foo);
-
             chart1.Series.Clear();
+            chart1.ChartAreas[0].AxisX.StripLines.Clear();
 
-            double rate;
-            bool?[] wells = new bool?[3]; //right now the code supports 3 wells
-            bool?[] Inj = new bool?[3];
-            bool?[] QwConst = new bool?[3];
-            double[] QwRate = new double[3];
-            double[] PwfPres = new double[3];
-            double[] WellRw = new double[3];
-            double[] Skin = new double[3];
-            double[] X_loc = new double[3];
-            double[] Y_loc = new double[3];
+
 
             double.TryParse(tbTimeFrame.Text, out time_frame); // [days] this is how long the simulation will run
             double.TryParse(tbTimeStep.Text, out  delta_t); // [days] the number of days between time steps
@@ -249,8 +222,9 @@ namespace WindowsFormsApplication1
             int i; //time step
             int n; //grid block
 
-            //define the pressure matrix to store the P values over time and space
-            double[,] P = new double [time_steps+1,grid_x]; // P[n,i]
+            Qw = new double[time_steps+1, 3];
+            Pwf = new double[time_steps+1, 3];
+            P = new double[time_steps+1, grid_x];
 
             //set up the dirac delta well term and initialize arrays
             double[] dirac = new double[grid_x ];
@@ -280,8 +254,7 @@ namespace WindowsFormsApplication1
                     dirac[n] = 1;
                 }
             }
-
-
+            
             //Initialize settings of the graph
             chart1.ChartAreas[0].AxisX.MajorGrid.Interval = delta_x;
             chart1.ChartAreas[0].AxisX.Title = "x, ft";
@@ -298,9 +271,9 @@ namespace WindowsFormsApplication1
                 chart1.Series[0].Points.AddXY(x_array[pi], P[0, pi]);
             }
 
-            //Output OOIP
-            double ooip = porosity * So * length * width * height;
-            lbOOIP.Text = "OOIP = " + ooip + " bbls";
+            //Output OOIP in bbls
+            double ooip = porosity * So * length * width * height / 5.6145;
+            lbOOIP.Text = "OOIP = " + ooip.ToString("N0") + " bbls";
 
             //set up place to store production, one column for each well
             double[] CumProd = new double[3];
@@ -313,6 +286,8 @@ namespace WindowsFormsApplication1
                 for (int ii = 0; ii < grid_x; ii++) //set the Thomas Method arrays
                 {
                     Pn[ii] = P[n, ii];
+                    //Qw[n, ii] = 0;
+                    //Pwf[n, ii] = 0;
                 }
 
                 //add the well terms to the b an d arrays
@@ -325,12 +300,29 @@ namespace WindowsFormsApplication1
                         {
                             wellTerm = 887.53 * QwRate[ii] * oilVisc * Bo_n(Pn[loc]) * delta_x / (perm * delta_y * delta_z);
                             d[loc] = d[loc] - wellTerm;
+                            Qw[n, ii] = QwRate[ii];
+                            if (n>0)
+	                        {
+                                Pwf[ n-1,ii] =Pn[loc]-(-QwRate[ii])/Jw(Pn[loc],WellRw[ii],Skin[ii]);
+                                CumProd[ii] = CumProd[ii] - QwRate[ii] * delta_t;
+	                        }
+                                
                         }
                         else
                         {
-                            wellTerm = 887.53 * 0.00708 / (Math.Log(re / WellRw[ii]) + Skin[ii]) * delta_x / delta_y;
-                            d[loc] = d[loc] - wellTerm;
-                            b[loc] = b[loc] + wellTerm;
+                            wellTerm = 887.53 * 0.00708  / (Math.Log(re / WellRw[ii]) + Skin[ii]) * delta_x / delta_y;
+                            d[loc] = d[loc] - wellTerm*PwfPres[ii];
+                            b[loc] = b[loc] - wellTerm;
+                            Pwf[n,ii]=PwfPres[ii];
+                            if (n > 0)
+                            {
+                                Qw[n - 1,ii] = -(Pn[loc]-PwfPres[ii])*Jw(Pn[loc], WellRw[ii], Skin[ii]);
+                                CumProd[ii] = CumProd[ii] - Qw[n-1,ii] * delta_t;
+                            }
+                            else
+                            {
+                                CumProd[ii] = -(Pinitial - PwfPres[ii]) * Jw(Pinitial, WellRw[ii], Skin[ii]);
+                            }
                         }
                     }
                 }
@@ -346,7 +338,7 @@ namespace WindowsFormsApplication1
                     d[ii] = -alpha * Pn[ii];
                 }
 
-                //save pressure array to P[,] matix
+                //save Pn pressure array to Pn+1 in the P[,] matix
                 for (int ii= 0; ii < grid_x; ii++) 
                 {
                     P[n + 1, ii] = Pn[ii];
@@ -375,7 +367,7 @@ namespace WindowsFormsApplication1
                         chart1.ChartAreas[0].AxisX.StripLines[wellID].Text = "Well " + Convert.ToString(wellID + 1);
 
                         //while we're here, go ahead and update cumulative production
-                        CumProd[wellID] = CumProd[wellID] - QwRate[wellID];
+                        
                     }
 
                     resProd = CumProd[0] + CumProd[1] + CumProd[2];
@@ -383,11 +375,11 @@ namespace WindowsFormsApplication1
                 }
             }
 
-            lbRF.Text = "Recovery = " + RecoveryFactor * 100 + "%";
-            lbProdTotal.Text = "Production = " + resProd + " STB";
-            lbProdWell1.Text = "Well1 = " + CumProd[0] + " STB";
-            lbProdWell2.Text = "Well2 = " + CumProd[1] + " STB";
-            lbProdWell3.Text = "Well3 = " + CumProd[2] + " STB";
+            lbRF.Text = "Recovery = " + RecoveryFactor.ToString("P2");
+            lbProdTotal.Text = "Production = " + resProd.ToString("N0") + " STB";
+            lbProdWell1.Text = "Well1 = " + CumProd[0].ToString("N0") + " STB";
+            lbProdWell2.Text = "Well2 = " + CumProd[1].ToString("N0") + " STB";
+            lbProdWell3.Text = "Well3 = " + CumProd[2].ToString("N0") + " STB";
 
             /*
             //initialize the first series (t=0) on the graph
@@ -427,22 +419,14 @@ namespace WindowsFormsApplication1
         {
 
             CreateExcelDoc excell_app = new CreateExcelDoc();
-            //creates the main header
-            excell_app.createHeaders(5, 2, "Total of Products", "B5", "D5", 2, "YELLOW", true, 10, "n");
-            //creates subheaders
-            excell_app.createHeaders(6, 2, "Sold Product", "B6", "B6", 0, "GRAY", true, 10, "");
-            excell_app.createHeaders(6, 3, "", "C6", "C6", 0, "GRAY", true, 10, "");
-            excell_app.createHeaders(6, 4, "Initial Total", "D6", "D6", 0, "GRAY", true, 10, "");
-            //add Data to cells
-            excell_app.addData(7, 2, "114287", "B7", "B7", "#,##0");
-            excell_app.addData(7, 3, "", "C7", "C7", "");
-            excell_app.addData(7, 4, "129121", "D7", "D7", "#,##0");
-            //add percentage row
-            excell_app.addData(8, 2, "", "B8", "B8", "");
-            excell_app.addData(8, 3, "=B7/D7", "C8", "C8", "0.0%");
-            excell_app.addData(8, 4, "", "D8", "D8", "");
-            //add empty divider
-            excell_app.createHeaders(9, 2, "", "B9", "D9", 2, "GAINSBORO", true, 10, "");
+
+            for (int i = 0; i < P.GetLength(0); i++)
+            {
+                for (int j = 0; j < P.GetLength(1); j++)
+                {
+                    excell_app.addData(i+1, j+1, P[i, j]);
+                }
+            }
 
         }
 
@@ -474,7 +458,7 @@ namespace WindowsFormsApplication1
             double re = 0.14 * Math.Sqrt(Math.Pow(delta_x, 2) + Math.Pow(delta_y, 2));
             double Bn = Boi*Math.Exp(-liquidComp*(Pn-Pinitial)); //need to make this based on pressure from c_liquid
             double Jw_n;
-            Jw_n= 0.00708 / oilVisc / Bn * perm * height / (Math.Log(rw/re) +S);
+            Jw_n= 0.00708 / oilVisc / Bn * perm * height / (Math.Log(re/rw) +S);
             return Jw_n;
         }
 
@@ -531,11 +515,8 @@ namespace WindowsFormsApplication1
 
         private void button2_Click(object sender, EventArgs e)
         {
-            //chart1.
-
-            
-            Form1 f1 = new Form1(); // Instantiate a Form1 object.
-            f1.Show();    
+           Form1 f1 = new Form1(Qw, delta_t); // Instantiate a Form1 object.
+           f1.Show();
         }
 
         private void tbTimeStep_TextChanged(object sender, EventArgs e)
@@ -543,8 +524,13 @@ namespace WindowsFormsApplication1
 
         }
 
+        private void button3_Click(object sender, EventArgs e)
+        {
+            SaveExcel();
+        }
+
     }
-}
+
 
 
 
@@ -577,9 +563,7 @@ namespace WindowsFormsApplication1
             }
         }
 
-public void createHeaders(int row, int col, string htext, string cell1,
-string cell2, int mergeColumns,string b, bool font,int size,string
-fcolor)
+public void createHeaders(int row, int col, string htext, string cell1, string cell2, int mergeColumns,string b, bool font,int size,string fcolor)
         {
             worksheet.Cells[row, col] = htext;
             workSheet_range = worksheet.get_Range(cell1, cell2);
@@ -621,12 +605,11 @@ fcolor)
             }
         }
 
-        public void addData(int row, int col, string data, 
-			string cell1, string cell2,string format)
+        public void addData(int row, int col, double data)
         {
             worksheet.Cells[row, col] = data;
-            workSheet_range = worksheet.get_Range(cell1, cell2);
-            workSheet_range.Borders.Color = System.Drawing.Color.Black.ToArgb();
-            workSheet_range.NumberFormat = format;
-        }    
+        }   
+
     }
+
+}
