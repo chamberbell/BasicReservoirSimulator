@@ -42,9 +42,9 @@ namespace WindowsFormsApplication1
                 chart1.Series[seriesName].ChartType = SeriesChartType.Line;
                 chart1.Series[seriesName].BorderWidth = 2;
 
-                for (int n = 1; n < time_steps; n++)
+                for (int n = 0; n < time_steps; n++)
                 {
-                    chart1.Series[seriesName].Points.AddXY((n-1) * del_t, -Qw_vs_Time[n, i]);
+                    chart1.Series[seriesName].Points.AddXY((n) * del_t, -Qw_vs_Time[n, i]);
                 }
             }
         }

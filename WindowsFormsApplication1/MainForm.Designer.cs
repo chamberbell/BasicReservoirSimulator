@@ -878,7 +878,7 @@
             // lbProdWell3
             // 
             this.lbProdWell3.AutoSize = true;
-            this.lbProdWell3.Location = new System.Drawing.Point(240, 77);
+            this.lbProdWell3.Location = new System.Drawing.Point(147, 77);
             this.lbProdWell3.Name = "lbProdWell3";
             this.lbProdWell3.Size = new System.Drawing.Size(63, 13);
             this.lbProdWell3.TabIndex = 8;
@@ -887,7 +887,7 @@
             // lbProdWell2
             // 
             this.lbProdWell2.AutoSize = true;
-            this.lbProdWell2.Location = new System.Drawing.Point(240, 62);
+            this.lbProdWell2.Location = new System.Drawing.Point(147, 62);
             this.lbProdWell2.Name = "lbProdWell2";
             this.lbProdWell2.Size = new System.Drawing.Size(63, 13);
             this.lbProdWell2.TabIndex = 7;
@@ -896,7 +896,7 @@
             // lbProdWell1
             // 
             this.lbProdWell1.AutoSize = true;
-            this.lbProdWell1.Location = new System.Drawing.Point(240, 46);
+            this.lbProdWell1.Location = new System.Drawing.Point(147, 46);
             this.lbProdWell1.Name = "lbProdWell1";
             this.lbProdWell1.Size = new System.Drawing.Size(63, 13);
             this.lbProdWell1.TabIndex = 6;
@@ -905,7 +905,7 @@
             // lbProdTotal
             // 
             this.lbProdTotal.AutoSize = true;
-            this.lbProdTotal.Location = new System.Drawing.Point(216, 33);
+            this.lbProdTotal.Location = new System.Drawing.Point(123, 33);
             this.lbProdTotal.Name = "lbProdTotal";
             this.lbProdTotal.Size = new System.Drawing.Size(87, 13);
             this.lbProdTotal.TabIndex = 5;
@@ -914,7 +914,7 @@
             // lbOOIP
             // 
             this.lbOOIP.AutoSize = true;
-            this.lbOOIP.Location = new System.Drawing.Point(218, 12);
+            this.lbOOIP.Location = new System.Drawing.Point(125, 12);
             this.lbOOIP.Name = "lbOOIP";
             this.lbOOIP.Size = new System.Drawing.Size(62, 13);
             this.lbOOIP.TabIndex = 4;
@@ -923,7 +923,7 @@
             // lbRF
             // 
             this.lbRF.AutoSize = true;
-            this.lbRF.Location = new System.Drawing.Point(216, 94);
+            this.lbRF.Location = new System.Drawing.Point(123, 94);
             this.lbRF.Name = "lbRF";
             this.lbRF.Size = new System.Drawing.Size(82, 13);
             this.lbRF.TabIndex = 3;
@@ -1582,13 +1582,16 @@
             // 
             // chart1
             // 
+            this.chart1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             chartArea1.Name = "ChartArea1";
             this.chart1.ChartAreas.Add(chartArea1);
-            legend1.Enabled = false;
             legend1.Name = "Legend1";
             this.chart1.Legends.Add(legend1);
             this.chart1.Location = new System.Drawing.Point(12, 432);
             this.chart1.Name = "chart1";
+            this.chart1.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.SemiTransparent;
             series1.ChartArea = "ChartArea1";
             series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
             series1.Legend = "Legend1";

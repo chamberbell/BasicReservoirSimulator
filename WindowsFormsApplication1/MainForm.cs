@@ -135,7 +135,7 @@ namespace WindowsFormsApplication1
 
             double.TryParse(tbTimeFrame.Text, out time_frame); // [days] this is how long the simulation will run
             double.TryParse(tbTimeStep.Text, out  delta_t); // [days] the number of days between time steps
-            time_steps = Convert.ToInt32(time_frame / delta_t); // time_frame divided by delta_t
+            time_steps = Convert.ToInt32(time_frame / delta_t)+1; // time_frame divided by delta_t
 
 
             double.TryParse(txLength.Text, out  length); //[ft]
@@ -263,9 +263,10 @@ namespace WindowsFormsApplication1
             chart1.ChartAreas[0].AxisY.Title = "P, psia";
             
             //initialize the first series (t=0) on the graph
-            string seriesName = "Time Step #0"; ;
+            string seriesName = "Initial Conditions";
             chart1.Series.Add(seriesName);
             chart1.Series[seriesName].ChartType = SeriesChartType.Line;
+            chart1.Series[seriesName].BorderWidth = 2;
             for (int pi = 0; pi < grid_x; pi++)
             {
                 chart1.Series[0].Points.AddXY(x_array[pi], P[0, pi]);
@@ -279,6 +280,9 @@ namespace WindowsFormsApplication1
             double[] CumProd = new double[3];
             double resProd = 0;
             double RecoveryFactor = 0;
+            int[] timePlot = {0,1,2,3,4,5,6,7,8,9,10,20,30,40,50,75,100,125,150,175,200,250,300,350,400,450,500};
+            //int[] timePlot = { 0, 50,100, 150,200, 250, 300, 350, 400, 450, 500 };
+            int ts_count = 0;
 
             //MAIN PRESSURE CALCULATIONS
             for (n = 0; n < time_steps; n++)
@@ -295,33 +299,32 @@ namespace WindowsFormsApplication1
                 {
                     if (wells[ii] == true)
                     {
+                        //identify where well_ii is located
                         int loc = Convert.ToInt32((X_loc[ii] / delta_x))-1;
+
+
+                        //Is this a constant rate well?
                         if (QwConst[ii]==true)
                         {
                             wellTerm = 887.53 * QwRate[ii] * oilVisc * Bo_n(Pn[loc]) * delta_x / (perm * delta_y * delta_z);
                             d[loc] = d[loc] - wellTerm;
-                            Qw[n, ii] = QwRate[ii];
-                            if (n>0)
-	                        {
-                                Pwf[ n-1,ii] =Pn[loc]-(-QwRate[ii])/Jw(Pn[loc],WellRw[ii],Skin[ii]);
-                                CumProd[ii] = CumProd[ii] - QwRate[ii] * delta_t;
-	                        }
-                                
+                            Qw[n, ii] = QwRate[ii];                                
                         }
-                        else
+                        else //if not constant rate, use the set Pwf to calcuate
                         {
-                            wellTerm = 887.53 * 0.00708  / (Math.Log(re / WellRw[ii]) + Skin[ii]) * delta_x / delta_y;
-                            d[loc] = d[loc] - wellTerm*PwfPres[ii];
-                            b[loc] = b[loc] - wellTerm;
-                            Pwf[n,ii]=PwfPres[ii];
-                            if (n > 0)
+                            if (n>0 && Inj[ii] == true && -Qw[n-1, ii] < -0.2*Qw[0, ii])
                             {
-                                Qw[n - 1,ii] = -(Pn[loc]-PwfPres[ii])*Jw(Pn[loc], WellRw[ii], Skin[ii]);
-                                CumProd[ii] = CumProd[ii] - Qw[n-1,ii] * delta_t;
+                                wellTerm = 887.53 * 0.00708 / (Math.Log(re / WellRw[ii]) + Skin[ii]) * delta_x / delta_y;
+                                d[loc] = d[loc] - wellTerm * ConvToInjPres;
+                                b[loc] = b[loc] - wellTerm;
+                                Pwf[n, ii] = ConvToInjPres;
                             }
                             else
                             {
-                                CumProd[ii] = -(Pinitial - PwfPres[ii]) * Jw(Pinitial, WellRw[ii], Skin[ii]);
+                                wellTerm = 887.53 * 0.00708 / (Math.Log(re / WellRw[ii]) + Skin[ii]) * delta_x / delta_y;
+                                d[loc] = d[loc] - wellTerm * PwfPres[ii];
+                                b[loc] = b[loc] - wellTerm;
+                                Pwf[n, ii] = PwfPres[ii];
                             }
                         }
                     }
@@ -343,37 +346,60 @@ namespace WindowsFormsApplication1
                 {
                     P[n + 1, ii] = Pn[ii];
                 }
-
-                //chart the new time step
-                seriesName = "Time Step #" + n+1; ;
-                chart1.Series.Add(seriesName);
-                chart1.Series[seriesName].ChartType = SeriesChartType.Line;
-
-
-                for (int ii = 0; ii < grid_x; ii++ )
+                
+                //chart the new time step (if it's an important one)
+                if (Array.Exists(timePlot, element => element == (n+1)*delta_t) || (n + 1) * delta_t == time_frame)
                 {
-                    chart1.Series[seriesName].Points.AddXY(x_array[ii], P[n + 1, ii]);
-                }
+                    seriesName = "Time = " + ((n+1) * delta_t) + " days"; 
+                    chart1.Series.Add(seriesName);
+                    chart1.Series[seriesName].ChartType = SeriesChartType.Line;
+                    chart1.Series[seriesName].BorderWidth = 2;
 
+                    for (int ii = 0; ii < grid_x; ii++)
+                    {
+                        chart1.Series[seriesName].Points.AddXY(x_array[ii], P[n + 1, ii]);
+                    }
+
+                    for (int wellID = 0; wellID < 3; wellID++)
+                    {
+                        if (wells[wellID] == true)
+                        {
+                            chart1.ChartAreas[0].AxisX.StripLines.Add(new StripLine());
+                            chart1.ChartAreas[0].AxisX.StripLines[wellID].BackColor = Color.Black;
+                            chart1.ChartAreas[0].AxisX.StripLines[wellID].StripWidth = 20;
+                            chart1.ChartAreas[0].AxisX.StripLines[wellID].Interval = 10000;
+                            chart1.ChartAreas[0].AxisX.StripLines[wellID].IntervalOffset = X_loc[wellID];
+                            chart1.ChartAreas[0].AxisX.StripLines[wellID].Text = "Well " + Convert.ToString(wellID + 1);
+                        }
+                    }
+                    ts_count++;
+                } //end of charting loop
+
+                //update cum. production and recovery factor calcs
                 for (int wellID = 0; wellID < 3; wellID++)
                 {
                     if (wells[wellID] == true)
                     {
-                        chart1.ChartAreas[0].AxisX.StripLines.Add(new StripLine());
-                        chart1.ChartAreas[0].AxisX.StripLines[wellID].BackColor = Color.Black;
-                        chart1.ChartAreas[0].AxisX.StripLines[wellID].StripWidth = 40;
-                        chart1.ChartAreas[0].AxisX.StripLines[wellID].Interval = 10000;
-                        chart1.ChartAreas[0].AxisX.StripLines[wellID].IntervalOffset = X_loc[wellID];
-                        chart1.ChartAreas[0].AxisX.StripLines[wellID].Text = "Well " + Convert.ToString(wellID + 1);
+                        //identify where well_ii is located
+                        int loc = Convert.ToInt32((X_loc[wellID] / delta_x)) - 1;
 
-                        //while we're here, go ahead and update cumulative production
-                        
+                        if (QwConst[wellID] == true)
+                        {
+                            Pwf[n, wellID] = Pn[loc] - (-Qw[n,wellID]) / Jw(Pn[loc], WellRw[wellID], Skin[wellID]);
+                            CumProd[wellID] = CumProd[wellID] - Qw[n,wellID] * delta_t;
+                        }
+                        else
+                        {
+                            Qw[n, wellID] = -(Pn[loc] - Pwf[n,wellID]) * Jw(Pn[loc], WellRw[wellID], Skin[wellID]);
+                            CumProd[wellID] = CumProd[wellID] - Qw[n, wellID] * delta_t;
+                        }
                     }
-
-                    resProd = CumProd[0] + CumProd[1] + CumProd[2];
-                    RecoveryFactor = resProd / ooip;
                 }
-            }
+
+                resProd = CumProd[0] + CumProd[1] + CumProd[2];
+                RecoveryFactor = resProd / ooip;
+
+            } //end of main pressure calculations
 
             lbRF.Text = "Recovery = " + RecoveryFactor.ToString("P2");
             lbProdTotal.Text = "Production = " + resProd.ToString("N0") + " STB";
@@ -381,40 +407,12 @@ namespace WindowsFormsApplication1
             lbProdWell2.Text = "Well2 = " + CumProd[1].ToString("N0") + " STB";
             lbProdWell3.Text = "Well3 = " + CumProd[2].ToString("N0") + " STB";
 
-            /*
-            //initialize the first series (t=0) on the graph
-            string seriesName = "Time Step #0"; ;
-            chart1.Series.Add(seriesName);
-            chart1.Series[seriesName].ChartType = SeriesChartType.Line;
-
-            //Initializes the basics of the pressure vs x vs time plot (@time = 0)
-            for (int pi=0; pi < grid_x ; pi++ )
-            {
-                chart1.Series[0].Points.AddXY(x_array[pi], P[0, pi]);
-            }
-
-
-            //This block of code takes the P[,] matrix and plots the pressures vs x, for each time step.
-            n = 1; //each n is a time_step. n+1 is the next time step.
-            while(n<time_steps-1)
-            {
-                seriesName = "Time Step #" + n; ;
-                chart1.Series.Add(seriesName);
-                chart1.Series[seriesName].ChartType = SeriesChartType.Line;
-
-                i = 0;
-                while (i < grid_x )
-                {
-                    chart1.Series[seriesName].Points.AddXY(x_array[i], P[n, i]);
-                    i++;
-                }
-                n++;
-            }
-
-            */
-
         }
 
+        public bool IsDivisble(int x, int n)
+        {
+            return (x % n) == 0;
+        }
         private void SaveExcel()
         {
 
