@@ -19,7 +19,7 @@ namespace WindowsFormsApplication1
     
     public partial class MainForm : Form
     {
-        //this is the "clean version" for project #1 code submission
+        //this is the test branch #2
         
         double time_frame; // [days] this is how long the simulation will run
         double delta_t; // [days] the number of days between time steps
