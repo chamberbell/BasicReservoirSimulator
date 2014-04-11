@@ -219,7 +219,6 @@ namespace WindowsFormsApplication1
             x_array[0] = delta_x / 2;
             Pn[0] = Pinitial;
 
-            int i; //time step
             int n; //grid block
 
             Qw = new double[time_steps+1, 3];
@@ -706,10 +705,10 @@ namespace WindowsFormsApplication1
                     worksheet[i] = workbook.Worksheets.Add();
                 }
                 
-            }
+            } 
             catch (Exception e)
             {
-                Console.Write("Error");
+                Console.Write("Error: "+e);
             }
             finally
             {
