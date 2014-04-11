@@ -172,6 +172,7 @@
             this.label56 = new System.Windows.Forms.Label();
             this.tbTimeFrame = new System.Windows.Forms.TextBox();
             this.chart1 = new System.Windows.Forms.DataVisualization.Charting.Chart();
+            this.button4 = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -859,6 +860,7 @@
             // 
             // groupBox6
             // 
+            this.groupBox6.Controls.Add(this.button4);
             this.groupBox6.Controls.Add(this.lbProdWell3);
             this.groupBox6.Controls.Add(this.lbProdWell2);
             this.groupBox6.Controls.Add(this.lbProdWell1);
@@ -1601,6 +1603,16 @@
             this.chart1.TabIndex = 23;
             this.chart1.Text = "chart1";
             // 
+            // button4
+            // 
+            this.button4.Location = new System.Drawing.Point(234, 29);
+            this.button4.Name = "button4";
+            this.button4.Size = new System.Drawing.Size(106, 39);
+            this.button4.TabIndex = 9;
+            this.button4.Text = "SolveHW";
+            this.button4.UseVisualStyleBackColor = true;
+            this.button4.Click += new System.EventHandler(this.button4_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1795,6 +1807,7 @@
         private System.Windows.Forms.Label lbOOIP;
         private System.Windows.Forms.Label lbRF;
         private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.Button button4;
 
     }
 }
