@@ -28,9 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea4 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend4 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series4 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.txZGridBlocks = new System.Windows.Forms.TextBox();
             this.txYGridBlocks = new System.Windows.Forms.TextBox();
@@ -199,7 +199,6 @@
             this.groupBox1.TabIndex = 8;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "# Grid Blocks";
-            this.groupBox1.Enter += new System.EventHandler(this.groupBox1_Enter);
             // 
             // txZGridBlocks
             // 
@@ -414,7 +413,6 @@
             this.label37.Size = new System.Drawing.Size(31, 13);
             this.label37.TabIndex = 8;
             this.label37.Text = "1/psi";
-            this.label37.Click += new System.EventHandler(this.label37_Click);
             // 
             // tbRockComp
             // 
@@ -511,7 +509,6 @@
             this.groupBox4.TabIndex = 11;
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Fluid Properties";
-            this.groupBox4.Enter += new System.EventHandler(this.groupBox4_Enter);
             // 
             // label52
             // 
@@ -982,7 +979,6 @@
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pictureBox1.TabIndex = 2;
             this.pictureBox1.TabStop = false;
-            this.pictureBox1.Click += new System.EventHandler(this.pictureBox1_Click);
             // 
             // groupBox5
             // 
@@ -1037,7 +1033,7 @@
             this.rbWell1Pwf.TabStop = true;
             this.rbWell1Pwf.Text = "Pwf";
             this.rbWell1Pwf.UseVisualStyleBackColor = true;
-            this.rbWell1Pwf.CheckedChanged += new System.EventHandler(this.rbWell1Pwf_CheckedChanged);
+            //this.rbWell1Pwf.CheckedChanged += new System.EventHandler(this.rbWell1Pwf_CheckedChanged);
             // 
             // rbWell1Qw
             // 
@@ -1048,7 +1044,7 @@
             this.rbWell1Qw.TabIndex = 15;
             this.rbWell1Qw.Text = "Qw";
             this.rbWell1Qw.UseVisualStyleBackColor = true;
-            this.rbWell1Qw.CheckedChanged += new System.EventHandler(this.rbWell1Qw_CheckedChanged);
+            //this.rbWell1Qw.CheckedChanged += new System.EventHandler(this.rbWell1Qw_CheckedChanged);
             // 
             // cbWell1Injector
             // 
@@ -1166,7 +1162,7 @@
             this.cbWell1Active.TabIndex = 0;
             this.cbWell1Active.Text = "Active";
             this.cbWell1Active.UseVisualStyleBackColor = true;
-            this.cbWell1Active.CheckedChanged += new System.EventHandler(this.cbWell1Active_CheckedChanged);
+            //this.cbWell1Active.CheckedChanged += new System.EventHandler(this.cbWell1Active_CheckedChanged);
             // 
             // groupBox7
             // 
@@ -1259,7 +1255,7 @@
             this.label17.Size = new System.Drawing.Size(13, 13);
             this.label17.TabIndex = 12;
             this.label17.Text = "ft";
-            this.label17.Click += new System.EventHandler(this.label17_Click);
+            //this.label17.Click += new System.EventHandler(this.label17_Click);
             // 
             // label18
             // 
@@ -1269,7 +1265,7 @@
             this.label18.Size = new System.Drawing.Size(13, 13);
             this.label18.TabIndex = 11;
             this.label18.Text = "ft";
-            this.label18.Click += new System.EventHandler(this.label18_Click);
+            //this.label18.Click += new System.EventHandler(this.label18_Click);
             // 
             // tbWell2rw
             // 
@@ -1525,7 +1521,7 @@
             this.cbWell3Active.TabIndex = 0;
             this.cbWell3Active.Text = "Active";
             this.cbWell3Active.UseVisualStyleBackColor = true;
-            this.cbWell3Active.CheckedChanged += new System.EventHandler(this.checkBox3_CheckedChanged);
+            //this.cbWell3Active.CheckedChanged += new System.EventHandler(this.checkBox3_CheckedChanged);
             // 
             // tbTimeStep
             // 
@@ -1534,7 +1530,7 @@
             this.tbTimeStep.Size = new System.Drawing.Size(62, 20);
             this.tbTimeStep.TabIndex = 17;
             this.tbTimeStep.Text = "10";
-            this.tbTimeStep.TextChanged += new System.EventHandler(this.tbTimeStep_TextChanged);
+            //this.tbTimeStep.TextChanged += new System.EventHandler(this.tbTimeStep_TextChanged);
             // 
             // lbTimeStep
             // 
@@ -1585,18 +1581,18 @@
             this.chart1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            chartArea1.Name = "ChartArea1";
-            this.chart1.ChartAreas.Add(chartArea1);
-            legend1.Name = "Legend1";
-            this.chart1.Legends.Add(legend1);
+            chartArea4.Name = "ChartArea1";
+            this.chart1.ChartAreas.Add(chartArea4);
+            legend4.Name = "Legend1";
+            this.chart1.Legends.Add(legend4);
             this.chart1.Location = new System.Drawing.Point(12, 432);
             this.chart1.Name = "chart1";
             this.chart1.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.SemiTransparent;
-            series1.ChartArea = "ChartArea1";
-            series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
-            series1.Legend = "Legend1";
-            series1.Name = "Series1";
-            this.chart1.Series.Add(series1);
+            series4.ChartArea = "ChartArea1";
+            series4.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+            series4.Legend = "Legend1";
+            series4.Name = "Series1";
+            this.chart1.Series.Add(series4);
             this.chart1.Size = new System.Drawing.Size(804, 344);
             this.chart1.TabIndex = 23;
             this.chart1.Text = "chart1";
