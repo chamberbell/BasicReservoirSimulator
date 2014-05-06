@@ -19,7 +19,7 @@ using Microsoft.Office.Interop.Excel;
 using Application = Microsoft.Office.Interop.Excel.Application;
 
 
-namespace WindowsFormsApplication1
+namespace ReservoirSimulator2D
 {
 	
 	public partial class MainForm : Form
