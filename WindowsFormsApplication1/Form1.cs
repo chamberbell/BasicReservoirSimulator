@@ -33,7 +33,7 @@ namespace WindowsFormsApplication1
             //chart1.ChartAreas[0].AxisX.Maximum = length;
             chart1.ChartAreas[0].AxisY.Title = "Rate, stb/day";
             
-
+            
 
             for (int i = 0; i < wells ; i++)
             {
