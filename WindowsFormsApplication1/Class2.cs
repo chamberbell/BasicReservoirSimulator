@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace WindowsFormsApplication1
 {
-
+    /*
     class Homework9
     {
         public void HW9()
@@ -153,5 +153,5 @@ namespace WindowsFormsApplication1
             return x;
         }
     }
-
+    */
 }
