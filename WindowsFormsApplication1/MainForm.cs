@@ -471,7 +471,85 @@ namespace ReservoirSimulator2D
 			return P;
 		}
 
-		private void button2_Click(object sender, EventArgs e)
+	    private double[] RHS_Create(double xw, double yw, double Nx, double Ny, double[] Pn, double rm, double well)
+	    {
+	        int well_m = Convert.ToInt32((yw - 1)*Nx + xw - 1);
+	        int grids = Convert.ToInt32(Nx*Ny);
+	        double[] RHS = new double[grids];
+
+	        for (int i = 0; i < grids; i++)
+	        {
+	            RHS[i] = rm*Pn[i];
+	            if (i == well_m)
+	            {
+	                RHS[i] = RHS[i] + well;
+	            }
+	        }
+	        return RHS;
+	    }
+
+
+        private double[,] CreateMatrix(double Nx, double Ny, double Nm, double Sm, double Wm, double Em, double Cm)
+        {
+            int grids = Convert.ToInt32(Nx * Ny);
+            double[,] mymatrix = new double[grids, grids];
+            double rem_i;
+            double rem_j;
+
+            for (int i = 0; i < mymatrix.GetLength(0); i++)
+            {
+                for (int j = 0; j < mymatrix.GetLength(1); j++)
+                {
+                    rem_i = (i + 1) % Nx;
+                    rem_j = (j + 1) % Nx;
+                    mymatrix[i, j] = 0;
+                    if (i == j) { mymatrix[i, j] = Cm; }
+                    if (i == j + 1) { mymatrix[i, j] = Wm; }
+                    if (i == j - 1) { mymatrix[i, j] = Em; }
+                    if (i == j - Nx) { mymatrix[i, j] = Nm; }
+                    if (i - Nx == j) { mymatrix[i, j] = Sm; }
+                    if (rem_i == 1 && rem_j == 0) { mymatrix[i, j] = 0; }
+                    if (rem_i == 0 && rem_j == 1) { mymatrix[i, j] = 0; }
+                    if (i == j && i < Nx) { mymatrix[i, j] = mymatrix[i, j] + Sm; }
+                    if (i == j && i > Nx * Ny - Nx - 1) { mymatrix[i, j] = mymatrix[i, j] + Nm; }
+                    if (i == j && rem_i == 1) { mymatrix[i, j] = mymatrix[i, j] + Wm; }
+                    if (i == j && rem_i == 0) { mymatrix[i, j] = mymatrix[i, j] + Em; }
+                }
+            }
+
+            return mymatrix;
+        }
+
+        private double[] GSSolve(double[,] matrix, double[] RHS, double initial, int iterations)
+        {
+            double[] x = new double[RHS.Length];
+            for (int i = 0; i < RHS.Length; i++)
+            {
+                x[i] = initial;
+            }
+            double[] xOld = new double[x.Length];
+
+            for (int k = 0; k < iterations; ++k)
+            {
+                x.CopyTo(xOld, 0);
+
+                for (int i = 0; i < RHS.Length; ++i)
+                {
+                    double entry = RHS[i];
+                    double diagonal = matrix[i, i];
+
+                    for (int j = 0; j < i; j++)
+                        entry -= matrix[i, j] * x[j];
+                    for (int j = i + 1; j < RHS.Length; j++)
+                        entry -= matrix[i, j] * xOld[j];
+
+                    x[i] = entry / diagonal;
+                }
+            }
+            return x;
+        }
+
+	    private void button2_Click(object sender, EventArgs e)
 		{
 		   Form1 f1 = new Form1(Qw, _deltaT); // Instantiate a Form1 object.
 		   f1.Show();
