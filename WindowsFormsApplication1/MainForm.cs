@@ -24,38 +24,42 @@ namespace ReservoirSimulator2D
 	
 	public partial class MainForm : Form
 	{
-		double time_frame; // [days] this is how long the simulation will run
-		double delta_t; // [days] the number of days between time steps
-		int time_steps; // time_frame divided by delta_t
+		double _timeFrame; // [days] this is how long the simulation will run
+		double _deltaT; // [days] the number of days between time steps
+		int _timeSteps; // time_frame divided by delta_t
 
-		double delta_x; //[ft]
-		double delta_y; //[ft]
-		double delta_z; //[ft]
+		double _deltaX; //[ft]
+		double _deltaY; //[ft]
+		double _deltaZ; //[ft]
 
-		int grid_x;
-		int grid_y;
-		int grid_z;
+		int _gridX;
+		int _gridY;
+		int _gridZ;
 
-		double length; //[ft]
-		double width; //[ft]
-		double height; //[ft]
+		double _length; //[ft]
+		double _width; //[ft]
+		double _height; //[ft]
 
-		double porosity;
-		double perm;
-		double rockComp;
-		double totalComp;
-		double liquidComp;
+		double _porosity;
+		double _perm;
+		double _rockComp;
+		double _totalComp;
+		double _liquidComp;
 
-		double Sw;
-		double So;
-		double Pb;
-		double Boi;
-		double oilVisc;
-		double Pinitial;
-		double Pmin;
-		double ConvToInjPres;
+		double _sw;
+		double _so;
+		double _pb;
+		double _boi;
+	    double _bwi;
+	    double _bgi;
+        double _oilVisc;
+	    double _gasVisc;
+	    double _waterVisc;
+		double _pinitial;
+		double _pmin;
+		double _convToInjPres;
 
-		double rate;
+		double _rate;
 		bool?[] wells = new bool?[3]; //right now the code supports 3 wells
 		bool?[] Inj = new bool?[3];
 		bool?[] QwConst = new bool?[3];
@@ -67,8 +71,8 @@ namespace ReservoirSimulator2D
 		double[] X_loc = new double[3];
 		double[] Y_loc = new double[3];
 
-		//define the pressure & rate matrices to store the P values over time and space
-		double[,] P;   // P_avg vs time vs x_loc
+		//define the pressure & rate matrices to store the _P values over time and space
+		double[,] _P;   // P_avg vs time vs x_loc
 		double[,] Qw;  // rate vs time vs x loc
 		double[,] Pwf; // Pwf vs time vs x_loc
 
@@ -91,55 +95,55 @@ namespace ReservoirSimulator2D
 		//this is what heppens what you clidk "Calculate"
 		private void button1_Click(object sender, EventArgs e)
 		{
-			refreshData();
+			RefreshData();
 		}
    
-		private void refreshData()
+		private void RefreshData()
 		{
 			chart1.Series.Clear();
 			chart1.ChartAreas[0].AxisX.StripLines.Clear();
 
-			double.TryParse(tbTimeFrame.Text, out time_frame); // [days] this is how long the simulation will run
-			double.TryParse(tbTimeStep.Text, out  delta_t); // [days] the number of days between time steps
-			time_steps = Convert.ToInt32(time_frame / delta_t)+1; // time_frame divided by delta_t
+			double.TryParse(tbTimeFrame.Text, out _timeFrame); // [days] this is how long the simulation will run
+			double.TryParse(tbTimeStep.Text, out  _deltaT); // [days] the number of days between time steps
+			_timeSteps = Convert.ToInt32(_timeFrame / _deltaT)+1; // time_frame divided by delta_t
 
-			double.TryParse(txLength.Text, out  length); //[ft]
-			double.TryParse(txWidth.Text, out  width); //[ft]
-			double.TryParse(txHeight.Text, out  height); //[ft]
+			double.TryParse(txLength.Text, out  _length); //[ft]
+			double.TryParse(txWidth.Text, out  _width); //[ft]
+			double.TryParse(txHeight.Text, out  _height); //[ft]
 
-			int.TryParse(txXGridBlocks.Text, out  grid_x); //[ft]
-			int.TryParse(txYGridBlocks.Text, out  grid_y); //[ft]
-			int.TryParse(txZGridBlocks.Text, out  grid_z); //[ft]
+			int.TryParse(txXGridBlocks.Text, out  _gridX); //[ft]
+			int.TryParse(txYGridBlocks.Text, out  _gridY); //[ft]
+			int.TryParse(txZGridBlocks.Text, out  _gridZ); //[ft]
 
-			delta_x = length / grid_x; //[ft]
-			delta_y = width / grid_y; //[ft]
-			delta_z = height / grid_z; //[ft]
+			_deltaX = _length / _gridX; //[ft]
+			_deltaY = _width / _gridY; //[ft]
+			_deltaZ = _height / _gridZ; //[ft]
 
-			double.TryParse(tbPorosity.Text, out  porosity);
-			porosity = porosity / 100; //convert from % to decimal
-			double.TryParse(tbPerm.Text, out  perm);
-			double.TryParse(tbRockComp.Text, out  rockComp);
-			double.TryParse(tbTotalComp.Text, out  totalComp);
-			double.TryParse(tbLiquComp.Text, out  liquidComp);
+			double.TryParse(tbPorosity.Text, out  _porosity);
+			_porosity = _porosity / 100; //convert from % to decimal
+			double.TryParse(tbPerm.Text, out  _perm);
+			double.TryParse(tbRockComp.Text, out  _rockComp);
+			double.TryParse(tbTotalComp.Text, out  _totalComp);
+			double.TryParse(tbLiquComp.Text, out  _liquidComp);
 
-			double.TryParse(tbWaterSat.Text, out  Sw);
-			Sw = Sw / 100; //convert from % to decimal
-			double.TryParse(tbOilSat.Text, out  So);
-			So = So / 100; //convert from % to decimal
-			double.TryParse(tbBubblePoint.Text, out  Pb);
-			double.TryParse(tbInitialBo.Text, out  Boi);
-			double.TryParse(tbOilVisc.Text, out  oilVisc);
-			double.TryParse(txInitialP.Text, out  Pinitial);
-			double.TryParse(txPresToConvert.Text, out  Pmin);
-			double.TryParse(txPresToConvert.Text, out  ConvToInjPres);
+			double.TryParse(tbWaterSat.Text, out  _sw);
+			_sw = _sw / 100; //convert from % to decimal
+			double.TryParse(tbOilSat.Text, out  _so);
+			_so = _so / 100; //convert from % to decimal
+			double.TryParse(tbBubblePoint.Text, out  _pb);
+			double.TryParse(tbInitialBo.Text, out  _boi);
+			double.TryParse(tbOilVisc.Text, out  _oilVisc);
+			double.TryParse(txInitialP.Text, out  _pinitial);
+			double.TryParse(txPresToConvert.Text, out  _pmin);
+			double.TryParse(txPresToConvert.Text, out  _convToInjPres);
 
-			bool ConvToInj = cbConvertInj.Checked;
+			bool convToInj = cbConvertInj.Checked;
 			wells[0] = cbWell1Active.Checked;
 			Inj[0] = cbWell1Injector.Checked;
 			QwConst[0] = rbWell1Qw.Checked; //1=Qw, 0=Pwf
 			double.TryParse(tbWell1Pwf.Text, out  PwfPres[0]);
-			double.TryParse(tbWell1Qw.Text, out  rate);
-			QwRate[0] = -rate; //production = negative
+			double.TryParse(tbWell1Qw.Text, out  _rate);
+			QwRate[0] = -_rate; //production = negative
 			double.TryParse(tbWell1Skin.Text, out  Skin[0]);
 			double.TryParse(tbWell1rw.Text, out  WellRw[0]); //[ft]
 			double.TryParse(tbWell1X.Text, out  X_loc[0]); //[ft]
@@ -149,8 +153,8 @@ namespace ReservoirSimulator2D
 			Inj[1] = cbWell2Injector.Checked;
 			QwConst[1] = rbWell2Qw.Checked; //1=Qw, 0=Pwf
 			double.TryParse(tbWell2Pwf.Text, out  PwfPres[1]);
-			double.TryParse(tbWell2Qw.Text, out  rate);
-			QwRate[1] = -rate; //production = negative
+			double.TryParse(tbWell2Qw.Text, out  _rate);
+			QwRate[1] = -_rate; //production = negative
 			double.TryParse(tbWell2Skin.Text, out  Skin[1]);
 			double.TryParse(tbWell2rw.Text, out  WellRw[1]); //[ft]
 			double.TryParse(tbWell2X.Text, out  X_loc[1]); //[ft]
@@ -160,55 +164,58 @@ namespace ReservoirSimulator2D
 			Inj[2] = cbWell3Injector.Checked;
 			QwConst[2] = rbWell3Qw.Checked; //1=Qw, 0=Pwf
 			double.TryParse(tbWell3Pwf.Text, out  PwfPres[2]);
-			double.TryParse(tbWell3Qw.Text, out  rate);
-			QwRate[2] = -rate; //production = negative
+			double.TryParse(tbWell3Qw.Text, out  _rate);
+			QwRate[2] = -_rate; //production = negative
 			double.TryParse(tbWell3Skin.Text, out  Skin[2]);
 			double.TryParse(tbWell3rw.Text, out  WellRw[2]); //[ft]
 			double.TryParse(tbWell3X.Text, out  X_loc[2]); //[ft]
 			double.TryParse(tbWell3Y.Text, out  Y_loc[2]); //[ft]
 
+		    var wellStrings = new string[] {"Ruby", "Sapphire", "Opal"};
+
+
 			//calculate constants
-			double alpha = 158 * porosity * oilVisc * liquidComp / perm * Math.Pow(delta_x, 2) / delta_t;
+			double alpha = 158 * _porosity * _oilVisc * _liquidComp / _perm * Math.Pow(_deltaX, 2) / _deltaT;
 			double beta = -2-alpha;
 			double wellTerm; //will calculate later in program
-			double re = 0.14 * Math.Sqrt(Math.Pow(delta_x, 2) + Math.Pow(delta_y, 2)); //Peaceman
+			double re = 0.14 * Math.Sqrt(Math.Pow(_deltaX, 2) + Math.Pow(_deltaY, 2)); //Peaceman
 
 			//set up the arrays
-			double[] x_array = new double[grid_x ];
-			double[] Pn = new double[grid_x];
-			double[] a = new double[grid_x];
-			double[] b = new double[grid_x];
-			double[] c = new double[grid_x];
-			double[] d = new double[grid_x];
+			double[] x_array = new double[_gridX ];
+			double[] Pn = new double[_gridX];
+			double[] a = new double[_gridX];
+			double[] b = new double[_gridX];
+			double[] c = new double[_gridX];
+			double[] d = new double[_gridX];
 		  
 
-			x_array[0] = delta_x / 2;
-			Pn[0] = Pinitial;
+			x_array[0] = _deltaX / 2;
+			Pn[0] = _pinitial;
 
 			int n; //grid block
 
-			Qw = new double[time_steps+1, 3];
-			Pwf = new double[time_steps+1, 3];
-			P = new double[time_steps+1, grid_x];
+			Qw = new double[_timeSteps+1, 3];
+			Pwf = new double[_timeSteps+1, 3];
+			_P = new double[_timeSteps+1, _gridX];
 
 			//set up the dirac delta well term and initialize arrays
-			double[] dirac = new double[grid_x ];
-			for (int x = 0;  x < (grid_x);  x++)
+			double[] dirac = new double[_gridX ];
+			for (int x = 0;  x < (_gridX);  x++)
 			{
 				dirac[x] = 0;
-				P[0, x] = Pinitial;
-				x_array[x] = x * delta_x + delta_x / 2;
+				_P[0, x] = _pinitial;
+				x_array[x] = x * _deltaX + _deltaX / 2;
 				a[x] = 1;
 				b[x] = beta;
 				c[x] = 1;
-				d[x] = -alpha * Pinitial;
+				d[x] = -alpha * _pinitial;
 			}
 
 			//Manage the end points and boundary conditions
 			a[0] = 0;
 			b[0] = 1 + beta; //no flow x=0 boundary
-			b[(grid_x-1 )] = 1 + beta; //no flow x=L boundary
-			c[(grid_x-1 )] = 0;
+			b[(_gridX-1 )] = 1 + beta; //no flow x=L boundary
+			c[(_gridX-1 )] = 0;
 			
 			//mark where the wells are in the dirac delta array
 			//I don't think the dirac variable actually ended up being used...
@@ -216,16 +223,16 @@ namespace ReservoirSimulator2D
 			{
 				if (wells[ii] == true)
 				{
-					n = Convert.ToInt32((X_loc[ii] / delta_x)+1);
+					n = Convert.ToInt32((X_loc[ii] / _deltaX)+1);
 					dirac[n] = 1;
 				}
 			}
 			
 			//Initialize settings of the graph
-			chart1.ChartAreas[0].AxisX.MajorGrid.Interval = delta_x;
+			chart1.ChartAreas[0].AxisX.MajorGrid.Interval = _deltaX;
 			chart1.ChartAreas[0].AxisX.Title = "x, ft";
 			chart1.ChartAreas[0].AxisX.Minimum = 0;
-			chart1.ChartAreas[0].AxisX.Maximum = length;
+			chart1.ChartAreas[0].AxisX.Maximum = _length;
 			chart1.ChartAreas[0].AxisY.Title = "P, psia";
 			
 			//initialize the first series (t=0) on the graph
@@ -233,36 +240,35 @@ namespace ReservoirSimulator2D
 			chart1.Series.Add(seriesName);
 			chart1.Series[seriesName].ChartType = SeriesChartType.Line;
 			chart1.Series[seriesName].BorderWidth = 2;
-			for (int pi = 0; pi < grid_x; pi++)
+			for (int pi = 0; pi < _gridX; pi++)
 			{
-				chart1.Series[0].Points.AddXY(x_array[pi], P[0, pi]);
+				chart1.Series[0].Points.AddXY(x_array[pi], _P[0, pi]);
 			}
 
 			//Output OOIP in bbls
-			double ooip = porosity * So * length * width * height / Boi/ 5.6145;
-			lbOOIP.Text = "OOIP = " + ooip.ToString("N0") + " STB";
+			double ooip = _porosity * _so * _length * _width * _height / _boi/ 5.6145;
+			lbOOIP.Text = @"OOIP = " + ooip.ToString("N0") + @" STB";
 
 			//set up place to store production, one column for each well
-			double[] CumProd = new double[3];
+			double[] cumProd = new double[3];
 			double resProd = 0;
-			double RecoveryFactor = 0;
+			double recoveryFactor = 0;
 
 			//---Uncomment the definition of "timePlot" that you want to use---
-			//int[] timePlot = {0,1,2,3,4,5,6,7,8,9,10,20,30,40,50,75,100,125,150,175,200,250,300,350,400,450,500, 600, 700, 800, 900, 1000};
+			int[] timePlot = {0,1,2,3,4,5,6,7,8,9,10,20,30,40,50,75,100,125,150,175,200,250,300,350,400,450,500, 600, 700, 800, 900, 1000};
 			//int[] timePlot = { 0,  50, 100 };
-			int[] timePlot = { 0, 50,100, 150,200, 250, 300, 350, 400, 450, 500 };
-			
-			int ts_count = 0;
-			double Qtotal_t1 = 0.0f;
+			//int[] timePlot = { 0, 50,100, 150,200, 250, 300, 350, 400, 450, 500 };
+		
+			double qtotalT1 = 0.0f;
 
 			//MAIN PRESSURE CALCULATIONS
-			for (n = 0; n < time_steps; n++)
+			for (n = 0; n < _timeSteps; n++)
 			{
 				if (n==1)
 				{
-					Qtotal_t1 = QwTotal(Qw, 0);
+					qtotalT1 = QwTotal(Qw, 0);
 				}
-				if ((Qtotal_t1 *0.01<  QwTotal(Qw, n - 1)) || n <= 1 || ConvToInj )
+				if ((qtotalT1 *0.01<  QwTotal(Qw, n - 1)) || n <= 1 || convToInj )
 				{
 					//add the well terms to the b an d arrays
 					for (int ii = 0; ii < 3; ii++)
@@ -270,13 +276,13 @@ namespace ReservoirSimulator2D
 						if (wells[ii] == true)
 						{
 							//identify where well_ii is located
-							int loc = Convert.ToInt32((X_loc[ii] / delta_x)) - 1;
+							int loc = Convert.ToInt32(Math.Floor((X_loc[ii] / _deltaX)));
 
 
 							//Is this a constant rate well?
 							if (QwConst[ii] == true)
 							{
-								wellTerm = 887.53 * QwRate[ii] * oilVisc * Bo_n(Pn[loc]) * delta_x / (perm * delta_y * delta_z);
+								wellTerm = 887.53 * QwRate[ii] * _oilVisc * Bo_n(Pn[loc]) * _deltaX / (_perm * _deltaY * _deltaZ);
 								d[loc] = d[loc] - wellTerm;
 								Qw[n, ii] = QwRate[ii];
 							}
@@ -284,14 +290,14 @@ namespace ReservoirSimulator2D
 							{
 								if (n > 0 && Inj[ii] == true && -Qw[n - 1, ii] < -0.1 * Qw[0, ii])
 								{
-									wellTerm = 887.53 * 0.00708 / (Math.Log(re / WellRw[ii]) + Skin[ii]) * delta_x / delta_y;
-									d[loc] = d[loc] - wellTerm * ConvToInjPres;
+									wellTerm = 887.53 * 0.00708 / (Math.Log(re / WellRw[ii]) + Skin[ii]) * _deltaX / _deltaY;
+									d[loc] = d[loc] - wellTerm * _convToInjPres;
 									b[loc] = b[loc] - wellTerm;
-									Pwf[n, ii] = ConvToInjPres;
+									Pwf[n, ii] = _convToInjPres;
 								}
 								else
 								{
-									wellTerm = 887.53 * 0.00708 / (Math.Log(re / WellRw[ii]) + Skin[ii]) * delta_x / delta_y;
+									wellTerm = 887.53 * 0.00708 / (Math.Log(re / WellRw[ii]) + Skin[ii]) * _deltaX / _deltaY;
 									d[loc] = d[loc] - wellTerm * PwfPres[ii];
 									b[loc] = b[loc] - wellTerm;
 									Pwf[n, ii] = PwfPres[ii];
@@ -300,49 +306,58 @@ namespace ReservoirSimulator2D
 						}
 					}
 
-					Pn = ThomasMethod(a, b, c, d, grid_x);
+					Pn = ThomasMethod(a, b, c, d, _gridX);
 
 					//reset the beta and d terms
-					for (int ii = 0; ii < (grid_x); ii++)
+					for (int ii = 0; ii < (_gridX); ii++)
 					{
 						b[ii] = beta;
 						b[0] = 1 + beta;
-						b[grid_x - 1] = 1 + beta;
+						b[_gridX - 1] = 1 + beta;
 						d[ii] = -alpha * Pn[ii];
 					}
 
 					//save Pn pressure array to Pn+1 in the P[,] matix
-					for (int ii = 0; ii < grid_x; ii++)
+					for (int ii = 0; ii < _gridX; ii++)
 					{
-						P[n + 1, ii] = Pn[ii];
+						_P[n + 1, ii] = Pn[ii];
 					}
 
 					//chart the new time step (if it's an important one)
-					if (Array.Exists(timePlot, element => element == (n + 1) * delta_t) || (n + 1) * delta_t == time_frame)
+					if (Array.Exists(timePlot, element => element == (n + 1) * _deltaT) || (n + 1) * _deltaT == _timeFrame)
 					{
-						seriesName = "Time = " + ((n + 1) * delta_t) + " days";
+						seriesName = "Time = " + ((n + 1) * _deltaT) + " days";
 						chart1.Series.Add(seriesName);
 						chart1.Series[seriesName].ChartType = SeriesChartType.Line;
 						chart1.Series[seriesName].BorderWidth = 2;
 
-						for (int ii = 0; ii < grid_x; ii++)
+						for (int ii = 0; ii < _gridX; ii++)
 						{
-							chart1.Series[seriesName].Points.AddXY(x_array[ii], P[n + 1, ii]);
+							chart1.Series[seriesName].Points.AddXY(x_array[ii], _P[n + 1, ii]);
 						}
 
+                        //add the black lines to the preview chart showing where the wells are
 						for (int wellID = 0; wellID < 3; wellID++)
 						{
 							if (wells[wellID] == true)
 							{
 								chart1.ChartAreas[0].AxisX.StripLines.Add(new StripLine());
 								chart1.ChartAreas[0].AxisX.StripLines[wellID].BackColor = Color.Black;
-								chart1.ChartAreas[0].AxisX.StripLines[wellID].StripWidth = 20;
+								chart1.ChartAreas[0].AxisX.StripLines[wellID].StripWidth = 10;
 								chart1.ChartAreas[0].AxisX.StripLines[wellID].Interval = 10000;
 								chart1.ChartAreas[0].AxisX.StripLines[wellID].IntervalOffset = X_loc[wellID];
-								chart1.ChartAreas[0].AxisX.StripLines[wellID].Text = "Well " + Convert.ToString(wellID + 1);
+								chart1.ChartAreas[0].AxisX.StripLines[wellID].Text = wellStrings[wellID];
 							}
+                            if (wells[wellID] == false)
+                            {
+                                chart1.ChartAreas[0].AxisX.StripLines.Add(new StripLine());
+                                chart1.ChartAreas[0].AxisX.StripLines[wellID].BackColor = Color.Black;
+                                chart1.ChartAreas[0].AxisX.StripLines[wellID].StripWidth = 0;
+                                chart1.ChartAreas[0].AxisX.StripLines[wellID].Interval = 10000;
+                                chart1.ChartAreas[0].AxisX.StripLines[wellID].IntervalOffset = X_loc[wellID];
+                                //chart1.ChartAreas[0].AxisX.StripLines[wellID].Text = "Well " + Convert.ToString(wellID + 1);
+                            }
 						}
-						ts_count++;
 					} //end of charting loop
 
 					//update cum. production and recovery factor calcs
@@ -351,31 +366,31 @@ namespace ReservoirSimulator2D
 						if (wells[wellID] == true)
 						{
 							//identify where well_ii is located
-							int loc = Convert.ToInt32((X_loc[wellID] / delta_x)) - 1;
+							int loc = Convert.ToInt32((X_loc[wellID] / _deltaX)) - 1;
 
 							if (QwConst[wellID] == true)
 							{
-								Pwf[n, wellID] = P[n+1,loc] - (-Qw[n, wellID]) / Jw(P[n,loc], WellRw[wellID], Skin[wellID]);
-								CumProd[wellID] = CumProd[wellID] - Qw[n, wellID] * delta_t;
+								Pwf[n, wellID] = _P[n+1,loc] - (-Qw[n, wellID]) / Jw(_P[n,loc], WellRw[wellID], Skin[wellID]);
+								cumProd[wellID] = cumProd[wellID] - Qw[n, wellID] * _deltaT;
 							}
 							else
 							{
-								Qw[n, wellID] = -(P[n+1,loc] - Pwf[n, wellID]) * Jw(P[n,loc], WellRw[wellID], Skin[wellID]);
-								CumProd[wellID] = CumProd[wellID] - Qw[n, wellID] * delta_t;
+								Qw[n, wellID] = -(_P[n+1,loc] - Pwf[n, wellID]) * Jw(_P[n,loc], WellRw[wellID], Skin[wellID]);
+								cumProd[wellID] = cumProd[wellID] - Qw[n, wellID] * _deltaT;
 							}
 						}
 					}
 
-					resProd = CumProd[0] + CumProd[1] + CumProd[2];
-					RecoveryFactor = resProd / ooip;
+					resProd = cumProd[0] + cumProd[1] + cumProd[2];
+					recoveryFactor = resProd / ooip;
 				}
 			} //end of main pressure calculations
 			
-			lbRF.Text = "Recovery = " + RecoveryFactor.ToString("P2");
-			lbProdTotal.Text = "Production = " + resProd.ToString("N0") + " STB";
-			lbProdWell1.Text = "Well1 = " + CumProd[0].ToString("N0") + " STB";
-			lbProdWell2.Text = "Well2 = " + CumProd[1].ToString("N0") + " STB";
-			lbProdWell3.Text = "Well3 = " + CumProd[2].ToString("N0") + " STB";
+			lbRF.Text = @"Recovery = " + recoveryFactor.ToString("P2");
+			lbProdTotal.Text = @"Production = " + resProd.ToString("N0") + @" STB";
+			lbProdWell1.Text = @"Well1 = " + cumProd[0].ToString("N0") + @" STB";
+			lbProdWell2.Text = @"Well2 = " + cumProd[1].ToString("N0") + @" STB";
+			lbProdWell3.Text = @"Well3 = " + cumProd[2].ToString("N0") + @" STB";
 
 		}
 
@@ -410,18 +425,18 @@ namespace ReservoirSimulator2D
 		//calculate the pressure dependent FVF
 		private double Bo_n(double Pn)
 		{
-			double Bn = Boi*Math.Exp(-liquidComp*(Pn-Pinitial));
+			double Bn = _boi*Math.Exp(-_liquidComp*(Pn-_pinitial));
 			return Bn;
 		}
 		
 		//Productivity index from Peaceman's Method
 		private double Jw(double Pn, double rw, double S)
 		{
-			double re = 0.14 * Math.Sqrt(Math.Pow(delta_x, 2) + Math.Pow(delta_y, 2));
-			double Bn = Boi*Math.Exp(-liquidComp*(Pn-Pinitial));
+			double re = 0.14 * Math.Sqrt(Math.Pow(_deltaX, 2) + Math.Pow(_deltaY, 2));
+			double Bn = _boi*Math.Exp(-_liquidComp*(Pn-_pinitial));
 			//double Bn = 1.25;
 			double Jw_n;
-			Jw_n= 0.00708 / (oilVisc * Bn) * perm * height / (Math.Log(re/rw) +S);
+			Jw_n= 0.00708 / (_oilVisc * Bn) * _perm * _height / (Math.Log(re/rw) +S);
 			return Jw_n;
 		}
 
@@ -458,17 +473,52 @@ namespace ReservoirSimulator2D
 
 		private void button2_Click(object sender, EventArgs e)
 		{
-		   Form1 f1 = new Form1(Qw, delta_t); // Instantiate a Form1 object.
+		   Form1 f1 = new Form1(Qw, _deltaT); // Instantiate a Form1 object.
 		   f1.Show();
 		}
 
 		private void button3_Click(object sender, EventArgs e)
 		{
-			CreateExcelDoc excell_app = new CreateExcelDoc();
-			SaveExcel(excell_app, P, 0);
-			SaveExcel(excell_app, Qw, 1);
-			SaveExcel(excell_app, Pwf, 2);
-			MessageBox.Show("Export to Excel is complete","Important Message");
+			CreateExcelDoc excellApp = new CreateExcelDoc();
+			SaveExcel(excellApp, _P, 0);
+			SaveExcel(excellApp, Qw, 1);
+			SaveExcel(excellApp, Pwf, 2);
+			MessageBox.Show(@"Export to Excel is complete",@"Important Message");
+		}
+
+		private void label43_Click(object sender, EventArgs e)
+		{
+
+		}
+
+		private void tbWaterSat_TextChanged(object sender, EventArgs e)
+		{
+
+		}
+
+		private void label42_Click(object sender, EventArgs e)
+		{
+
+		}
+
+		private void label49_Click(object sender, EventArgs e)
+		{
+
+		}
+
+		private void label51_Click(object sender, EventArgs e)
+		{
+
+		}
+
+		private void groupBox4_Enter(object sender, EventArgs e)
+		{
+
+		}
+
+		private void cbWell3Active_CheckedChanged(object sender, EventArgs e)
+		{
+
 		}
 
 	}
@@ -529,7 +579,7 @@ namespace ReservoirSimulator2D
 			double well = 887.53 * 100 * 2 * 1 / (50 * 78);
 			int Nx = 5;
 			int Ny = 3;
-			double deltat = 10;
+			const double deltat = 10;
 			int timesteps = Convert.ToInt32(500 / deltat);
 
 			double[,] P = new double[timesteps + 1, 15];
@@ -564,8 +614,8 @@ namespace ReservoirSimulator2D
 					P[n + 1, i] = Pn[i];
 				}
 			}
-			CreateExcelDoc excell_app = new CreateExcelDoc();
-			SaveExcel(excell_app, P, 0);
+			CreateExcelDoc excellApp = new CreateExcelDoc();
+			SaveExcel(excellApp, P, 0);
 		}
 
 		private double[] RHS_Create(double xw, double yw, double Nx, double Ny, double[] Pn, double rm, double well)
