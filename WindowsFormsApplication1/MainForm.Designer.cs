@@ -28,9 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.txZGridBlocks = new System.Windows.Forms.TextBox();
             this.txYGridBlocks = new System.Windows.Forms.TextBox();
@@ -65,7 +65,7 @@
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.tbGasVisc = new System.Windows.Forms.TextBox();
             this.tbWaterVisc = new System.Windows.Forms.TextBox();
-            this.tbCompWater = new System.Windows.Forms.TextBox();
+            this.tbWaterComp = new System.Windows.Forms.TextBox();
             this.tbCompGas = new System.Windows.Forms.TextBox();
             this.tbInitialBw = new System.Windows.Forms.TextBox();
             this.tbInitialBg = new System.Windows.Forms.TextBox();
@@ -498,7 +498,7 @@
             // 
             this.groupBox4.Controls.Add(this.tbGasVisc);
             this.groupBox4.Controls.Add(this.tbWaterVisc);
-            this.groupBox4.Controls.Add(this.tbCompWater);
+            this.groupBox4.Controls.Add(this.tbWaterComp);
             this.groupBox4.Controls.Add(this.tbCompGas);
             this.groupBox4.Controls.Add(this.tbInitialBw);
             this.groupBox4.Controls.Add(this.tbInitialBg);
@@ -549,13 +549,13 @@
             this.tbWaterVisc.TabIndex = 32;
             this.tbWaterVisc.Text = "1";
             // 
-            // tbCompWater
+            // tbWaterComp
             // 
-            this.tbCompWater.Location = new System.Drawing.Point(156, 135);
-            this.tbCompWater.Name = "tbCompWater";
-            this.tbCompWater.Size = new System.Drawing.Size(43, 20);
-            this.tbCompWater.TabIndex = 31;
-            this.tbCompWater.Text = "1E-6";
+            this.tbWaterComp.Location = new System.Drawing.Point(156, 135);
+            this.tbWaterComp.Name = "tbWaterComp";
+            this.tbWaterComp.Size = new System.Drawing.Size(43, 20);
+            this.tbWaterComp.TabIndex = 31;
+            this.tbWaterComp.Text = "1E-6";
             // 
             // tbCompGas
             // 
@@ -1700,18 +1700,18 @@
             this.chart1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            chartArea2.Name = "ChartArea1";
-            this.chart1.ChartAreas.Add(chartArea2);
-            legend2.Name = "Legend1";
-            this.chart1.Legends.Add(legend2);
+            chartArea1.Name = "ChartArea1";
+            this.chart1.ChartAreas.Add(chartArea1);
+            legend1.Name = "Legend1";
+            this.chart1.Legends.Add(legend1);
             this.chart1.Location = new System.Drawing.Point(12, 454);
             this.chart1.Name = "chart1";
             this.chart1.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.SemiTransparent;
-            series2.ChartArea = "ChartArea1";
-            series2.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
-            series2.Legend = "Legend1";
-            series2.Name = "Series1";
-            this.chart1.Series.Add(series2);
+            series1.ChartArea = "ChartArea1";
+            series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+            series1.Legend = "Legend1";
+            series1.Name = "Series1";
+            this.chart1.Series.Add(series1);
             this.chart1.Size = new System.Drawing.Size(804, 322);
             this.chart1.TabIndex = 23;
             this.chart1.Text = "chart1";
@@ -1916,7 +1916,7 @@
         private System.Windows.Forms.Label label44;
         private System.Windows.Forms.TextBox tbGasVisc;
         private System.Windows.Forms.TextBox tbWaterVisc;
-        private System.Windows.Forms.TextBox tbCompWater;
+        private System.Windows.Forms.TextBox tbWaterComp;
         private System.Windows.Forms.TextBox tbCompGas;
         private System.Windows.Forms.TextBox tbInitialBw;
         private System.Windows.Forms.TextBox tbInitialBg;
