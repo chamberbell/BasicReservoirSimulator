@@ -1,4 +1,4 @@
-﻿namespace WindowsFormsApplication1
+﻿namespace ReservoirSimulator2D
 {
     partial class Form1
     {

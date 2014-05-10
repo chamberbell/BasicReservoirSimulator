@@ -7,7 +7,7 @@
     <ProjectGuid>{1E63833F-1FFB-4604-8DEB-4F5510CBF7F3}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>WindowsFormsApplication1</RootNamespace>
+    <RootNamespace>ReservoirSimulator2D</RootNamespace>
     <AssemblyName>WindowsFormsApplication1</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
