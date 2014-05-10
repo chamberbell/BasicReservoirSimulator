@@ -1,5 +1,5 @@
 ﻿// PTE 508 - Spring 2014
-// Project #1
+// Project #2
 // by Tracy Lenz
 // Written in C# using MS Visual Studio 2013
 
@@ -17,14 +17,15 @@ using System.Reflection; // For Missing.Value and BindingFlags
 using System.Runtime.InteropServices; // For COMException
 using Microsoft.Office.Interop.Excel;
 using Application = Microsoft.Office.Interop.Excel.Application;
-
+using ILNumerics;
 
 namespace ReservoirSimulator2D
 {
 	
 	public partial class MainForm : Form
 	{
-		double _timeFrame; // [days] this is how long the simulation will run
+	    
+        double _timeFrame; // [days] this is how long the simulation will run
 		double _deltaT; // [days] the number of days between time steps
 		int _timeSteps; // time_frame divided by delta_t
 
@@ -75,14 +76,20 @@ namespace ReservoirSimulator2D
 
 		//define the pressure & rate matrices to store the _P values over time and space
         double[,] _P;   // P_avg vs time vs vs grid block
-        double[,] Qw;  // rate vs time vs grid block 
+        double[,] Qw;  // water rate vs time vs grid block 
+        double[,] Qo;  // oil rate vs time vs grid block 
         double[,] Pwf; // Pwf vs time vs grid block
 	    double[,] _So; // Oil Saturation vs time vs grid block
+	    double[] OIP; //remaining oil in place over time
+        const double Swc = 0.2;
+        const double Sor = 0.0;
 
+	    int _timeStepSelected;
 
 		public MainForm()
 		{
 			InitializeComponent();
+            //HW9();
 		}
 
 		private void MainForm_Load(object sender, EventArgs e)
@@ -137,6 +144,7 @@ namespace ReservoirSimulator2D
 			double.TryParse(tbBubblePoint.Text, out  _pb);
 			double.TryParse(tbInitialBo.Text, out  _boi);
 			double.TryParse(tbOilVisc.Text, out  _oilVisc);
+            double.TryParse(tbWaterVisc.Text, out  _waterVisc);
 			double.TryParse(txInitialP.Text, out  _pinitial);
 			double.TryParse(txPresToConvert.Text, out  _pmin);
 			double.TryParse(txPresToConvert.Text, out  _convToInjPres);
@@ -179,8 +187,8 @@ namespace ReservoirSimulator2D
 
 
 			//calculate constants
-			double alpha = 158 * _porosity * _oilVisc * _oilComp / _perm * Math.Pow(_deltaX, 2) / _deltaT;
-			double beta = -2-alpha;
+			//double alpha = 158 * _porosity * _oilVisc * _oilComp / _perm * Math.Pow(_deltaX, 2) / _deltaT;
+			//double beta = -2-alpha;
 		    double re = 0.14 * Math.Sqrt(Math.Pow(_deltaX, 2) + Math.Pow(_deltaY, 2)); //Peaceman
 
 
@@ -200,31 +208,44 @@ namespace ReservoirSimulator2D
 		    double Bo = Bo_n(_pinitial);
             double Bw = Bw_n(_pinitial);
 		    double Mo = Mo_bar(_pinitial, _pinitial, _so, _so);
-		    double Mw = Mw_bar(_pinitial, _pinitial, _so, _so);
+		    double Mw = Mw_bar(_pinitial, _pinitial, _sw, _sw);
 		    double delY2 = Math.Pow(_deltaY, 2);
             double delX2 = Math.Pow(_deltaX, 2);
 
-            double Cm = -Bo / delY2 * (Mo + Mo) - Bw / delY2 * (Mw + Mw) - Bo / delX2 * (Mo + Mo) - Bw / delX2 * (Mw + Mw);
-            double Sm = Bo / delY2 * Mo + Bw / delY2 * Mw;  
-            double Wm = Bo / delX2 * Mo + Bw / delX2 * Mw; 
-            double Nm = Bo / delY2 * Mo + Bw / delY2 * Mw; 
-            double Em = Bo / delX2 * Mo + Bw / delX2 * Mw; 
-            
+            double[] Cm = new double[mBlocks];
+            double[] Sm = new double[mBlocks];  
+            double[] Wm = new double[mBlocks];
+            double[] Nm = new double[mBlocks]; 
+            double[] Em = new double[mBlocks];
+
+            double[] Com = new double[mBlocks];
+            double[] Som = new double[mBlocks];
+            double[] Wom = new double[mBlocks];
+            double[] Nom = new double[mBlocks];
+            double[] Eom = new double[mBlocks];
+
             x_array[0] = _deltaX / 2;
-			Pn[0] = _pinitial;
 
-			int n; //grid block
+		    for (int n = 0; n < mBlocks; n++)
+		    {
+		        Pn[n] = _pinitial;
+		    }
+            
 
-			Qw = new double[_timeSteps+1, 3];
+			//int n; //grid block
+
+			Qo = new double[_timeSteps+1, 3];
+            Qw = new double[_timeSteps + 1, 3];
 			Pwf = new double[_timeSteps+1, 3];
 			_P = new double[_timeSteps+1, mBlocks];
             _So = new double[_timeSteps+1, mBlocks];
+            OIP = new double[_timeSteps+1];
 
 			for (int x = 0;  x < (mBlocks);  x++)
 			{
 				_P[0, x] = _pinitial;
 			    _So[0, x] = _so;
-			}
+             }
 
             for (int x = 0; x < (_gridX); x++)
             {
@@ -250,7 +271,7 @@ namespace ReservoirSimulator2D
 			}
 
 			//Output OOIP in bbls
-			double ooip = _porosity * _so * _length * _width * _height / _boi/ 5.6145;
+			double ooip = phi_n(_pinitial) * _so * _length * _width * _height / Bo_n(_pinitial)/ 5.6145;
 			lbOOIP.Text = @"OOIP = " + ooip.ToString("N0") + @" STB";
 
 			//set up place to store production, one column for each well
@@ -266,21 +287,110 @@ namespace ReservoirSimulator2D
 			double qtotalT1 = 0.0f;
 
 			//MAIN PRESSURE CALCULATIONS
-			for (n = 0; n < _timeSteps; n++)
+			for (int n = 0; n < _timeSteps; n++)
 			{
                 //update B, Sat, Krel inputs
 
-                //build a new matrix
+			    for (int x = 0; x < _gridX; x++)
+			    {
+			        for (int y = 0; y < _gridY; y++)
+			        {
+			            int m = this.m_index(x, y);
+			            double P_m = Pn[m ];
+			            double So_m = _So[n, m];
+                        double Sw_m = 1-So_m;
 
-                //build the RHS of the equation
-			    RHS = RHS_Create(c,);
+			            double Mo_N;
+			            double Mo_S;
+			            double Mo_E;
+			            double Mo_W;
+
+                        double Mw_N;
+			            double Mw_S;
+			            double Mw_E;
+			            double Mw_W;
+
+			            if (y == _gridY - 1) //if north boundary, set north mobility to zero
+			            {
+			                Mw_N = 0;
+			                Mo_N = 0;
+			            }
+			            else
+			            {
+                            double P_N = Pn[m + _gridX];
+                            double So_N = _So[n, (m + _gridX)];
+                            double Sw_N = 1 - So_N;
+                            Mw_N = Mw_bar(P_m, P_N, Sw_m, Sw_N);
+                            Mo_N = Mo_bar(P_m, P_N, So_m, So_N);
+			            }
+			            if (y == 0) //if south boundary, set south mobility to zero
+			            {
+			                Mw_S = 0;
+			                Mo_S = 0;
+			            }
+			            else
+			            {
+                            double P_S = Pn[m - _gridX];
+                            double So_S = _So[n, (m - _gridX)];
+                            double Sw_S = 1 - So_S;
+                            Mw_S = Mw_bar(P_m, P_S, Sw_m, Sw_S);
+                            Mo_S = Mo_bar(P_m, P_S, So_m, So_S);
+			            }
+			            if (x == _gridX - 1) //if east boundary, set east mobility to zero
+			            {
+			                Mw_E = 0;
+			                Mo_E = 0;
+			            }
+			            else
+			            {
+                            double P_E = Pn[m + 1];
+                            double So_E = _So[n, (m+1)];
+                            double Sw_E = 1 - So_E;
+                            Mw_E = Mw_bar(P_m, P_E, Sw_m, Sw_E);
+                            Mo_E = Mo_bar(P_m, P_E, So_m, So_E);
+			            }
+			            if (x == 0) //if west boundary, set west mobility to zero
+			            {
+			                Mw_W = 0;
+			                Mo_W = 0;
+			            }
+			            else
+			            {
+                            double P_W = Pn[m - 1];
+                            double So_W = _So[n, (m - 1)];
+                            double Sw_W = 1 - So_W;
+                            Mw_W = Mw_bar(P_m, P_W, Sw_m, Sw_W);
+                            Mo_W = Mo_bar(P_m, P_W, So_m, So_W);
+			            }
+
+			            double alpha = alphaCalc(P_m, So_m);
+
+                        Com[m]  = -((delX2 / delY2) * (Mo_S + Mo_N) + Mo_W + Mo_E);
+                        Som[m] = (delX2 / delY2) * (Mo_S);
+                        Wom[m] = Mo_W;
+                        Nom[m] = (delX2 / delY2) * (Mo_N);
+                        Eom[m] = Mo_E;
+
+                        Cm[m] = -Bo / delY2 * (Mo_S + Mo_N) - Bw / delY2 * (Mw_S + Mw_N) - Bo / delX2 * (Mo_W + Mo_E) - Bw / delX2 * (Mw_W + Mw_E) - alpha;
+                        Sm[m] = Bo / delY2 * Mo_S + Bw / delY2 * Mw_S;  
+                        Wm[m] = Bo / delX2 * Mo_W + Bw / delX2 * Mw_W; 
+                        Nm[m] = Bo / delY2 * Mo_N + Bw / delY2 * Mw_N; 
+                        Em[m] = Bo / delX2 * Mo_E + Bw / delX2 * Mw_E;
+
+                        RHS[m] = -alpha * P_m;
+			        }
+			    }
+
+                //build a new matrix
+			    mymatrix = CreateMatrix(Nm, Sm, Wm, Em, Cm);
+
 
                 //account for what the wells are doing
 				if (n==1)
 				{
-					qtotalT1 = QwTotal(Qw, 0);
+					qtotalT1 = QwTotal(Qo, 0);
 				}
-				if ((qtotalT1 *0.01<  QwTotal(Qw, n - 1)) || n <= 1 || convToInj )
+				if (n>=0)//((qtotalT1 *0.01<  QwTotal(Qw, n - 1)) || n <= 1 || convToInj )
 				{
 					//add the well terms to the b an d arrays
 					for (int ii = 0; ii < 3; ii++)
@@ -290,7 +400,7 @@ namespace ReservoirSimulator2D
 							//identify where well_ii is located
 							int loci = Convert.ToInt32(Math.Floor((X_loc[ii] / _deltaX)));
                             int locj = Convert.ToInt32(Math.Floor((Y_loc[ii] / _deltaY)));
-						    int loc = m(loci, locj);
+						    int loc = m_index(loci, locj);
 
 							//Is this a constant rate well? (won't be used for project 2)
 						    double wellTerm; 
@@ -307,40 +417,44 @@ namespace ReservoirSimulator2D
                                 double jww = Jww(Pn[loc],WellRw[ii],Skin[ii],_So[n,loc]);
 							    double bo_m = Bo_n(Pn[loc]);
 							    double bw_m = Bw_n(Pn[loc]);
-                                double gamma_o = well(bo_m, jwo);
+                                double gamma_o = well(bo_m, jwo); //positive value
                                 double gamma_w = well(bw_m, jww);
 								
-                                if (n > 0 && Inj[ii] == true && -Qw[n - 1, ii] < -0.1 * Qw[0, ii])
+                                if (Inj[ii] == true && n*_deltaT>500)
                                 {
-									mymatrix[loc,loc] = mymatrix[loc,loc]+gamma_o+gamma_w;
-									RHS[loc] = RHS[loc] - gamma_o*_convToInjPres-gamma_w*_convToInjPres;
+                                    if (_So[n,loc]>.5)
+                                    {
+                                        _So[n, loc] = .5;
+                                        jww = Jww(Pn[loc], WellRw[ii], Skin[ii], _So[n, loc]);
+                                        gamma_w = well(bw_m, jww);
+                                    }
+                                    mymatrix[loc, loc] = mymatrix[loc, loc] - gamma_o-gamma_w;
+                                    RHS[loc] = RHS[loc] - gamma_o * _convToInjPres - gamma_w * _convToInjPres;
 									Pwf[n, ii] = _convToInjPres;
 								}
 								else
 								{
-									mymatrix[loc,loc] = mymatrix[loc,loc]+gamma_o+gamma_w;
+									mymatrix[loc,loc] = mymatrix[loc,loc]-gamma_o-gamma_w;
 									RHS[loc] = RHS[loc] - gamma_o*PwfPres[ii]-gamma_w*PwfPres[ii];
 									Pwf[n, ii] = PwfPres[ii];
 								}
 							}
 						}
 					}
+                    
+                    //CreateExcelDoc excellApp = new CreateExcelDoc();
+                    //SaveExcel3(excellApp, Em, 0);
+                    //SaveExcel3(excellApp, Wm, 1);
+                    //SaveExcel3(excellApp, Nm, 2);
+                    //SaveExcel3(excellApp, Sm, 3);
 
                     //solve the matrix
-				    Pn = GSSolve(mymatrix, RHS, _pinitial, 10);
+				    Pn = GSSolve(mymatrix, RHS, Pn, 100);
+                    //SaveExcel3(excellApp, Pn, 4);
 					//Pn = ThomasMethod(a, b, c, d, _gridX);
 
-					//reset the beta and d terms
-					for (int ii = 0; ii < (_gridX); ii++)
-					{
-						b[ii] = beta;
-						b[0] = 1 + beta;
-						b[_gridX - 1] = 1 + beta;
-						d[ii] = -alpha * Pn[ii];
-					}
-
 					//save Pn pressure array to Pn+1 in the P[,] matix
-					for (int ii = 0; ii < _gridX; ii++)
+					for (int ii = 0; ii < mBlocks; ii++)
 					{
 						_P[n + 1, ii] = Pn[ii];
 					}
@@ -387,25 +501,118 @@ namespace ReservoirSimulator2D
 					{
 						if (wells[wellID] == true)
 						{
-							//identify where well_ii is located
-							int loc = Convert.ToInt32((X_loc[wellID] / _deltaX)) - 1;
+                            //identify where well_ii is located
+                            int loci = Convert.ToInt32(Math.Floor((X_loc[wellID] / _deltaX)));
+                            int locj = Convert.ToInt32(Math.Floor((Y_loc[wellID] / _deltaY)));
+                            int loc = m_index(loci, locj);
 
 							if (QwConst[wellID] == true)
 							{
-								Pwf[n, wellID] = _P[n+1,loc] - (-Qw[n, wellID]) / Jw(_P[n,loc], WellRw[wellID], Skin[wellID]);
-								cumProd[wellID] = cumProd[wellID] - Qw[n, wellID] * _deltaT;
+                                Pwf[n, wellID] = _P[n + 1, loc] - (-Qo[n, wellID]) / Jwo(_P[n, loc], WellRw[wellID], Skin[wellID], _So[n, wellID]);
+								cumProd[wellID] = cumProd[wellID] - Qo[n, wellID] * _deltaT;
 							}
 							else
 							{
-								Qw[n, wellID] = -(_P[n+1,loc] - Pwf[n, wellID]) * Jw(_P[n,loc], WellRw[wellID], Skin[wellID]);
-								cumProd[wellID] = cumProd[wellID] - Qw[n, wellID] * _deltaT;
+                                if (Inj[wellID] == true && n*_deltaT>500)
+							    {
+                                    Qo[n, wellID] = 0;
+                                    Qw[n, wellID] = (_P[n + 1, loc] - Pwf[n, wellID]) * Jww(_P[n+1, loc], WellRw[wellID], Skin[wellID], _So[n, loc]);
+							    }
+							    else
+							    {
+                                    Qo[n, wellID] = (_P[n + 1, loc] - Pwf[n, wellID]) * Jwo(_P[n, loc], WellRw[wellID], Skin[wellID], _So[n, loc]);
+							    }
+                                Qw[n, wellID] = (_P[n + 1, loc] - Pwf[n, wellID]) * Jww(_P[n+1, loc], WellRw[wellID], Skin[wellID], _So[n, loc]);
+                                
+                                cumProd[wellID] = cumProd[wellID] + Qo[n, wellID] * _deltaT;
 							}
 						}
 					}
 
 					resProd = cumProd[0] + cumProd[1] + cumProd[2];
 					recoveryFactor = resProd / ooip;
+
+                    //Explicitly solve for n+1 saturation with n+1 pressures
+				    for (int x = 0; x < _gridX; x++)
+				    {
+				        for (int y = 0; y < _gridY; y++)
+				        {
+				            int m = m_index(x, y);
+				            double P_m = _P[n,m];
+				            double So_m = _So[n, m ];
+
+				            double P_N;
+				            double P_S;
+				            double P_E;
+				            double P_W;
+
+				            //check if N/S/E/W block pressure is available, otherwise use Center
+				            if ((m + _gridX) < mBlocks && (m + _gridX ) >= 0)
+				            {
+                                P_N = _P[n+1, m + _gridX ];
+				            }
+				            else
+				            {
+				                P_N = P_m;
+				            }
+
+				            if ((m - _gridX ) < mBlocks && (m - _gridX) >= 0)
+				            {
+                                P_S = _P[n+1, m - _gridX ];
+				            }
+				            else
+				            {
+				                P_S = P_m;
+				            }
+
+				            if ((m + 1) < mBlocks && (m + 1 ) >= 0)
+				            {
+                                P_E = _P[n+1, m +1 ];
+				            }
+				            else
+				            {
+				                P_E = P_m;
+				            }
+
+				            if ((m - 1 ) < mBlocks  && (m - 1 ) >= 0)
+				            {
+                                P_W = _P[n+1, m - 1 ];
+				            }
+				            else
+				            {
+				                P_W = P_m;
+				            }
+      
+				            double pmn1 = _P[n+1, m ];
+                            double pmn = _P[n, m ];
+
+				            double c1 = Bo_n(pmn1)/phi_n(pmn1);
+				            double c2 = phi_n(pmn)*_So[n, m]/Bo_n(pmn);
+				            double c3 = Som[m]*P_S + Wom[m]*P_W + Com[m]*pmn1 + Eom[m]*P_E + Nom[m]*P_N;
+				            double c4 = 158*delX2/_deltaT;
+				            double c5 = 0;
+
+				            for (int wellID = 0; wellID < 3; wellID++)
+				            {
+				                //identify where well_ii is located
+				                int loci = Convert.ToInt32(Math.Floor((X_loc[wellID]/_deltaX)));
+				                int locj = Convert.ToInt32(Math.Floor((Y_loc[wellID]/_deltaY)));
+				                int loc = this.m_index(loci, locj);
+
+				                if (m == loc)
+				                {
+				                    c5 = -887.53*Qo[n, wellID]*_deltaX/_deltaZ/_deltaY;
+				                }
+				            }
+				            _So[n + 1, m] = c1*(c2 + (c3 + c5)/c4);
+				        }
+				    }
+
 				}
+			    for (int ij = 0; ij < mBlocks; ij++)
+			    {
+                    OIP[n] = OIP[n] + (_deltaY * _deltaX * _deltaZ * phi_n(_P[n + 1, ij]) * _So[n + 1, ij]) / Bo_n(_P[n + 1, ij]) / 5.615;
+			    }
 			} //end of main pressure calculations
 			
 			lbRF.Text = @"Recovery = " + recoveryFactor.ToString("P2");
@@ -435,14 +642,43 @@ namespace ReservoirSimulator2D
 
 		private void SaveExcel(CreateExcelDoc myWB, double[,] x, int sheet)
 		{
-			for (int i = 0; i < x.GetLength(0); i++)
+			for (int n = 0; n < x.GetLength(0); n++)
 			{
-				for (int j = 0; j < x.GetLength(1); j++)
-				{
-					myWB.addData(i + 1, j + 1, x[i, j], sheet);
+                myWB.addData(n * (_gridY+2) + 2, 1, n, sheet);
+                for (int m = 0; m < x.GetLength(1); m++)
+                {
+                    int rem_m = (m ) % _gridX;
+                    int row = _gridY - Convert.ToInt32(Math.Floor(Convert.ToDouble(m)/Convert.ToDouble(_gridX)));
+                    int col = rem_m+1;
+                    myWB.addData((n*(_gridY+2) + 2)+row, col, x[n, m], sheet);
 				}
 			}
 		}
+
+        private void SaveExcel3(CreateExcelDoc myWB, double[] x, int sheet)
+        {
+
+                myWB.addData(1 * (_gridY + 2) + 2, 1, 1, sheet);
+                for (int m = 0; m < x.GetLength(0); m++)
+                {
+                    int rem_m = (m) % _gridX;
+                    int row = _gridY - Convert.ToInt32(Math.Floor(Convert.ToDouble(m) / Convert.ToDouble(_gridX)));
+                    int col = rem_m + 1;
+                    myWB.addData((1 * (_gridY + 2) + 2) + row, col, x[ m], sheet);
+                }
+            
+        }
+
+        private void SaveExcel2(CreateExcelDoc myWB, double[,] x, int sheet)
+        {
+            for (int i = 0; i < x.GetLength(0); i++)
+            {
+                for (int j = 0; j < x.GetLength(1); j++)
+                {
+                    myWB.addData(i + 1, j + 1, x[i, j], sheet);
+                }
+            }
+        }
 
 		//calculate the pressure dependent FVF
 		private double Bo_n(double Pn)
@@ -463,12 +699,6 @@ namespace ReservoirSimulator2D
             return Phi_n;
         }
 
-        private double Mobil(double k, double Kr, double mu, double B)
-        {
-            double M = _perm * Kr / (mu * B);
-            return M;
-        }
-
         private double Mo_bar(double P1, double P2, double So1, double So2)
         {
             double P = (P1 + P2)/2;
@@ -480,26 +710,26 @@ namespace ReservoirSimulator2D
             else
             {
                 So = So2;}
-            double M = _perm * Kro(0,0.2, (1-So)) / (_oilVisc * Bo_n(P));
+            double M = _perm * Kro(1-So) / (_oilVisc * Bo_n(P));
             return M;
         }
 
-        private double Mw_bar(double P1, double P2, double So1, double So2)
+        private double Mw_bar(double P1, double P2, double Sw1, double Sw2)
         {
             double P = (P1 + P2)/2;
-            double So;
+            double Sw;
             if (P1 > P2)
             {
-                So = So1;
+                Sw = Sw1;
             }
             else
             {
-                So = So2;}
-            double M = _perm * Krw(0, (1-So)) / (_oilVisc * Bw_n(P));
+                Sw = Sw2;}
+            double M = _perm * Krw(Sw) / (_waterVisc * Bw_n(P));
             return M;
         }
 
-        private double Krw(double Swc, double Sw)
+        private double Krw(double Sw)
         {
             double Sn = (Sw - Swc)/(1 - Swc);
             double kr;
@@ -514,7 +744,7 @@ namespace ReservoirSimulator2D
             return kr;
         }
 
-        private double Kro(double Swc, double Sor,double Sw)
+        private double Kro(double Sw)
         {
             double So = 1 - Sw;
             double Sn = (Sw - Swc) / (1 - Swc);
@@ -530,19 +760,22 @@ namespace ReservoirSimulator2D
             return kr;
         }
 
-        private int m(int i, int j)
+        private int m_index(int i, int j)
         {
-            var m_loc = (j - 1)*_gridX + i;
+            int m_loc;
+
+            m_loc = (j)*_gridX + i;
             return m_loc;
         }
 
         private double well(double B, double Jw)
         {
-            var wellTerm = -887.53*(B*Jw)/(_deltaX*_deltaY*_deltaZ);
+            var wellTerm = 887.53*(B*Jw)/(_deltaX*_deltaY*_deltaZ);
             return wellTerm;
         }
 
 		//Productivity index from Peaceman's Method
+        /*
 		private double Jw(double Pn, double rw, double S)
 		{
 			double re = 0.14 * Math.Sqrt(Math.Pow(_deltaX, 2) + Math.Pow(_deltaY, 2));
@@ -552,12 +785,12 @@ namespace ReservoirSimulator2D
 			Jw_n= 0.00708 / (_oilVisc * Bn) * _perm * _height / (Math.Log(re/rw) +S);
 			return Jw_n;
 		}
-
+        */
         private double Jwo(double Pn, double rw, double S, double So)
         {
             double re = 0.14 * Math.Sqrt(Math.Pow(_deltaX, 2) + Math.Pow(_deltaY, 2));
             double Bon = Bo_n(Pn);
-            double kro = Kro(0.2, 0, (1-So));
+            double kro = Kro(1-So);
             double Jw_n;
             Jw_n = 0.00708 / (_oilVisc * Bon) * _perm*kro * _height / (Math.Log(re / rw) + S);
             return Jw_n;
@@ -567,9 +800,9 @@ namespace ReservoirSimulator2D
         {
             double re = 0.14 * Math.Sqrt(Math.Pow(_deltaX, 2) + Math.Pow(_deltaY, 2));
             double Bwn = Bw_n(Pn);
-            double krw = Krw(0.2, (1 - So));
+            double krw = Krw(1 - So);
             double Jw_n;
-            Jw_n = 0.00708 / (_oilVisc * Bwn) * _perm * krw * _height / (Math.Log(re / rw) + S);
+            Jw_n = 0.00708 / (_waterVisc * Bwn) * _perm * krw * _height / (Math.Log(re / rw) + S);
             return Jw_n;
         }
 
@@ -618,87 +851,95 @@ namespace ReservoirSimulator2D
 			return P;
 		}
 
-		private double[] RHS_Create(double xw, double yw, double Nx, double Ny, double[] Pn, double rm, double well)
+
+
+		private double[,] CreateMatrix(double[] Nm, double[] Sm, double[] Wm, double[] Em, double[] Cm)
 		{
-			int well_m = Convert.ToInt32((yw - 1)*Nx + xw - 1);
-			int grids = Convert.ToInt32(Nx*Ny);
-			double[] RHS = new double[grids];
-
-			for (int i = 0; i < grids; i++)
-			{
-				RHS[i] = rm*Pn[i];
-				if (i == well_m)
-				{
-					RHS[i] = RHS[i] + well;
-				}
-			}
-			return RHS;
-		}
-
-
-		private double[,] CreateMatrix(double Nx, double Ny, double Nm, double Sm, double Wm, double Em, double Cm)
-		{
-			int grids = Convert.ToInt32(Nx * Ny);
+		    int Ny = _gridY;
+		    int Nx = _gridX;
+            int grids = Convert.ToInt32(Nx * Ny);
 			double[,] mymatrix = new double[grids, grids];
 			double rem_i;
-			double rem_j;
-
+			double rem_j; 
+		    
 			for (int i = 0; i < mymatrix.GetLength(0); i++)
 			{
 				for (int j = 0; j < mymatrix.GetLength(1); j++)
 				{
-					rem_i = (i + 1) % Nx;
+				    rem_i = (i + 1) % Nx;
 					rem_j = (j + 1) % Nx;
 					mymatrix[i, j] = 0;
-					if (i == j) { mymatrix[i, j] = Cm; }
-					if (i == j + 1) { mymatrix[i, j] = Wm; }
-					if (i == j - 1) { mymatrix[i, j] = Em; }
-					if (i == j - Nx) { mymatrix[i, j] = Nm; }
-					if (i - Nx == j) { mymatrix[i, j] = Sm; }
-					if (rem_i == 1 && rem_j == 0) { mymatrix[i, j] = 0; }
+					if (i == j) {  mymatrix[i, j] = Cm[i]; }
+                    if (i == j + 1) { mymatrix[i, j] = Wm[i]; }
+                    if (i == j - 1) { mymatrix[i, j] = Em[i]; }
+                    if (i == j - Nx) { mymatrix[i, j] = Nm[i]; }
+                    if (i == j + Nx) { mymatrix[i, j] = Sm[i]; }
+					
+                    
+                    if (rem_i == 1 && rem_j == 0) { mymatrix[i, j] = 0; }
 					if (rem_i == 0 && rem_j == 1) { mymatrix[i, j] = 0; }
-					if (i == j && i < Nx) { mymatrix[i, j] = mymatrix[i, j] + Sm; }
-					if (i == j && i > Nx * Ny - Nx - 1) { mymatrix[i, j] = mymatrix[i, j] + Nm; }
-					if (i == j && rem_i == 1) { mymatrix[i, j] = mymatrix[i, j] + Wm; }
-					if (i == j && rem_i == 0) { mymatrix[i, j] = mymatrix[i, j] + Em; }
-				}
+                    if (i == j && i < Nx) { mymatrix[i, j] = mymatrix[i, j] + Sm[i]; }
+                    if (i == j && i > Nx * Ny - Nx - 1) { mymatrix[i, j] = mymatrix[i, j] + Nm[i]; }
+                    if (i == j && rem_i == 1) { mymatrix[i, j] = mymatrix[i, j] + Wm[i]; }
+                    if (i == j && rem_i == 0) { mymatrix[i, j] = mymatrix[i, j] + Em[i]; }
+				
+                }
 			}
 
 			return mymatrix;
 		}
 
-		private double[] GSSolve(double[,] matrix, double[] RHS, double initial, int iterations)
+		private double[] GSSolve(double[,] matrix, double[] right, double[] initial, int iterations)
 		{
-			double[] x = new double[RHS.Length];
-			for (int i = 0; i < RHS.Length; i++)
-			{
-				x[i] = initial;
-			}
-			double[] xOld = new double[x.Length];
+            //CreateExcelDoc excellApp = new CreateExcelDoc();
+            //SaveExcel2(excellApp, matrix, 0);
+            //SaveExcel3(excellApp, right, 1);
+		    double hi = 5000;
+		    double lo = 500;
 
-			for (int k = 0; k < iterations; ++k)
-			{
-				x.CopyTo(xOld, 0);
+            double[] x = new double[right.Length];
+            for (int i = 0; i < right.Length; i++)
+            {
+                x[i] = initial[i];
+            }
+            double entry;
+            double diagonal;
+            double[] xOld = new double[x.Length];
 
-				for (int i = 0; i < RHS.Length; ++i)
-				{
-					double entry = RHS[i];
-					double diagonal = matrix[i, i];
+            for (int k = 0; k < iterations; ++k)
+            {
+                x.CopyTo(xOld, 0);
 
-					for (int j = 0; j < i; j++)
-						entry -= matrix[i, j] * x[j];
-					for (int j = i + 1; j < RHS.Length; j++)
-						entry -= matrix[i, j] * xOld[j];
+                for (int i = 0; i < right.Length; ++i)
+                {
+                    entry = right[i];
+                    diagonal = matrix[i, i];
 
-					x[i] = entry / diagonal;
-				}
-			}
-			return x;
+                    for (int j = 0; j < i; j++)
+                        entry -= matrix[i, j] * x[j];
+                    for (int j = i + 1; j < right.Length; j++)
+                        entry -= matrix[i, j] * xOld[j];
+
+                    x[i] = entry / diagonal;
+                    
+                    if (x[i]<lo)
+                    {
+                        x[i] = lo;
+                    }
+
+                    if (x[i] > hi)
+                    {
+                        x[i] = hi;
+                    }
+                    
+                }
+            }
+            return x;
 		}
 
 		private void button2_Click(object sender, EventArgs e)
 		{
-		   Form1 f1 = new Form1(Qw, _deltaT); // Instantiate a Form1 object.
+		   Form1 f1 = new Form1(Qo, Qw, _deltaT); // Instantiate a Form1 object.
 		   f1.Show();
 		}
 
@@ -706,8 +947,11 @@ namespace ReservoirSimulator2D
 		{
 			CreateExcelDoc excellApp = new CreateExcelDoc();
 			SaveExcel(excellApp, _P, 0);
-			SaveExcel(excellApp, Qw, 1);
-			SaveExcel(excellApp, Pwf, 2);
+			SaveExcel2(excellApp, Qw, 1);
+            SaveExcel2(excellApp, Qo, 2);
+			SaveExcel2(excellApp, Pwf, 3);
+            SaveExcel(excellApp, _So, 4);
+            SaveExcel3(excellApp, OIP, 5);
 			MessageBox.Show(@"Export to Excel is complete",@"Important Message");
 		}
 
@@ -745,6 +989,25 @@ namespace ReservoirSimulator2D
 		{
 
 		}
+
+        private void listTimeSteps_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            int.TryParse(listTimeSteps.Text, out  _timeStepSelected); //time step to be plotted
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            Form2 f1 = new Form2("Pressure, psia",1000,3250,_P, _timeStepSelected, _gridX, _gridY, _deltaX, _deltaY); // Instantiate a Form1 object.
+            f1.Text = "Reservoir Pressure at " + _timeStepSelected * _deltaT + " days";
+            f1.Show();
+        }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+            Form2 f1 = new Form2("Oil Saturation",0, 1,_So, _timeStepSelected, _gridX, _gridY, _deltaX, _deltaY); // Instantiate a Form1 object.
+            f1.Text = "Oil Saturation at " + _timeStepSelected*_deltaT + " days";
+            f1.Show();
+        }
 
 	}
 	
@@ -818,14 +1081,14 @@ namespace ReservoirSimulator2D
 				P[0, i] = Pinitial;
 			}
 
-			double[,] testmatrix = new double[3, 3] { { 4, 0, 1 }, { 0, 3, 2 }, { 1, 2, 4 } };
-			double[] b = new double[3] { 2, 1, 3 };
+			double[,] testmatrix = new double[2, 2] { { 16, 3 }, { 7, -11 } };
+			double[] b = new double[2] { 11, 13 };
 			double[,] A1 = new double[3, 3];
 			double[] b1 = new double[3];
 			double[] initial = new double[3] { 0, 0, 0 };
 			b.CopyTo(b1, 0);
-			double[] x1 = new double[3];
-			x1 = GSSolve(testmatrix, b1, 0, 10);
+			double[] x1 = new double[2];
+			x1 = GSSolve(testmatrix, b, 0, 10);
 
 			mymatrix = CreateMatrix(Nx, Ny, Nm, Sm, Wm, Em, Cm);
 

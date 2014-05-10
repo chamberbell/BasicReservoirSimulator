@@ -15,14 +15,15 @@ namespace ReservoirSimulator2D
     {
 
         private double[,] Qw_vs_Time;
+        private double[,] Qo_vs_Time;
 
-
-        public Form1(double[,] Qw, double del_t)
+        public Form1(double[,] Qo, double[,] Qw, double del_t)
         {
             InitializeComponent();
             chart1.Series.Clear();
 
             this.Qw_vs_Time = Qw;
+            this.Qo_vs_Time = Qo;
             string seriesName;
             int time_steps = Qw_vs_Time.GetLength(0);
             int wells = Qw_vs_Time.GetLength(1);
@@ -37,14 +38,28 @@ namespace ReservoirSimulator2D
 
             for (int i = 0; i < wells ; i++)
             {
-                seriesName = "Well" + (i+1); ;
+                seriesName = "Qw, Well" + (i+1); ;
+                chart1.Series.Add(seriesName);
+                chart1.Series[seriesName].ChartType = SeriesChartType.Line;
+                chart1.Series[seriesName].BorderWidth = 2;
+                chart1.Series[seriesName].BorderDashStyle = ChartDashStyle.Dash;
+
+                for (int n = 0; n < time_steps; n++)
+                {
+                    chart1.Series[seriesName].Points.AddXY((n) * del_t, Qw_vs_Time[n, i]);
+                }
+            }
+
+            for (int i = 0; i < wells; i++)
+            {
+                seriesName = "Qo, Well" + (i + 1); ;
                 chart1.Series.Add(seriesName);
                 chart1.Series[seriesName].ChartType = SeriesChartType.Line;
                 chart1.Series[seriesName].BorderWidth = 2;
 
                 for (int n = 0; n < time_steps; n++)
                 {
-                    chart1.Series[seriesName].Points.AddXY((n) * del_t, -Qw_vs_Time[n, i]);
+                    chart1.Series[seriesName].Points.AddXY((n) * del_t, Qo_vs_Time[n, i]);
                 }
             }
         }
